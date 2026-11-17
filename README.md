@@ -76,6 +76,15 @@ With another client, implement `McpAppsHostClient`: a `ToolCatalog` that knows w
 
 `samples/demo` is a chat-like screen where the assistant answers with MCP Apps. It has a theme switch, a "Hostile app" button that runs an app doing everything it should not, and a Servers mode that connects to real ext-apps example servers.
 
+<p align="center">
+  <img src=".github/assets/demo-android.gif" alt="The demo on Android" width="250">
+  <img src=".github/assets/demo-ios.gif" alt="The demo on iOS" width="250">
+  <img src=".github/assets/demo-web.gif" alt="The demo on the web" width="250">
+</p>
+
+<p align="center"><sub>Android emulator, iOS simulator and web (Chromium). Desktop has no recording yet.</sub></p>
+
+
 ```sh
 scripts/build-fixtures.sh                          # builds the real example apps once
 ./gradlew :samples:demo:androidApp:installDebug    # Android
