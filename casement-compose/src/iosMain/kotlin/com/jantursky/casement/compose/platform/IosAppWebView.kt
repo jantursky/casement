@@ -11,6 +11,7 @@ import com.jantursky.casement.bridge.BlockedKind
 import com.jantursky.casement.compose.RendererFailure
 import com.jantursky.casement.compose.WebViewSpec
 import com.jantursky.casement.compose.bridgeShim
+import com.jantursky.casement.compose.contentRules
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ObjCSignatureOverride
@@ -302,27 +303,3 @@ private fun controlOf(text: String): String? =
 
 private fun ByteArray.toNSData(): NSData =
     if (isEmpty()) NSData() else usePinned { NSData.create(bytes = it.addressOf(0), length = size.toULong()) }
-
-/**
- * A content rule list in WebKit's JSON format: block every http(s) and ws(s) request, then re-allow the declared
- * origins. The document itself uses a custom scheme, so these rules never touch it.
- */
-internal fun contentRules(allowedOrigins: List<String>): String {
-    val rules = mutableListOf("""{"trigger":{"url-filter":"^(https?|wss?)://"},"action":{"type":"block"}}""")
-    allowedOrigins.forEach { origin ->
-        rules += """{"trigger":{"url-filter":"${originRegex(origin)}"},"action":{"type":"ignore-previous-rules"}}"""
-    }
-    return rules.joinToString(prefix = "[", postfix = "]", separator = ",")
-}
-
-private fun originRegex(origin: String): String {
-    val scheme = origin.substringBefore("://")
-    val authority = origin.substringAfter("://")
-    val wildcard = authority.startsWith("*.")
-    val hostAndPort = authority.removePrefix("*.")
-    val host = hostAndPort.substringBefore(':')
-    val port = hostAndPort.substringAfter(':', "")
-    val hostPattern = (if (wildcard) "([^/:]*\\\\.)?" else "") + host.replace(".", "\\\\.")
-    val portPattern = if (port.isEmpty()) "" else ":$port"
-    return "^$scheme://$hostPattern$portPattern(/|\\\\?|#|$)"
-}

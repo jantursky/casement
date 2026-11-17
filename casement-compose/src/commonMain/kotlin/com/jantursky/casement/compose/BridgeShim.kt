@@ -38,6 +38,15 @@ internal fun bridgeShim(
       document.addEventListener('securitypolicyviolation', function (e) {
         send(JSON.stringify({ casement: 'csp', directive: e.violatedDirective, blocked: e.blockedURI }));
       });
+      // A page without a viewport tag is laid out at desktop width on iOS. Phones need device width.
+      document.addEventListener('DOMContentLoaded', function () {
+        if (!document.querySelector('meta[name=viewport]')) {
+          var meta = document.createElement('meta');
+          meta.name = 'viewport';
+          meta.content = 'width=device-width, initial-scale=1';
+          (document.head || document.documentElement).appendChild(meta);
+        }
+      });
       send(JSON.stringify({ casement: 'ready' }));
     })();
     """.trimIndent()

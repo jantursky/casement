@@ -32,7 +32,7 @@ internal class DemoClient(
                 "get-time" to setOf(ToolVisibility.App),
                 "submit-form" to setOf(ToolVisibility.App),
                 "refresh-data" to setOf(ToolVisibility.App),
-                "delete-everything" to setOf(ToolVisibility.Model),
+                "model-only" to setOf(ToolVisibility.Model),
             ),
         )
 

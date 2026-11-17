@@ -161,6 +161,10 @@ public fun DemoApp() {
                                         client = client,
                                         modifier = Modifier.fillMaxWidth(),
                                         onMessage = { entries += Entry.Text(true, "(from app) ${it.content}") },
+                                        approveToolCall = {
+                                            entries += Entry.Text(false, "The app called ${it.name}")
+                                            true
+                                        },
                                         onOpenLink = { entries += Entry.Text(false, "The app wants to open $it") },
                                         onBlocked = { blocked += it },
                                     )
@@ -203,4 +207,4 @@ private fun BlockedPanel(blocked: List<BlockedAction>) {
     }
 }
 
-private const val MAX_SHOWN = 6
+private const val MAX_SHOWN = 12
