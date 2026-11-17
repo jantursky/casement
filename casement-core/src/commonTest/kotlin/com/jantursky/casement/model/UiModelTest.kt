@@ -82,4 +82,16 @@ class UiModelTest {
         assertNull(DisplayMode.fromWire("sideways"))
         assertNull(DisplayMode.fromWire(null))
     }
+
+    @Test
+    fun `permissions policy header switches off what is not granted`() {
+        assertEquals(
+            "camera=(), microphone=(), geolocation=(), clipboard-write=()",
+            UiPermissions.None.toPermissionsPolicy(),
+        )
+        assertEquals(
+            "camera=(self), microphone=(), geolocation=(), clipboard-write=(self)",
+            UiPermissions(camera = true, clipboardWrite = true).toPermissionsPolicy(),
+        )
+    }
 }

@@ -715,6 +715,23 @@ class HostBridgeTest {
         }
 
     @Test
+    fun `close after teardown sends the request and then closes`() =
+        runTest {
+            val h = harness()
+            h.handshake()
+            h.bridge.closeAfterTeardown("view left")
+            assertEquals("ui/resource-teardown", h.methods().last())
+            assertEquals(
+                "view left",
+                h.sent
+                    .last()
+                    .params()["reason"]!!
+                    .jsonPrimitive.content,
+            )
+            assertEquals(BridgeState.Closed, h.bridge.state)
+        }
+
+    @Test
     fun `a closed bridge ignores everything`() =
         runTest {
             val h = harness()

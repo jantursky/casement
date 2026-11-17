@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="origin">
+<title>Casement sandbox</title>
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; }
+</style>
+</head>
+<body>
+<script>
+// Casement sandbox proxy. Serve this file from an origin that is NOT the origin of the host page, and see
+// docs/web-sandbox for the headers it should get. It relays JSON-RPC between the host page and the MCP App,
+// which runs in a nested iframe. See README.md next to this file.
+(function () {
+  'use strict';
+
+  if (window.parent === window) {
+    document.body.textContent = 'This page must be embedded by a Casement host.';
+    return;
+  }
+
+  var hostOrigin;
+  try {
+    hostOrigin = new URL(document.referrer).origin;
+  } catch (e) {
+    return;
+  }
+  if (!hostOrigin || hostOrigin === 'null' || hostOrigin === window.location.origin) return;
+
+  var port = null;
+  var inner = null;
+
+  // The policy goes in front of the app's own markup, so it is in force before any of its scripts run.
+  function withPolicy(html, csp) {
+    var meta = '<meta http-equiv="Content-Security-Policy" content="' + csp.replace(/"/g, '&quot;') + '">';
+    var doctype = /^\s*(<!--[\s\S]*?-->\s*)*<!doctype[^>]*>/i.exec(html);
+    return doctype ? html.slice(0, doctype[0].length) + meta + html.slice(doctype[0].length) : meta + html;
+  }
+
+  function start(init, hostPort) {
+    port = hostPort;
+    inner = document.createElement('iframe');
+    inner.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
+    inner.setAttribute('referrerpolicy', 'no-referrer');
+    if (init.allow) inner.setAttribute('allow', init.allow);
+    if (init.csp) inner.setAttribute('csp', init.csp);
+    inner.style.cssText = 'border:0;width:100%;height:100%;display:block;background:transparent';
+    document.body.appendChild(inner);
+
+    var doc = inner.contentDocument;
+    doc.addEventListener('securitypolicyviolation', function (e) {
+      port.postMessage(JSON.stringify({ casement: 'csp', directive: e.violatedDirective, blocked: e.blockedURI }));
+    });
+    doc.open();
+    doc.write(withPolicy(init.html, init.csp || ''));
+    doc.close();
+
+    port.onmessage = function (e) {
+      try {
+        inner.contentWindow.postMessage(JSON.parse(e.data), window.location.origin);
+      } catch (err) { /* not JSON, ignore */ }
+    };
+  }
+
+  window.addEventListener('message', function (event) {
+    if (event.source === window.parent) {
+      var m = event.data;
+      if (event.origin === hostOrigin && !inner && m && m.casement === 'init' && event.ports[0]) {
+        start(m, event.ports[0]);
+      }
+      return;
+    }
+    // Only the app's own frame may talk to the host, and only in JSON-RPC.
+    if (inner && port && event.source === inner.contentWindow) {
+      var d = event.data;
+      if (d && typeof d === 'object' && d.jsonrpc === '2.0') port.postMessage(JSON.stringify(d));
+    }
+  });
+
+  window.parent.postMessage({ casement: 'proxy-ready' }, hostOrigin);
+})();
+</script>
+</body>
+</html>

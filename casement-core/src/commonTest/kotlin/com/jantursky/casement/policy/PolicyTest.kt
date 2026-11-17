@@ -100,4 +100,27 @@ class PolicyTest {
         val granted = HostPolicy(grantedPermissions = UiPermissions(camera = true))
         assertEquals(UiPermissions(camera = true), granted.resolvePermissions(asked))
     }
+
+    @Test
+    fun `origin matcher checks scheme host and port`() {
+        val allowed = listOf("https://api.example.com", "https://*.cdn.example.com", "wss://live.example.com:8443")
+        assertTrue(OriginMatcher.isAllowed(allowed, "https://api.example.com/v1/x?y=1"))
+        assertTrue(OriginMatcher.isAllowed(allowed, "HTTPS://API.EXAMPLE.COM:443/"))
+        assertTrue(OriginMatcher.isAllowed(allowed, "https://a.b.cdn.example.com/lib.js"))
+        assertTrue(OriginMatcher.isAllowed(allowed, "wss://live.example.com:8443/socket"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https://cdn.example.com/lib.js"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https://evilcdn.example.com/lib.js"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https://api.example.com.evil.com/"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https://api.example.com@evil.com/"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https://api.example.com:8080/"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "http://api.example.com/"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "wss://live.example.com/"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "data:text/html,x"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https://[::1]/"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https:///path"))
+        assertFalse(OriginMatcher.isAllowed(allowed, "https://api.example.com:abc/"))
+        assertFalse(OriginMatcher.isAllowed(emptyList(), "https://api.example.com/"))
+        assertFalse(OriginMatcher.isAllowed(listOf("https://*"), "https://anything.com/"))
+        assertFalse(OriginMatcher.isAllowed(listOf("not a url"), "https://anything.com/"))
+    }
 }

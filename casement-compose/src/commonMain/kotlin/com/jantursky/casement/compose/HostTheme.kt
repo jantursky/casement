@@ -153,10 +153,20 @@ internal fun Color.toCss(): String {
     return if (alpha >= 1f) {
         "#" + listOf(r, g, b).joinToString("") { it.toString(HEX_RADIX).padStart(2, '0') }
     } else {
-        "rgba($r, $g, $b, ${(alpha * ALPHA_SCALE).roundToInt() / ALPHA_SCALE})"
+        "rgba($r, $g, $b, ${cssAlpha(alpha)})"
+    }
+}
+
+/** An alpha as a short decimal such as `0`, `0.05` or `0.5`, the same on every platform. */
+private fun cssAlpha(alpha: Float): String {
+    val percent = (alpha * PERCENT).roundToInt().coerceIn(0, PERCENT)
+    return when {
+        percent == 0 -> "0"
+        percent == PERCENT -> "1"
+        else -> "0." + percent.toString().padStart(2, '0').trimEnd('0')
     }
 }
 
 private const val MAX_CHANNEL = 255
 private const val HEX_RADIX = 16
-private const val ALPHA_SCALE = 100f
+private const val PERCENT = 100

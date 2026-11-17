@@ -52,6 +52,11 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.kotlinx.coroutines.test)
         }
+        jvmTest.dependencies {
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.ui.test)
+            implementation(compose.desktop.currentOs)
+        }
         androidMain.dependencies {
             implementation(libs.androidx.webkit)
             implementation(libs.androidx.lifecycle.runtime.compose)
@@ -79,6 +84,14 @@ kover {
             excludes {
                 // Platform renderers are exercised on devices and simulators, not in host tests.
                 packages("com.jantursky.casement.compose.platform")
+                // The composable and its session are exercised by the device and simulator tests.
+                classes(
+                    "com.jantursky.casement.compose.McpAppView*",
+                    "com.jantursky.casement.compose.Load*",
+                    "com.jantursky.casement.compose.Session",
+                    "com.jantursky.casement.compose.WebViewSpec",
+                    "com.jantursky.casement.compose.RendererFailure",
+                )
             }
         }
         verify {

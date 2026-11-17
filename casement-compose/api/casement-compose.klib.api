@@ -16,3 +16,21 @@ final fun com.jantursky.casement.compose/com_jantursky_casement_compose_Load_Loa
 final fun com.jantursky.casement.compose/com_jantursky_casement_compose_Load_Ready$stableprop_getter(): kotlin/Int // com.jantursky.casement.compose/com_jantursky_casement_compose_Load_Ready$stableprop_getter|com_jantursky_casement_compose_Load_Ready$stableprop_getter(){}[0]
 final fun com.jantursky.casement.compose/defaultOpenLink(androidx.compose.runtime/Composer?, kotlin/Int): kotlin/Function1<kotlin/String, kotlin/Unit> // com.jantursky.casement.compose/defaultOpenLink|defaultOpenLink(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun com.jantursky.casement.compose/rememberHostContext(androidx.compose.runtime/Composer?, kotlin/Int): com.jantursky.casement.model/HostContext // com.jantursky.casement.compose/rememberHostContext|rememberHostContext(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+
+// Targets: [wasmJs]
+final class com.jantursky.casement.compose.platform/WebSandbox { // com.jantursky.casement.compose.platform/WebSandbox|null[0]
+    constructor <init>(kotlin/String) // com.jantursky.casement.compose.platform/WebSandbox.<init>|<init>(kotlin.String){}[0]
+
+    final val proxyUrl // com.jantursky.casement.compose.platform/WebSandbox.proxyUrl|{}proxyUrl[0]
+        final fun <get-proxyUrl>(): kotlin/String // com.jantursky.casement.compose.platform/WebSandbox.proxyUrl.<get-proxyUrl>|<get-proxyUrl>(){}[0]
+}
+
+// Targets: [wasmJs]
+final val com.jantursky.casement.compose.platform/LocalWebSandbox // com.jantursky.casement.compose.platform/LocalWebSandbox|{}LocalWebSandbox[0]
+    final fun <get-LocalWebSandbox>(): androidx.compose.runtime/ProvidableCompositionLocal<com.jantursky.casement.compose.platform/WebSandbox?> // com.jantursky.casement.compose.platform/LocalWebSandbox.<get-LocalWebSandbox>|<get-LocalWebSandbox>(){}[0]
+
+// Targets: [wasmJs]
+final val com.jantursky.casement.compose.platform/com_jantursky_casement_compose_platform_WebSandbox$stableprop // com.jantursky.casement.compose.platform/com_jantursky_casement_compose_platform_WebSandbox$stableprop|#static{}com_jantursky_casement_compose_platform_WebSandbox$stableprop[0]
+
+// Targets: [wasmJs]
+final fun com.jantursky.casement.compose.platform/com_jantursky_casement_compose_platform_WebSandbox$stableprop_getter(): kotlin/Int // com.jantursky.casement.compose.platform/com_jantursky_casement_compose_platform_WebSandbox$stableprop_getter|com_jantursky_casement_compose_platform_WebSandbox$stableprop_getter(){}[0]
