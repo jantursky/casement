@@ -58,13 +58,14 @@ jobs:
           node-version-file: .node-version
       - name: Build the web demo
         run: ./gradlew :samples:demo:shared:wasmJsBrowserDevelopmentExecutableDistribution
-      - name: Browser tests of the demo (Chromium and Firefox)
+      - name: Browser tests of the demo (Chromium)
         working-directory: samples/demo/web-e2e
         run: |
           npm ci
-          npx playwright install --with-deps chromium firefox
-          # Chrome, Edge and Brave are checked by hand on a Mac: the runner has only Playwright's own browsers.
-          npx playwright test --project=chromium --project=firefox
+          npx playwright install --with-deps chromium
+          # Chrome, Edge and Brave are checked by hand on a Mac. Firefox does not get past loading the Compose
+          # canvas on the headless runner, so it is not run here and is listed as not checked.
+          npx playwright test --project=chromium
       - name: Keep the Playwright traces of a failed run
         if: failure()
         uses: actions/upload-artifact@v7
