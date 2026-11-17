@@ -145,3 +145,7 @@ mavenPublishing {
 // The library ships no Compose resources, and the plugin's copy task for device tests has no output directory
 // with the Android KMP library plugin.
 tasks.matching { it.name == "copyAndroidDeviceTestComposeResourcesToAndroidAssets" }.configureEach { enabled = false }
+
+// The wasm test run covers pure functions only (no UI), so it doesn't need the Skiko runtime that this check
+// asks an executable binary for.
+tasks.named { it == "checkComposeUiTestConfigurationForWasmJs" }.configureEach { enabled = false }
