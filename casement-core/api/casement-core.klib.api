@@ -8,15 +8,20 @@
 // Library unique name: <casement:casement-core>
 final enum class com.jantursky.casement.bridge/BlockedKind : kotlin/Enum<com.jantursky.casement.bridge/BlockedKind> { // com.jantursky.casement.bridge/BlockedKind|null[0]
     enum entry Capability // com.jantursky.casement.bridge/BlockedKind.Capability|null[0]
+    enum entry Csp // com.jantursky.casement.bridge/BlockedKind.Csp|null[0]
     enum entry DisplayMode // com.jantursky.casement.bridge/BlockedKind.DisplayMode|null[0]
     enum entry Duplicate // com.jantursky.casement.bridge/BlockedKind.Duplicate|null[0]
     enum entry Link // com.jantursky.casement.bridge/BlockedKind.Link|null[0]
     enum entry Malformed // com.jantursky.casement.bridge/BlockedKind.Malformed|null[0]
+    enum entry Navigation // com.jantursky.casement.bridge/BlockedKind.Navigation|null[0]
+    enum entry Network // com.jantursky.casement.bridge/BlockedKind.Network|null[0]
     enum entry Oversize // com.jantursky.casement.bridge/BlockedKind.Oversize|null[0]
+    enum entry Permission // com.jantursky.casement.bridge/BlockedKind.Permission|null[0]
     enum entry Premature // com.jantursky.casement.bridge/BlockedKind.Premature|null[0]
     enum entry Rejected // com.jantursky.casement.bridge/BlockedKind.Rejected|null[0]
     enum entry ToolNotVisible // com.jantursky.casement.bridge/BlockedKind.ToolNotVisible|null[0]
     enum entry ToolUnknown // com.jantursky.casement.bridge/BlockedKind.ToolUnknown|null[0]
+    enum entry Window // com.jantursky.casement.bridge/BlockedKind.Window|null[0]
 
     final val entries // com.jantursky.casement.bridge/BlockedKind.entries|#static{}entries[0]
         final fun <get-entries>(): kotlin.enums/EnumEntries<com.jantursky.casement.bridge/BlockedKind> // com.jantursky.casement.bridge/BlockedKind.entries.<get-entries>|<get-entries>#static(){}[0]
@@ -125,6 +130,15 @@ abstract interface com.jantursky.casement.bridge/HostBridgeHandler { // com.jant
     open suspend fun onUpdateModelContext(kotlinx.serialization.json/JsonObject) // com.jantursky.casement.bridge/HostBridgeHandler.onUpdateModelContext|onUpdateModelContext(kotlinx.serialization.json.JsonObject){}[0]
 }
 
+abstract interface com.jantursky.casement.client/McpAppsHostClient { // com.jantursky.casement.client/McpAppsHostClient|null[0]
+    abstract val tools // com.jantursky.casement.client/McpAppsHostClient.tools|{}tools[0]
+        abstract fun <get-tools>(): com.jantursky.casement.bridge/ToolCatalog // com.jantursky.casement.client/McpAppsHostClient.tools.<get-tools>|<get-tools>(){}[0]
+
+    abstract suspend fun callTool(kotlin/String, kotlinx.serialization.json/JsonObject?): kotlinx.serialization.json/JsonObject // com.jantursky.casement.client/McpAppsHostClient.callTool|callTool(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+    abstract suspend fun readResource(kotlin/String): com.jantursky.casement.model/UiResource // com.jantursky.casement.client/McpAppsHostClient.readResource|readResource(kotlin.String){}[0]
+    open suspend fun forward(kotlin/String, kotlinx.serialization.json/JsonObject?): kotlinx.serialization.json/JsonObject // com.jantursky.casement.client/McpAppsHostClient.forward|forward(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+}
+
 sealed interface com.jantursky.casement.jsonrpc/JsonRpcMessage // com.jantursky.casement.jsonrpc/JsonRpcMessage|null[0]
 
 final class com.jantursky.casement.bridge/AppInfo { // com.jantursky.casement.bridge/AppInfo|null[0]
@@ -189,6 +203,7 @@ final class com.jantursky.casement.bridge/HostBridge { // com.jantursky.casement
         final fun <get-state>(): com.jantursky.casement.bridge/BridgeState // com.jantursky.casement.bridge/HostBridge.state.<get-state>|<get-state>(){}[0]
 
     final fun close() // com.jantursky.casement.bridge/HostBridge.close|close(){}[0]
+    final fun closeAfterTeardown(kotlin/String = ...) // com.jantursky.casement.bridge/HostBridge.closeAfterTeardown|closeAfterTeardown(kotlin.String){}[0]
     final fun receive(kotlin/String) // com.jantursky.casement.bridge/HostBridge.receive|receive(kotlin.String){}[0]
     final fun sendToolCancelled(kotlin/String? = ...) // com.jantursky.casement.bridge/HostBridge.sendToolCancelled|sendToolCancelled(kotlin.String?){}[0]
     final fun sendToolInput(kotlinx.serialization.json/JsonObject) // com.jantursky.casement.bridge/HostBridge.sendToolInput|sendToolInput(kotlinx.serialization.json.JsonObject){}[0]
@@ -554,6 +569,7 @@ final class com.jantursky.casement.model/UiPermissions { // com.jantursky.caseme
     final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.jantursky.casement.model/UiPermissions.hashCode|hashCode(){}[0]
     final fun intersect(com.jantursky.casement.model/UiPermissions): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.model/UiPermissions.intersect|intersect(com.jantursky.casement.model.UiPermissions){}[0]
+    final fun toPermissionsPolicy(): kotlin/String // com.jantursky.casement.model/UiPermissions.toPermissionsPolicy|toPermissionsPolicy(){}[0]
     final fun toString(): kotlin/String // com.jantursky.casement.model/UiPermissions.toString|toString(){}[0]
 
     final object Companion { // com.jantursky.casement.model/UiPermissions.Companion|null[0]
@@ -608,8 +624,10 @@ final class com.jantursky.casement.model/UiResourceMeta { // com.jantursky.casem
 }
 
 final class com.jantursky.casement.policy/CspResult { // com.jantursky.casement.policy/CspResult|null[0]
-    constructor <init>(kotlin/String, kotlin.collections/List<kotlin/String>) // com.jantursky.casement.policy/CspResult.<init>|<init>(kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
+    constructor <init>(kotlin/String, kotlin.collections/List<kotlin/String>, com.jantursky.casement.model/UiCsp) // com.jantursky.casement.policy/CspResult.<init>|<init>(kotlin.String;kotlin.collections.List<kotlin.String>;com.jantursky.casement.model.UiCsp){}[0]
 
+    final val accepted // com.jantursky.casement.policy/CspResult.accepted|{}accepted[0]
+        final fun <get-accepted>(): com.jantursky.casement.model/UiCsp // com.jantursky.casement.policy/CspResult.accepted.<get-accepted>|<get-accepted>(){}[0]
     final val header // com.jantursky.casement.policy/CspResult.header|{}header[0]
         final fun <get-header>(): kotlin/String // com.jantursky.casement.policy/CspResult.header.<get-header>|<get-header>(){}[0]
     final val rejected // com.jantursky.casement.policy/CspResult.rejected|{}rejected[0]
@@ -617,7 +635,8 @@ final class com.jantursky.casement.policy/CspResult { // com.jantursky.casement.
 
     final fun component1(): kotlin/String // com.jantursky.casement.policy/CspResult.component1|component1(){}[0]
     final fun component2(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.policy/CspResult.component2|component2(){}[0]
-    final fun copy(kotlin/String = ..., kotlin.collections/List<kotlin/String> = ...): com.jantursky.casement.policy/CspResult // com.jantursky.casement.policy/CspResult.copy|copy(kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
+    final fun component3(): com.jantursky.casement.model/UiCsp // com.jantursky.casement.policy/CspResult.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin.collections/List<kotlin/String> = ..., com.jantursky.casement.model/UiCsp = ...): com.jantursky.casement.policy/CspResult // com.jantursky.casement.policy/CspResult.copy|copy(kotlin.String;kotlin.collections.List<kotlin.String>;com.jantursky.casement.model.UiCsp){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.policy/CspResult.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // com.jantursky.casement.policy/CspResult.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // com.jantursky.casement.policy/CspResult.toString|toString(){}[0]
@@ -670,6 +689,10 @@ final object com.jantursky.casement.jsonrpc/JsonRpcErrorCode { // com.jantursky.
 final object com.jantursky.casement.policy/CspBuilder { // com.jantursky.casement.policy/CspBuilder|null[0]
     final fun build(com.jantursky.casement.model/UiCsp?): com.jantursky.casement.policy/CspResult // com.jantursky.casement.policy/CspBuilder.build|build(com.jantursky.casement.model.UiCsp?){}[0]
     final fun isAllowedOrigin(kotlin/String): kotlin/Boolean // com.jantursky.casement.policy/CspBuilder.isAllowedOrigin|isAllowedOrigin(kotlin.String){}[0]
+}
+
+final object com.jantursky.casement.policy/OriginMatcher { // com.jantursky.casement.policy/OriginMatcher|null[0]
+    final fun isAllowed(kotlin.collections/List<kotlin/String>, kotlin/String): kotlin/Boolean // com.jantursky.casement.policy/OriginMatcher.isAllowed|isAllowed(kotlin.collections.List<kotlin.String>;kotlin.String){}[0]
 }
 
 final const val com.jantursky.casement.model/EXTENSION_ID // com.jantursky.casement.model/EXTENSION_ID|{}EXTENSION_ID[0]

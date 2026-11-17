@@ -1,0 +1,9 @@
+public final class com/jantursky/casement/compose/HostThemeKt {
+	public static final fun rememberHostContext (Landroidx/compose/runtime/Composer;I)Lcom/jantursky/casement/model/HostContext;
+}
+
+public final class com/jantursky/casement/compose/McpAppViewKt {
+	public static final fun McpAppView (Lcom/jantursky/casement/model/ToolWithUi;Lkotlinx/serialization/json/JsonObject;Lkotlinx/serialization/json/JsonObject;Lcom/jantursky/casement/client/McpAppsHostClient;Landroidx/compose/ui/Modifier;ZLcom/jantursky/casement/model/HostContext;Lcom/jantursky/casement/policy/HostPolicy;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;III)V
+	public static final fun defaultOpenLink (Landroidx/compose/runtime/Composer;I)Lkotlin/jvm/functions/Function1;
+}
+
