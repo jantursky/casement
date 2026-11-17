@@ -5,16 +5,18 @@ sidebar:
   order: 6
 ---
 
-"Checked on" says where the automated tests ran. A blank means it was not run there. **No real device was used.**
+"Checked on" says where the automated tests ran. A blank means it was not run there.
 
 | Platform | Checked on | Tests |
 | --- | --- | --- |
 | Android | Emulator `tl_phone`, Android 16 (API 36), arm64 | 4 security tests with the hostile app, 4 conformance tests with real ext-apps apps, 4 view tests |
 | iOS | Simulator "Casement Tests", iOS 27.2, arm64 | 4 UI tests of the demo, including the hostile app |
-| Web (Wasm) | Headless Chromium through Playwright 1.57 | 4 end-to-end tests of the demo, including the hostile app |
+| Web (Wasm) | Playwright 1.57 with Chromium, Chrome 157, Edge 157 and Brave 151 on macOS | 4 end-to-end tests of the demo each, including the hostile app |
+| Web, Firefox | Firefox 159 on macOS | Clicked through by hand (all four demo scenarios and the blocked list). No automated run: Playwright's Firefox build does not start on this macOS, and in CI it never reached the app frame |
 | Desktop JVM | macOS arm64, JDK 25 | 1 security test in a real window, document loading tests |
-| Real devices | **not checked** | |
-| Safari, Firefox, Windows, Linux | **not checked** | |
+| Android, real device | Samsung SM-G991B, Android 15 (API 35), WebView 157 | 12 device tests (security, conformance with real ext-apps apps, view) and the demo by hand |
+| iOS, real device | iPhone 11, iOS 27.2 | 4 UI tests of the demo, including the hostile app |
+| Safari, Windows, Linux | **not checked** | |
 
 The core module's unit tests run on the JVM, the Android host test, the iOS simulator and Wasm.
 

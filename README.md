@@ -15,7 +15,7 @@ An MCP server can ship a small interactive UI next to a tool: a form, a chart, a
 
 It targets Android, iOS, the web (Wasm) and the desktop from one `McpAppView` composable, against spec `2026-01-26`.
 
-> **Status: not released yet.** Nothing is published to Maven Central. The API can still change. Several platform claims below are only checked on an emulator, a simulator or a headless browser, and are marked as such. No real device has been used.
+> **Status: 1.0.0, the first release.** It is on Maven Central. Real devices and browsers were tested as listed in the platform table; what was not checked is marked as such.
 
 ## Modules
 
@@ -27,11 +27,7 @@ It targets Android, iOS, the web (Wasm) and the desktop from one `McpAppView` co
 
 ## Install
 
-Not published yet. Until the first release, build from source and use `publishToMavenLocal`:
-
-```sh
-./gradlew publishToMavenLocal
-```
+From Maven Central:
 
 ```kotlin
 dependencies {
@@ -129,10 +125,11 @@ Android, iOS and the desktop run the app as the top-level page of a web view. Th
 | --- | --- | --- | --- | --- |
 | Android | `WebView`, `shouldInterceptRequest`, header CSP | Emulator `tl_phone`, Android 16 (API 36), arm64 | 4 device tests | 4 ext-apps apps |
 | iOS | `WKWebView`, URL scheme handler, content rules | Simulator "Casement Tests", iOS 27.2, arm64: 4 UI tests of the demo | Hostile app in the demo UI test | 1 (`get-time`) |
-| Web (Wasm) | Double-iframe sandbox page | Headless Chromium through Playwright 1.57: 4 end-to-end tests of the demo | Hostile app in an e2e test | 1 |
+| Web (Wasm) | Double-iframe sandbox page | Playwright 1.57, 4 end-to-end tests of the demo each: Chromium, Chrome 157, Edge 157, Brave 151 (macOS). Firefox 159: clicked through by hand, no automated run | Hostile app in an e2e test | 1 |
 | Desktop JVM | OpenJFX `WebView` | macOS arm64, JDK 25 | 1 test with a real window | |
-| Real devices | | **not checked** | | |
-| Safari, Firefox, Windows, Linux | | **not checked** | | |
+| Android, real device | same renderer | Samsung SM-G991B, Android 15 (API 35), WebView 157: 12 device tests, demo run by hand | Hostile app in the demo | 4 ext-apps apps |
+| iOS, real device | same renderer | iPhone 11, iOS 27.2: the 4 UI tests of the demo | Hostile app in the demo UI test | 1 (`get-time`) |
+| Safari, Windows, Linux | | **not checked** | | |
 
 The core module's unit tests run on the JVM, the Android host test, the iOS simulator and Wasm. CI runs the same suites on every pull request; see `.github/workflows/ci.yml`.
 
