@@ -35,8 +35,8 @@ Not published yet. Until the first release, build from source and use `publishTo
 
 ```kotlin
 dependencies {
-    implementation("io.github.jantursky:casement-compose:1.0.0-SNAPSHOT")
-    implementation("io.github.jantursky:casement-mcp-sdk:1.0.0-SNAPSHOT") // only with the MCP Kotlin SDK
+    implementation("io.github.jantursky:casement-compose:1.0.0")
+    implementation("io.github.jantursky:casement-mcp-sdk:1.0.0") // only with the MCP Kotlin SDK
 }
 ```
 

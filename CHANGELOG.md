@@ -4,6 +4,8 @@ All notable changes to `io.github.jantursky:casement-*` are listed here. The for
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-17
+
 ### Fixed
 
 - `toolInfo.tool` always carries `name` and `inputSchema`, so the app SDK no longer rejects `ui/initialize` for a tool whose definition lacks them (found on a real Android device).
