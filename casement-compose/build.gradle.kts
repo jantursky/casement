@@ -62,6 +62,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
         }
         getByName("androidDeviceTest").resources.srcDir(rootProject.file("fixtures/ext-apps"))
+        getByName("androidDeviceTest").resources.srcDir(rootProject.file("fixtures/hostile"))
         getByName("androidDeviceTest").dependencies {
             implementation(kotlin("test"))
             implementation(libs.androidx.test.runner)

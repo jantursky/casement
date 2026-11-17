@@ -152,8 +152,9 @@ private fun configure(settings: WebSettings) {
     settings.allowContentAccess = false
     settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
     settings.setGeolocationEnabled(false)
-    settings.javaScriptCanOpenWindowsAutomatically = false
-    settings.setSupportMultipleWindows(false)
+    settings.javaScriptCanOpenWindowsAutomatically = true
+    // Both on, so that window.open reaches onCreateWindow, which always refuses and reports it.
+    settings.setSupportMultipleWindows(true)
     settings.mediaPlaybackRequiresUserGesture = true
     settings.cacheMode = WebSettings.LOAD_NO_CACHE
     settings.setSupportZoom(false)
