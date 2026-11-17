@@ -7,9 +7,3 @@ public final class com/jantursky/casement/compose/McpAppViewKt {
 	public static final fun defaultOpenLink (Landroidx/compose/runtime/Composer;I)Lkotlin/jvm/functions/Function1;
 }
 
-public final class com/jantursky/casement/compose/platform/DesktopRendererKt {
-	public static final fun disposeDesktopRenderer (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun initializeDesktopRenderer (Ljava/io/File;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun initializeDesktopRenderer$default (Ljava/io/File;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-}
-

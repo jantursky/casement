@@ -1,45 +1,29 @@
 package com.jantursky.casement.compose.platform
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.SwingPanel
 import com.jantursky.casement.bridge.BlockedAction
 import com.jantursky.casement.bridge.BlockedKind
-import com.jantursky.casement.compose.RendererFailure
 import com.jantursky.casement.compose.WebViewSpec
-import com.jantursky.casement.compose.bridgeShim
-import com.jantursky.casement.policy.OriginMatcher
-import dev.datlag.kcef.KCEF
-import dev.datlag.kcef.KCEFBrowser
-import dev.datlag.kcef.KCEFClient
-import kotlinx.serialization.builtins.serializer
+import javafx.application.Platform
+import javafx.concurrent.Worker
+import javafx.embed.swing.JFXPanel
+import javafx.scene.Scene
+import javafx.scene.paint.Color
+import javafx.scene.web.WebEngine
+import javafx.scene.web.WebView
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import org.cef.browser.CefBrowser
-import org.cef.browser.CefFrame
-import org.cef.browser.CefMessageRouter
-import org.cef.browser.CefRendering
-import org.cef.callback.CefCallback
-import org.cef.callback.CefMediaAccessCallback
-import org.cef.callback.CefQueryCallback
-import org.cef.handler.CefLifeSpanHandlerAdapter
-import org.cef.handler.CefMessageRouterHandlerAdapter
-import org.cef.handler.CefPermissionHandler
-import org.cef.handler.CefRequestHandler
-import org.cef.handler.CefRequestHandlerAdapter
-import org.cef.handler.CefResourceHandler
-import org.cef.handler.CefResourceRequestHandler
-import org.cef.handler.CefResourceRequestHandlerAdapter
-import org.cef.misc.BoolRef
-import org.cef.misc.IntRef
-import org.cef.misc.StringRef
-import org.cef.network.CefRequest
-import org.cef.network.CefResponse
-import java.util.concurrent.atomic.AtomicInteger
 import javax.swing.SwingUtilities
 
 @Composable
@@ -47,285 +31,118 @@ internal actual fun PlatformAppWebView(
     spec: WebViewSpec,
     modifier: Modifier,
 ) {
-    val sandbox = remember(spec) { DesktopSandbox.create(spec) }
-    if (sandbox == null) {
-        LaunchedEffect(spec) { spec.onFailed(RendererFailure.Unsupported) }
+    var ready by remember { mutableStateOf(FxToolkit.isReady) }
+    LaunchedEffect(Unit) {
+        FxToolkit.await()
+        ready = true
+    }
+    if (!ready) {
+        Box(modifier)
         return
     }
+    val sandbox = remember(spec) { JavaFxSandbox(spec) }
     DisposableEffect(sandbox) { onDispose { sandbox.close() } }
-    SwingPanel(factory = { sandbox.browser.uiComponent }, modifier = modifier)
+    SwingPanel(factory = { sandbox.panel }, modifier = modifier)
 }
 
-private const val BRIDGE = "cefQuery"
-private const val OK = 200
-private const val NOT_FOUND = 404
-private val instances = AtomicInteger()
-
 /**
- * A Chromium (CEF) browser that can run untrusted HTML and talk to the host, and nothing else.
- *
- * The document is served by a resource handler from a made-up https origin, so it gets a real origin and a
- * `Content-Security-Policy` header the page cannot remove. CEF has no document-start script, so the bridge shim
- * is put in front of the document's own markup. Every request outside the declared origins is cancelled, and
- * navigation, popups, dialogs and permission prompts are refused.
+ * Starts the JavaFX toolkit. The first `JFXPanel` runs a nested event loop on the AWT thread while the toolkit comes
+ * up, which must not happen in the middle of a Compose frame, so it is done in an event of its own.
  */
-private class DesktopSandbox private constructor(
-    private val spec: WebViewSpec,
-    private val client: KCEFClient,
-) {
-    private val origin = "https://app-${instances.incrementAndGet()}.casement.invalid"
-    private val documentUrl = "$origin/app.html"
-    private var documentLoaded = false
-    private val router = CefMessageRouter.create()
+private object FxToolkit {
+    private val ready = CompletableDeferred<Unit>()
+    private var started = false
 
-    val browser: KCEFBrowser
+    val isReady: Boolean get() = ready.isCompleted
 
-    init {
-        router.addHandler(
-            object : CefMessageRouterHandlerAdapter() {
-                override fun onQuery(
-                    browser: CefBrowser,
-                    frame: CefFrame,
-                    queryId: Long,
-                    request: String,
-                    persistent: Boolean,
-                    callback: CefQueryCallback,
-                ): Boolean {
-                    if (frame.isMain && frame.url == documentUrl) onMessage(request)
-                    callback.success("")
-                    return true
-                }
-            },
-            true,
-        )
-        client.addMessageRouter(router)
-        client.addRequestHandler(RequestGate())
-        client.addLifeSpanHandler(
-            object : CefLifeSpanHandlerAdapter() {
-                override fun onBeforePopup(
-                    browser: CefBrowser,
-                    frame: CefFrame,
-                    targetUrl: String,
-                    targetFrameName: String,
-                ): Boolean {
-                    blocked(BlockedKind.Window, "Blocked window.open")
-                    return true
-                }
-            },
-        )
-        client.addPermissionHandler(
-            object : CefPermissionHandler {
-                override fun onRequestMediaAccessPermission(
-                    browser: CefBrowser,
-                    frame: CefFrame,
-                    requestingUrl: String,
-                    requestedPermissions: Int,
-                    callback: CefMediaAccessCallback,
-                ): Boolean {
-                    blocked(BlockedKind.Permission, "Denied camera or microphone")
-                    callback.Cancel()
-                    return true
-                }
-            },
-        )
-        client.addJSDialogHandler(
-            object : org.cef.handler.CefJSDialogHandlerAdapter() {
-                override fun onJSDialog(
-                    browser: CefBrowser,
-                    originUrl: String,
-                    dialogType: org.cef.handler.CefJSDialogHandler.JSDialogType,
-                    messageText: String,
-                    defaultPromptText: String,
-                    callback: org.cef.callback.CefJSDialogCallback,
-                    suppressMessage: BoolRef,
-                ): Boolean {
-                    suppressMessage.set(true)
-                    return false
-                }
-            },
-        )
-        browser = client.createBrowser(documentUrl, CefRendering.DEFAULT, true)
-        spec.channel.attach { text ->
-            val literal = Json.encodeToString(String.serializer(), text)
-            browser.mainFrame.executeJavaScript(
-                "window.__casementReceive && window.__casementReceive($literal)",
-                documentUrl,
-                0,
-            )
-        }
-    }
-
-    fun close() {
-        spec.channel.detach()
-        browser.dispose()
-        router.dispose()
-        client.dispose()
-    }
-
-    private fun onMessage(text: String) {
-        val control = controlOf(text)
-        SwingUtilities.invokeLater {
-            when (control) {
-                null -> spec.channel.fromApp(text)
-                "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, "The browser blocked a CSP violation"))
+    suspend fun await() {
+        if (!started) {
+            started = true
+            SwingUtilities.invokeLater {
+                JFXPanel()
+                ready.complete(Unit)
             }
         }
+        ready.await()
+    }
+}
+
+private const val MESSAGE_PREFIX = "casement:"
+
+/**
+ * An OpenJFX WebView that can run untrusted HTML and talk to the host, and nothing else.
+ *
+ * JavaFX's WebKit gives the host no request interception and no response headers, so the guarantees differ from the
+ * other platforms: the policy is a `<meta>` tag, and the app runs in an iframe with an opaque origin inside a wrapper
+ * page whose own policy refuses to let that frame navigate (see [wrapperDocument]). Permission prompts do not exist
+ * in this engine, so camera, microphone and location are never available. Requests outside the declared origins are
+ * stopped by the policy, not by the host, so they are reported as CSP violations.
+ */
+internal class JavaFxSandbox(
+    private val spec: WebViewSpec,
+) {
+    val panel = JFXPanel()
+    private var engine: WebEngine? = null
+
+    init {
+        Platform.setImplicitExit(false)
+        Platform.runLater {
+            val view = WebView()
+            view.isContextMenuEnabled = false
+            val web = view.engine
+            engine = web
+            web.isJavaScriptEnabled = true
+            web.onAlert = javafx.event.EventHandler { onAlert(it.data) }
+            web.confirmHandler = javafx.util.Callback { false }
+            web.promptHandler = javafx.util.Callback { null }
+            web.createPopupHandler =
+                javafx.util.Callback {
+                    blocked(BlockedKind.Window, "Blocked window.open")
+                    null
+                }
+            web.loadWorker.stateProperty().addListener { _, _, state ->
+                if (state == Worker.State.SUCCEEDED && !started) start(web)
+            }
+            panel.scene = Scene(view, Color.TRANSPARENT)
+            web.loadContent(wrapperDocument())
+        }
+    }
+
+    private var started = false
+
+    private fun start(web: WebEngine) {
+        started = true
+        web.executeScript("window.__start(${jsString(appDocument(spec.html, spec.csp))})")
+    }
+
+    private fun onAlert(data: String) {
+        if (!data.startsWith(MESSAGE_PREFIX)) return // A dialog the app asked for: ignored.
+        val text = data.removePrefix(MESSAGE_PREFIX)
+        when (controlOf(text)) {
+            null -> post { spec.channel.fromApp(text) }
+            "ready" -> post { spec.channel.attach { toApp(it) } }
+            "csp" -> blocked(BlockedKind.Csp, "The browser blocked a CSP violation")
+            "navigation" -> blocked(BlockedKind.Navigation, "The app tried to navigate away")
+        }
+    }
+
+    private fun toApp(text: String) {
+        Platform.runLater { engine?.executeScript("window.__toApp(${jsString(text)})") }
     }
 
     private fun blocked(
         kind: BlockedKind,
         detail: String,
-    ) = SwingUtilities.invokeLater { spec.onBlocked(BlockedAction(kind, detail)) }
+    ) = post { spec.onBlocked(BlockedAction(kind, detail)) }
 
-    /** The page as served: the shim first, so it runs before anything the app brings. */
-    private fun document(): ByteArray {
-        val shim =
-            bridgeShim(
-                send = "function (s) { window.$BRIDGE({ request: s }); }",
-                receive = "window.__casementReceive = deliver;",
-            )
-        return injectScript(spec.html, shim).toByteArray(Charsets.UTF_8)
-    }
+    private fun post(action: () -> Unit) = SwingUtilities.invokeLater(action)
 
-    private inner class RequestGate : CefRequestHandlerAdapter() {
-        override fun onBeforeBrowse(
-            browser: CefBrowser,
-            frame: CefFrame,
-            request: CefRequest,
-            userGesture: Boolean,
-            isRedirect: Boolean,
-        ): Boolean {
-            if (!documentLoaded && request.url == documentUrl) {
-                documentLoaded = true
-                return false
-            }
-            blocked(BlockedKind.Navigation, "Blocked navigation to ${request.url.substringBefore(':')}")
-            return true
+    fun close() {
+        spec.channel.detach()
+        Platform.runLater {
+            engine?.load(null)
+            engine = null
         }
-
-        override fun getResourceRequestHandler(
-            browser: CefBrowser,
-            frame: CefFrame,
-            request: CefRequest,
-            isNavigation: Boolean,
-            isDownload: Boolean,
-            requestInitiator: String,
-            disableDefaultHandling: BoolRef,
-        ): CefResourceRequestHandler = ResourceGate()
-
-        override fun onRenderProcessTerminated(
-            browser: CefBrowser,
-            status: CefRequestHandler.TerminationStatus,
-        ) {
-            SwingUtilities.invokeLater { spec.onFailed(RendererFailure.ProcessGone) }
-        }
-    }
-
-    private inner class ResourceGate : CefResourceRequestHandlerAdapter() {
-        override fun onBeforeResourceLoad(
-            browser: CefBrowser,
-            frame: CefFrame,
-            request: CefRequest,
-        ): Boolean {
-            val url = request.url
-            val allowed =
-                url == documentUrl ||
-                    url.startsWith("data:") ||
-                    url.startsWith("blob:") ||
-                    OriginMatcher.isAllowed(spec.allowedOrigins, url)
-            if (!allowed && !url.startsWith("$origin/")) {
-                blocked(BlockedKind.Network, "Blocked request to ${url.substringAfter("://").substringBefore('/')}")
-            }
-            return !allowed && !url.startsWith("$origin/")
-        }
-
-        override fun getResourceHandler(
-            browser: CefBrowser,
-            frame: CefFrame,
-            request: CefRequest,
-        ): CefResourceHandler? =
-            when {
-                request.url == documentUrl && request.method == "GET" -> StaticResponse(OK, document(), headers())
-                request.url.startsWith("$origin/") -> StaticResponse(NOT_FOUND, ByteArray(0), emptyMap())
-                else -> null
-            }
-    }
-
-    private fun headers(): Map<String, String> =
-        mapOf(
-            "Content-Type" to "text/html; charset=utf-8",
-            "Content-Security-Policy" to spec.csp,
-            "Permissions-Policy" to spec.permissions.toPermissionsPolicy(),
-            "X-Content-Type-Options" to "nosniff",
-            "Referrer-Policy" to "no-referrer",
-            "Cache-Control" to "no-store",
-        )
-
-    companion object {
-        /** A sandbox, or null while the browser engine is not initialized (see `initializeDesktopRenderer`). */
-        fun create(spec: WebViewSpec): DesktopSandbox? {
-            val client = KCEF.newClientOrNullBlocking() ?: return null
-            return DesktopSandbox(spec, client)
-        }
-    }
-}
-
-private class StaticResponse(
-    private val status: Int,
-    private val body: ByteArray,
-    private val headers: Map<String, String>,
-) : CefResourceHandler {
-    private var offset = 0
-
-    override fun processRequest(
-        request: CefRequest,
-        callback: CefCallback,
-    ): Boolean {
-        callback.Continue()
-        return true
-    }
-
-    override fun getResponseHeaders(
-        response: CefResponse,
-        responseLength: IntRef,
-        redirectUrl: StringRef,
-    ) {
-        response.status = status
-        response.mimeType = "text/html"
-        headers.forEach { (name, value) -> response.setHeaderByName(name, value, true) }
-        responseLength.set(body.size)
-    }
-
-    override fun readResponse(
-        dataOut: ByteArray,
-        bytesToRead: Int,
-        bytesRead: IntRef,
-        callback: CefCallback,
-    ): Boolean {
-        val count = minOf(bytesToRead, body.size - offset)
-        if (count <= 0) return false
-        System.arraycopy(body, offset, dataOut, 0, count)
-        offset += count
-        bytesRead.set(count)
-        return true
-    }
-
-    override fun cancel() = Unit
-}
-
-/** Puts [script] at the start of [html]: after the doctype if there is one, so quirks mode is not triggered. */
-internal fun injectScript(
-    html: String,
-    script: String,
-): String {
-    val tag = "<script>$script</script>"
-    val doctype = Regex("^\\s*(<!--[\\s\\S]*?-->\\s*)*<!doctype[^>]*>", RegexOption.IGNORE_CASE).find(html)
-    return if (doctype !=
-        null
-    ) {
-        html.substring(0, doctype.range.last + 1) + tag + html.substring(doctype.range.last + 1)
-    } else {
-        tag + html
     }
 }
 

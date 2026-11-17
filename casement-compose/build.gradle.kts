@@ -14,6 +14,41 @@ plugins {
     alias(libs.plugins.binary.compatibility.validator)
 }
 
+val openJfxModules = listOf("base", "graphics", "controls", "media", "web", "swing")
+
+/** The compile classpath needs the platform jars of the machine that builds; consumers bring their own. */
+val compileClassifier: String =
+    System.getProperty("os.name").lowercase().let { os ->
+        val arm = System.getProperty("os.arch").let { it == "aarch64" || it == "arm64" }
+        when {
+            "mac" in os -> if (arm) "mac-aarch64" else "mac"
+            "win" in os -> "win"
+            else -> if (arm) "linux-aarch64" else "linux"
+        }
+    }
+
+// OpenJFX ships its classes in per-OS jars, picked here by the machine that runs the code. A dedicated
+// non-transitive configuration keeps Gradle from falling back to the empty platform-less jars.
+val javafxPlatform: Configuration =
+    configurations.create("javafxPlatform") {
+        isTransitive = false
+        isCanBeConsumed = false
+        isCanBeResolved = true
+    }
+run {
+    val os = System.getProperty("os.name").lowercase()
+    val arm = System.getProperty("os.arch").let { it == "aarch64" || it == "arm64" }
+    val classifier =
+        when {
+            "mac" in os -> if (arm) "mac-aarch64" else "mac"
+            "win" in os -> "win"
+            else -> if (arm) "linux-aarch64" else "linux"
+        }
+    listOf("base", "graphics", "controls", "media", "web", "swing").forEach {
+        dependencies.add("javafxPlatform", "org.openjfx:javafx-$it:${libs.versions.openjfx.get()}:$classifier")
+    }
+}
+
 kotlin {
     explicitApi()
 
@@ -52,10 +87,17 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.kotlinx.coroutines.test)
         }
+        // The desktop renderer needs OpenJFX at run time. It is not forced on consumers: they add javafx-web and
+        // javafx-swing for their own OS (the org.openjfx.javafxplugin does this). Here it is compile-only.
         jvmMain.dependencies {
-            implementation(libs.kcef)
+            openJfxModules.forEach {
+                compileOnly(
+                    "org.openjfx:javafx-$it:${libs.versions.openjfx.get()}:$compileClassifier",
+                )
+            }
         }
         jvmTest.dependencies {
+            implementation(files(javafxPlatform))
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui.test)
             implementation(compose.desktop.currentOs)

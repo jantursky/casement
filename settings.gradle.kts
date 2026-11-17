@@ -23,11 +23,6 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        // The desktop renderer's browser engine (KCEF) depends on JogAmp artifacts that Maven Central does not carry.
-        maven("https://jogamp.org/deployment/maven") {
-            name = "JogAmp"
-            content { includeGroupByRegex("org\\.jogamp.*") }
-        }
         // Toolchains the Kotlin/Wasm plugin downloads. Project repositories are disallowed, so they live here.
         ivy("https://nodejs.org/dist") {
             name = "Node.js"

@@ -13,7 +13,7 @@ androidx-test-junit = "1.3.0"
 compose-ui-test-android = "1.12.1"
 ktor = "3.6.1"
 mcp-sdk = "0.16.0"
-kcef = "2025.03.23"
+openjfx = "21.0.5"
 junit = "4.13.2"
 robolectric = "4.17"
 kover = "0.9.11"
@@ -48,7 +48,8 @@ mcp-sdk-client = { module = "io.modelcontextprotocol:kotlin-sdk-client", version
 mcp-sdk-server = { module = "io.modelcontextprotocol:kotlin-sdk-server", version.ref = "mcp-sdk" }
 mcp-sdk-testing = { module = "io.modelcontextprotocol:kotlin-sdk-testing", version.ref = "mcp-sdk" }
 mcp-sdk-core = { module = "io.modelcontextprotocol:kotlin-sdk-core", version.ref = "mcp-sdk" }
-kcef = { module = "dev.datlag:kcef", version.ref = "kcef" }
+openjfx-web = { module = "org.openjfx:javafx-web", version.ref = "openjfx" }
+openjfx-swing = { module = "org.openjfx:javafx-swing", version.ref = "openjfx" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 junit = { module = "junit:junit", version.ref = "junit" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
