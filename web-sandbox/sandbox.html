@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="origin">
+<!-- The app's frame is created empty (about:blank) and filled in by script. Any later navigation of it is refused. -->
+<meta http-equiv="Content-Security-Policy" content="frame-src about:">
 <title>Casement sandbox</title>
 <style>
   html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; }
@@ -54,12 +56,31 @@
     doc.addEventListener('securitypolicyviolation', function (e) {
       port.postMessage(JSON.stringify({ casement: 'csp', directive: e.violatedDirective, blocked: e.blockedURI }));
     });
+    // CSP violations on the app's frame itself (such as a blocked navigation) are reported on this page.
+    document.addEventListener('securitypolicyviolation', function (e) {
+      port.postMessage(JSON.stringify({ casement: 'csp', directive: e.violatedDirective, blocked: e.blockedURI }));
+    });
     doc.open();
     doc.write(withPolicy(init.html, init.csp || ''));
     doc.close();
 
+    // Defence in depth: if the frame ever ends up on another document, cut it off and tell the host.
+    // A frame filled by document.write keeps the URL it started with, so that is what it is compared to.
+    var home = inner.contentWindow.location.href;
+    inner.addEventListener('load', function () {
+      var moved = false;
+      try { moved = inner.contentWindow.location.href !== home; } catch (err) { moved = true; }
+      if (moved) {
+        port.postMessage(JSON.stringify({ casement: 'navigation' }));
+        port.onmessage = null;
+        inner.remove();
+        inner = null;
+      }
+    });
+
     port.onmessage = function (e) {
       try {
+        if (!inner) return;
         inner.contentWindow.postMessage(JSON.parse(e.data), window.location.origin);
       } catch (err) { /* not JSON, ignore */ }
     };
@@ -74,7 +95,7 @@
       return;
     }
     // Only the app's own frame may talk to the host, and only in JSON-RPC.
-    if (inner && port && event.source === inner.contentWindow) {
+    if (inner && port && event.source === inner.contentWindow && event.origin === window.location.origin) {
       var d = event.data;
       if (d && typeof d === 'object' && d.jsonrpc === '2.0') port.postMessage(JSON.stringify(d));
     }

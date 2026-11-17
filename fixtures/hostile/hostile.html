@@ -58,7 +58,8 @@
   }).then(function () {
     probe.done = true;
     document.getElementById('status').textContent = 'done';
-    location.href = 'https://evil.example/navigate';
+    // Last, and a moment later, so a test can read the results before the sandbox reacts.
+    setTimeout(function () { location.href = 'https://evil.example/navigate'; }, 1500);
   });
 </script>
 </body>

@@ -140,6 +140,7 @@ private fun createSandboxFrame(
         when (controlOf(text)) {
             null -> spec.channel.fromApp(text)
             "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, "The browser blocked a CSP violation"))
+            "navigation" -> spec.onBlocked(BlockedAction(BlockedKind.Navigation, "The app tried to navigate away"))
         }
     }
     spec.channel.attach { portPost(hostPort, it) }
