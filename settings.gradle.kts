@@ -48,3 +48,4 @@ dependencyResolutionManagement {
 rootProject.name = "casement"
 
 include(":casement-core", ":casement-compose", ":casement-mcp-sdk")
+include(":samples:demo:shared", ":samples:demo:androidApp")

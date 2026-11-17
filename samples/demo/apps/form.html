@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Contact form</title><style>:root { color-scheme: light dark; }
+body { margin: 0; padding: 12px; font-family: var(--font-sans, system-ui, sans-serif); font-size: 14px;
+  background: var(--color-background-primary, transparent); color: var(--color-text-primary, #1c1b1f); }
+h1 { font-size: 15px; margin: 0 0 10px; font-weight: 600; }
+label { display: block; font-size: 12px; margin: 8px 0 3px; color: var(--color-text-secondary, #5f5b66); }
+input, textarea { width: 100%; box-sizing: border-box; padding: 8px 10px; font: inherit; color: inherit;
+  background: var(--color-background-secondary, transparent); border: 1px solid var(--color-border-primary, #c9c5cf);
+  border-radius: var(--border-radius-md, 8px); }
+button { margin: 10px 8px 0 0; padding: 8px 14px; font: inherit; cursor: pointer;
+  border: 1px solid var(--color-border-primary, #c9c5cf); border-radius: var(--border-radius-md, 8px);
+  background: var(--color-background-secondary, transparent); color: inherit; }
+button.primary { background: var(--color-text-primary, #1c1b1f); color: var(--color-background-primary, #fff); }
+#out { margin-top: 10px; font-size: 12px; color: var(--color-text-secondary, #5f5b66); white-space: pre-wrap; }
+</style></head>
+<body>
+<h1>Contact form</h1>
+<label for="name">Name</label><input id="name" value="Ada Lovelace">
+<label for="email">Email</label><input id="email" value="ada@example.com">
+<label for="note">Note</label><textarea id="note" rows="3">Please call me back.</textarea>
+<button class="primary" id="submit">Submit</button><button id="tell">Tell the assistant</button>
+<div id="out"></div>
+<script>
+var nextId = 1, waiting = {}, listeners = {};
+window.addEventListener('message', function (e) {
+  var m = e.data;
+  if (!m || m.jsonrpc !== '2.0') return;
+  if (m.method && listeners[m.method]) listeners[m.method](m.params || {});
+  else if (m.id !== undefined && waiting[m.id]) { waiting[m.id](m); delete waiting[m.id]; }
+});
+function rpc(method, params) {
+  return new Promise(function (resolve) {
+    var id = nextId++;
+    waiting[id] = resolve;
+    window.parent.postMessage({ jsonrpc: '2.0', id: id, method: method, params: params }, '*');
+  });
+}
+function notify(method, params) {
+  window.parent.postMessage({ jsonrpc: '2.0', method: method, params: params }, '*');
+}
+function applyContext(ctx) {
+  if (!ctx) return;
+  if (ctx.theme) document.documentElement.setAttribute('data-theme', ctx.theme);
+  var vars = ctx.styles && ctx.styles.variables;
+  if (vars) Object.keys(vars).forEach(function (k) { document.documentElement.style.setProperty(k, vars[k]); });
+}
+function reportSize() {
+  notify('ui/notifications/size-changed', { height: Math.ceil(document.documentElement.getBoundingClientRect().height) });
+}
+function start(onReady) {
+  listeners['ui/notifications/host-context-changed'] = applyContext;
+  rpc('ui/initialize', { protocolVersion: '2026-01-26', appInfo: { name: document.title, version: '1.0.0' }, appCapabilities: {} })
+    .then(function (m) {
+      applyContext(m.result && m.result.hostContext);
+      notify('ui/notifications/initialized');
+      onReady();
+      reportSize();
+    });
+}
+
+start(function () {
+  document.getElementById('submit').onclick = function () {
+    rpc('tools/call', { name: 'submit-form', arguments: {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      note: document.getElementById('note').value } }).then(function (m) {
+      var t = m.result && m.result.structuredContent;
+      document.getElementById('out').textContent = m.error ? 'Error: ' + m.error.message : 'Saved as ' + t.ticket;
+      reportSize();
+    });
+  };
+  document.getElementById('tell').onclick = function () {
+    rpc('ui/message', { role: 'user', content: [{ type: 'text', text: 'I filled in the contact form.' }] });
+  };
+});
+</script></body></html>
