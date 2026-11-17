@@ -8,6 +8,8 @@ public final class com/jantursky/casement/mcp/SdkMcpAppsHostClient : com/janturs
 }
 
 public final class com/jantursky/casement/mcp/SdkMcpAppsHostClientKt {
+	public static final fun connectMcpAppsHost (Lio/ktor/client/HttpClient;Ljava/lang/String;Lio/modelcontextprotocol/kotlin/sdk/types/Implementation;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun connectMcpAppsHost$default (Lio/ktor/client/HttpClient;Ljava/lang/String;Lio/modelcontextprotocol/kotlin/sdk/types/Implementation;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun mcpAppsClientCapabilities (Lio/modelcontextprotocol/kotlin/sdk/types/ClientCapabilities;)Lio/modelcontextprotocol/kotlin/sdk/types/ClientCapabilities;
 	public static synthetic fun mcpAppsClientCapabilities$default (Lio/modelcontextprotocol/kotlin/sdk/types/ClientCapabilities;ILjava/lang/Object;)Lio/modelcontextprotocol/kotlin/sdk/types/ClientCapabilities;
 }

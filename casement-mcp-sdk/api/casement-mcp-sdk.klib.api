@@ -18,3 +18,4 @@ final class com.jantursky.casement.mcp/SdkMcpAppsHostClient : com.jantursky.case
 }
 
 final fun com.jantursky.casement.mcp/mcpAppsClientCapabilities(io.modelcontextprotocol.kotlin.sdk.types/ClientCapabilities = ...): io.modelcontextprotocol.kotlin.sdk.types/ClientCapabilities // com.jantursky.casement.mcp/mcpAppsClientCapabilities|mcpAppsClientCapabilities(io.modelcontextprotocol.kotlin.sdk.types.ClientCapabilities){}[0]
+final suspend fun com.jantursky.casement.mcp/connectMcpAppsHost(io.ktor.client/HttpClient, kotlin/String, io.modelcontextprotocol.kotlin.sdk.types/Implementation = ...): com.jantursky.casement.mcp/SdkMcpAppsHostClient // com.jantursky.casement.mcp/connectMcpAppsHost|connectMcpAppsHost(io.ktor.client.HttpClient;kotlin.String;io.modelcontextprotocol.kotlin.sdk.types.Implementation){}[0]
