@@ -1,0 +1,20 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <casement:casement-mcp-sdk>
+final class com.jantursky.casement.mcp/SdkMcpAppsHostClient : com.jantursky.casement.client/McpAppsHostClient { // com.jantursky.casement.mcp/SdkMcpAppsHostClient|null[0]
+    constructor <init>(io.modelcontextprotocol.kotlin.sdk.client/Client) // com.jantursky.casement.mcp/SdkMcpAppsHostClient.<init>|<init>(io.modelcontextprotocol.kotlin.sdk.client.Client){}[0]
+
+    final val tools // com.jantursky.casement.mcp/SdkMcpAppsHostClient.tools|{}tools[0]
+        final fun <get-tools>(): com.jantursky.casement.bridge/ToolCatalog // com.jantursky.casement.mcp/SdkMcpAppsHostClient.tools.<get-tools>|<get-tools>(){}[0]
+
+    final suspend fun callTool(kotlin/String, kotlinx.serialization.json/JsonObject?): kotlinx.serialization.json/JsonObject // com.jantursky.casement.mcp/SdkMcpAppsHostClient.callTool|callTool(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+    final suspend fun readResource(kotlin/String): com.jantursky.casement.model/UiResource // com.jantursky.casement.mcp/SdkMcpAppsHostClient.readResource|readResource(kotlin.String){}[0]
+    final suspend fun refreshTools(): kotlin.collections/List<com.jantursky.casement.model/ToolWithUi> // com.jantursky.casement.mcp/SdkMcpAppsHostClient.refreshTools|refreshTools(){}[0]
+}
+
+final fun com.jantursky.casement.mcp/mcpAppsClientCapabilities(io.modelcontextprotocol.kotlin.sdk.types/ClientCapabilities = ...): io.modelcontextprotocol.kotlin.sdk.types/ClientCapabilities // com.jantursky.casement.mcp/mcpAppsClientCapabilities|mcpAppsClientCapabilities(io.modelcontextprotocol.kotlin.sdk.types.ClientCapabilities){}[0]

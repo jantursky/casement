@@ -47,4 +47,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "casement"
 
-include(":casement-core", ":casement-compose")
+include(":casement-core", ":casement-compose", ":casement-mcp-sdk")
