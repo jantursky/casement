@@ -1,0 +1,55 @@
+name: Bug report
+description: An app renders wrong, the bridge answers wrongly, something throws, or the sandbox lets something through.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. If the sandbox let an app do something the policy denies, please report it privately instead, using the security link in the issue chooser.
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: [Android, iOS, Desktop (JVM), Web (wasmJs)]
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device, emulator or browser
+      placeholder: Pixel 9 emulator, Android 16
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Casement version
+    validations:
+      required: true
+  - type: input
+    id: toolchain
+    attributes:
+      label: Kotlin and Compose Multiplatform versions
+      placeholder: Kotlin 2.4.21, Compose Multiplatform 1.12.2
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: The app document or the MCP server that shows it, and the smallest composable that hosts it.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the error, and the `BlockedAction` values you received.
+    validations:
+      required: true

@@ -7,4 +7,4 @@ at version 2.1.0 (commit `ea3e9d0e`). Tests run them through the bridge to check
 | --- | --- | --- |
 | `get-time.html` | `examples/basic-server-vanillajs` | Handshake, tool result, app-initiated tool call, `ui/message`, logging, `ui/open-link`, theming |
 
-Rebuild with `scripts/build-fixtures.sh`. The examples are licensed under Apache-2.0 and MIT by the ext-apps project.
+The apps are rebuilt by `scripts/build-fixtures.sh` (CI runs it too), not stored in the repository. The recorded `.json` answers are. The examples are licensed under Apache-2.0 and MIT by the ext-apps project.

@@ -28,6 +28,6 @@ test-results/
 playwright-report/
 hs_err_pid*.log
 
-# Built on demand by scripts/build-fixtures.sh (get-time.html is kept in the repository)
+# Built on demand by scripts/build-fixtures.sh (the recorded .json answers are kept)
 fixtures/ext-apps/*.html
-!fixtures/ext-apps/get-time.html
+

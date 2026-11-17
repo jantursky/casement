@@ -1,0 +1,138 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    # macOS, so the klib API dump and the iOS simulator tests are covered; Linux cannot build the iOS targets.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      # Spotless reads the build folders, so it runs alone.
+      - name: Format
+        run: ./gradlew spotlessCheck
+      - name: Real example apps for the conformance tests
+        run: scripts/build-fixtures.sh
+      - name: Tests, API compatibility and the coverage gate
+        run: ./gradlew check apiCheck koverXmlReport koverVerify -x spotlessKotlin -x spotlessKotlinCheck -x spotlessKotlinGradle -x spotlessKotlinGradleCheck
+      - name: Upload coverage to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@v7
+        with:
+          files: casement-core/build/reports/kover/report.xml,casement-compose/build/reports/kover/report.xml,casement-mcp-sdk/build/reports/kover/report.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - name: Build the web demo
+        run: ./gradlew :samples:demo:shared:wasmJsBrowserDevelopmentExecutableDistribution
+      - name: Browser tests of the demo (Chromium)
+        working-directory: samples/demo/web-e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npx playwright test
+      - name: Keep the Playwright traces of a failed run
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-traces
+          path: samples/demo/web-e2e/test-results/
+
+  android:
+    # Device tests on an emulator: the Android renderer, the security tests and the real-app conformance tests.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - run: scripts/build-fixtures.sh
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          script: ./gradlew :casement-compose:connectedAndroidDeviceTest
+
+  ios-demo:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - run: scripts/build-fixtures.sh
+      - name: Build the iOS demo for the simulator
+        run: |
+          brew install xcodegen
+          (cd samples/demo/iosApp && xcodegen generate)
+          xcodebuild build -project samples/demo/iosApp/DemoApp.xcodeproj -scheme DemoApp -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO
+
+  pack:
+    # macOS, so the iOS klibs of every module exist for the Maven Local publication.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v6
+      - run: ./gradlew publishToMavenLocal
