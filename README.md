@@ -104,7 +104,7 @@ Android, iOS and the desktop run the app as the top-level page of a web view. Th
 
 ## Not covered yet
 
-- **`window.open` is not reported** on iOS and the desktop. The page is blocked from opening a window, but no `BlockedAction` is raised.
+- **`window.open` is only reported on Android.** Every platform blocks the page from opening a window. Android raises a `BlockedAction` and a test asserts it. On iOS and the desktop the code has a handler, but it did not fire in my runs, and the web renderer has none.
 - **Camera and microphone on iOS** are probably not exposed to a page on a custom scheme. That is unconfirmed.
 - **The desktop renderer has weaker guarantees**: a meta CSP only (no header CSP), no veto of single requests, and no permission control in the engine.
 - **iOS runs the shim in the page world**, not an isolated world. A hostile page could see it.

@@ -1,0 +1,33 @@
+---
+title: How it works
+description: The bridge, the renderers and the order things happen in.
+sidebar:
+  order: 3
+---
+
+## The flow
+
+1. `McpAppView` reads the tool's `ui://` resource through your client.
+2. It builds a Content Security Policy from the `_meta.ui` the resource declared, cut down by your `HostPolicy`.
+3. The renderer loads the document in a web view the host controls. A small shim replaces `window.postMessage` so the standard app SDK talks to the host without an iframe parent.
+4. `HostBridge` answers the app: `ui/initialize`, then tool input and result notifications, `tools/call`, `ui/message`, `ui/open-link`, display mode and size changes, and `ui/resource-teardown`.
+5. Anything the bridge or the renderer refuses becomes a `BlockedAction` for your `onBlocked`.
+
+## The modules
+
+`casement-core` has no UI. It holds the bridge state machine, the JSON-RPC framing, `ToolCatalog`, `HostPolicy` and the CSP builder. `casement-compose` adds `McpAppView` and the renderers. `casement-mcp-sdk` connects the official MCP Kotlin SDK.
+
+## The renderers
+
+Android, iOS and the desktop run the app as the top-level page of a web view. The web uses a double-iframe sandbox on another origin.
+
+| Platform | Page loaded from | CSP delivered as | Requests vetoed by |
+| --- | --- | --- | --- |
+| Android | `https://app-N.casement.invalid`, answered in `shouldInterceptRequest` | Response header | The CSP, plus the intercept |
+| iOS | `casement-app://app/app.html` through a scheme handler | Response header from the scheme handler | WebKit content rules |
+| Web | An iframe inside a sandbox page on another origin | A meta tag and the `csp` attribute | The CSP |
+| Desktop | `srcdoc` in a sandboxed iframe of an OpenJFX page | A meta tag only | Nothing beyond the CSP |
+
+## What the bridge does with a bad request
+
+A malformed message, an oversize message, a request before the handshake, a second `ui/initialize`, an unknown method or a capability that was not advertised is answered with a JSON-RPC error and reported. The app keeps running unless the sandbox itself was breached.

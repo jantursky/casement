@@ -1,0 +1,36 @@
+---
+title: Using Casement with A2UI
+description: How MCP Apps hosting and A2UI rendering fit in one app.
+sidebar:
+  order: 7
+---
+
+[A2UI](https://a2ui.org) and MCP Apps solve different problems.
+
+- **A2UI** is a protocol where an agent describes an interface declaratively as JSON. The client draws it with its own native components from a catalog both sides agreed on. There is no arbitrary code to run.
+- **MCP Apps** ships a small web app with a tool. The host runs it in a sandbox.
+
+Casement implements the second. It does not render A2UI.
+
+## Putting both in one chat
+
+A Compose chat can use an A2UI renderer for the agent's declarative surfaces and Casement for tools that come with a `ui://` app. They share nothing but the screen:
+
+```kotlin
+when (val part = message.part) {
+    is A2uiSurface -> A2uiRenderer(part)          // the A2UI renderer of your choice
+    is ToolUi -> McpAppView(                       // Casement
+        tool = part.tool,
+        toolInput = part.input,
+        toolResult = part.result,
+        client = part.client,
+    )
+    is Text -> Text(part.text)
+}
+```
+
+## Choosing between them
+
+Use A2UI for interfaces the agent composes from known components, where native look and feel and safety by construction matter. Use an MCP App when the tool ships a rich, self-contained UI such as a chart or a form, and you accept running its web code in a sandbox.
+
+The A2UI documentation says an A2UI surface can itself run inside an MCP App in hosts that support it. Casement could host such an app like any other. I have not tried that combination.

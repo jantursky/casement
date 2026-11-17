@@ -1,0 +1,39 @@
+/* Casement docs: the logo's indigo on a neutral page. No shadows. */
+:root {
+  --blume-background: #ffffff;
+  --blume-foreground: #17142b;
+  --blume-muted: #f4f3fa;
+  --blume-muted-foreground: #625e7c;
+  --blume-border: #dcd9ea;
+  --blume-accent: #5b4be8;
+  --blume-accent-foreground: #ffffff;
+  --blume-action: #5b4be8;
+  --blume-action-foreground: #ffffff;
+  --blume-code-background: #f4f3fa;
+  --blume-radius: 14px;
+}
+
+:root[data-theme='dark'] {
+  --blume-background: #0b0b10;
+  --blume-foreground: #ece9ff;
+  --blume-muted: #15131f;
+  --blume-muted-foreground: #9a96b8;
+  --blume-border: #2c2946;
+  --blume-accent: #8a7bff;
+  --blume-accent-foreground: #0b0b10;
+  --blume-action: #8a7bff;
+  --blume-action-foreground: #0b0b10;
+  --blume-code-background: #121019;
+}
+
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+}
+
+table,
+td,
+th {
+  font-variant-numeric: tabular-nums;
+}

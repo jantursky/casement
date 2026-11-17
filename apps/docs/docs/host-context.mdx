@@ -1,0 +1,29 @@
+---
+title: Host context and theming
+description: Theme, style variables, locale and display modes.
+sidebar:
+  order: 5
+---
+
+`McpAppView` sends the app a `hostContext`. By default it comes from `rememberHostContext()`, which reads the current Material 3 theme, so the app switches when your theme does.
+
+```kotlin
+McpAppView(
+    // ...
+    hostContext = rememberHostContext().copy(locale = "sk-SK"),
+)
+```
+
+## Fields
+
+`HostContext` covers `theme` (light or dark), `styleVariables` (CSS variables the app can use), `fontCss`, `displayMode` and `availableDisplayModes`, `containerDimensions`, `locale`, `timeZone`, `userAgent`, `platform`, `touch`, `hover`, `safeAreaInsets`, `toolInfo` and `extras`.
+
+`toolInfo` is filled from the tool you pass. Three of the fields are Casement conventions and not part of the spec: see the `HostContext` source comment.
+
+## Live updates
+
+When the host context changes, the view sends `ui/notifications/host-context-changed`. The theme switch in the demo uses this, and the end-to-end tests assert it.
+
+## Display modes
+
+The default is `inline` only. An app that asks for another mode gets a refusal, reported as `DisplayMode`, unless you offer it in `availableDisplayModes`.

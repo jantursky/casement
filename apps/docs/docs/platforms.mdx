@@ -1,0 +1,29 @@
+---
+title: Platforms
+description: What was checked where, and what was not.
+sidebar:
+  order: 6
+---
+
+"Checked on" says where the automated tests ran. A blank means it was not run there. **No real device was used.**
+
+| Platform | Checked on | Tests |
+| --- | --- | --- |
+| Android | Emulator `tl_phone`, Android 16 (API 36), arm64 | 4 security tests with the hostile app, 4 conformance tests with real ext-apps apps, 4 view tests |
+| iOS | Simulator "Casement Tests", iOS 27.2, arm64 | 4 UI tests of the demo, including the hostile app |
+| Web (Wasm) | Headless Chromium through Playwright 1.57 | 4 end-to-end tests of the demo, including the hostile app |
+| Desktop JVM | macOS arm64, JDK 25 | 1 security test in a real window, document loading tests |
+| Real devices | **not checked** | |
+| Safari, Firefox, Windows, Linux | **not checked** | |
+
+The core module's unit tests run on the JVM, the Android host test, the iOS simulator and Wasm.
+
+## Notes per platform
+
+**Android.** The renderer needs `WEB_MESSAGE_LISTENER` and refuses without it. The conformance tests run four unmodified apps from the ext-apps repository through the bridge.
+
+**iOS.** `WKWebView` with a URL scheme handler and a content rule list. WebKit's URL filter supports only flat patterns, so the rules are generated that way. The conformance tests with the extra ext-apps apps were run on Android only.
+
+**Web.** The end-to-end tests drive the Compose canvas by position, with software GL flags, in headless Chromium only.
+
+**Desktop.** OpenJFX `WebView` inside a `SwingPanel`. Only macOS and JDK 25 were tried.

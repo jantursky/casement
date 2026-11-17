@@ -1,0 +1,37 @@
+---
+title: Security model
+description: What an app cannot do, and how each refusal shows up.
+sidebar:
+  order: 4
+---
+
+The default policy denies everything. A `HostPolicy` grants more.
+
+## What an app cannot do
+
+- **Reach other domains.** Requests outside the CSP the resource declared, cut down by your policy, are blocked and reported as `Csp`.
+- **Navigate away.** An attempt to load another page is cancelled and reported as `Navigation`.
+- **Open windows.** `window.open` is blocked on every platform. It is reported as `Window` on Android, where a test asserts it. On iOS and the desktop the code has a handler that did not fire in my runs, and the web renderer does not report it.
+- **Call hidden tools.** A `tools/call` for an unknown tool is `ToolUnknown`. A tool without app visibility is `ToolNotVisible`. A call your `approveToolCall` declines is `Rejected`.
+- **Open any link.** `ui/open-link` only works for schemes in `allowedLinkSchemes` (`https`, `http`, `mailto` by default). Others are `Link`.
+- **Use camera, microphone or location** unless the policy grants the permission and the resource asked for it. A refused request is `Permission`.
+- **Send oversize or malformed messages.** These are `Oversize` and `Malformed`.
+
+## BlockedKind
+
+`Malformed`, `Oversize`, `Premature`, `Duplicate`, `Capability`, `ToolUnknown`, `ToolNotVisible`, `Link`, `DisplayMode`, `Rejected`, `Navigation`, `Window`, `Permission`, `Csp`.
+
+## The hostile app
+
+`fixtures/hostile/hostile.html` is an app that tries all of the above. Each platform's tests run it and assert which `BlockedKind` values arrive. The demo has a "Hostile app" button that runs it live.
+
+## Known limits
+
+- The desktop renderer relies on a meta CSP. It has no response header CSP, no veto of single requests and no permission control in the engine. Treat desktop apps as less isolated.
+- On iOS the bridge shim runs in the page world, not an isolated world.
+- The zod library inside the app SDK probes `new Function('')` at start. The strict default CSP blocks it and a `Csp` report for `eval (script-src)` follows. It is harmless noise.
+- `window.open` is only reliably reported on Android.
+- Camera and microphone on iOS are probably not available to a page on a custom scheme. Not confirmed.
+- Teardown when the view leaves composition is best effort.
+
+Report a way around the sandbox privately. See `SECURITY.md` in the repository.

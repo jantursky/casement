@@ -1,0 +1,80 @@
+---
+title: Getting started
+description: Add Casement to a Compose Multiplatform project and show an MCP App.
+sidebar:
+  order: 2
+---
+
+## Install
+
+Casement is not published yet. Build it from source and publish to Maven Local:
+
+```sh
+./gradlew publishToMavenLocal
+```
+
+Then add it to `commonMain`:
+
+```kotlin
+commonMain.dependencies {
+    implementation("io.github.jantursky:casement-compose:{{version}}")
+    implementation("io.github.jantursky:casement-mcp-sdk:{{version}}") // only with the MCP Kotlin SDK
+}
+```
+
+## Requirements per platform
+
+- **Android**: minSdk 26. The WebView needs `WebViewFeature.WEB_MESSAGE_LISTENER`. When it is missing the view refuses to render, because it cannot enforce the sandbox.
+- **iOS**: nothing extra.
+- **Web**: serve `web-sandbox/sandbox.html` from a different origin than your app. The web renderer needs the double-iframe sandbox and refuses to render without it.
+- **Desktop**: add `javafx-web` and `javafx-swing` (OpenJFX 21 or newer) to your app. The library declares them `compileOnly`.
+
+## Connect and show an app
+
+With the MCP Kotlin SDK:
+
+```kotlin
+val host = connectMcpAppsHost(httpClient, "https://example.com/mcp")
+val tool = host.refreshTools().first()          // tools that declare a UI
+val result = host.callTool(tool.name, null)
+
+McpAppView(tool = tool, toolInput = null, toolResult = result, client = host)
+```
+
+`McpAppView` takes its height from the app and sits in a `LazyColumn` like any other item.
+
+## Bring your own client
+
+Implement `McpAppsHostClient`:
+
+```kotlin
+interface McpAppsHostClient {
+    val tools: ToolCatalog                       // which tools apps may call
+    suspend fun readResource(uri: String): UiResource
+    suspend fun callTool(name: String, arguments: JsonObject?): JsonObject
+}
+```
+
+`ToolCatalog.of(map)` builds a catalog from tool names and their visibility (`model`, `app`). A tool call from an app reaches your client only when the tool is visible to apps.
+
+## Handle what the app does
+
+```kotlin
+McpAppView(
+    // ...
+    onMessage = { addToConversation(it.content) },      // ui/message
+    onOpenLink = { uriHandler.openUri(it) },             // ui/open-link, after the policy check
+    approveToolCall = { request -> askTheUser(request) }, // before an app's tools/call reaches the client
+    onBlocked = { log("${it.kind}: ${it.detail}") },
+)
+```
+
+## Run the demo
+
+```sh
+scripts/build-fixtures.sh                           # builds the real example apps once
+./gradlew :samples:demo:shared:run                  # desktop
+./gradlew :samples:demo:androidApp:installDebug     # Android
+```
+
+The demo has a theme switch, a Servers mode that connects to ext-apps example servers (start them with `scripts/run-sample-servers.sh`), and a "Hostile app" that tries everything it should not.

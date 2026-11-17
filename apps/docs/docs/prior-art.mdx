@@ -1,0 +1,22 @@
+---
+title: Prior art
+description: Related projects, and how Casement differs by design.
+sidebar:
+  order: 8
+---
+
+## Related projects
+
+- [modelcontextprotocol/ext-apps](https://github.com/modelcontextprotocol/ext-apps): the spec, the app SDK and a reference host for the web. Casement runs its real example apps as test fixtures.
+- [@mcp-ui/client](https://github.com/idosal/mcp-ui): renders MCP UI resources in React.
+- SwiftMCPAppHost: hosts MCP Apps for SwiftUI.
+- An MCP Apps host in http4k, and a draft pull request for a Compose bridge in the ext-apps repository. I found them while searching and have not tried either.
+
+## Differences by design
+
+This is not a feature-by-feature comparison, which has not been done.
+
+- One Kotlin API across Android, iOS, the web and the desktop. `@mcp-ui/client` is for React, and SwiftMCPAppHost is for Apple platforms.
+- It implements MCP Apps (`io.modelcontextprotocol/ui`, spec `2026-01-26`) and refuses to render where it cannot enforce the sandbox.
+- Every refusal is a `BlockedAction`, and each platform's tests include a hostile app.
+- The core has no UI and no MCP client dependency, so you can bring your own transport.

@@ -1,0 +1,30 @@
+---
+title: Casement
+description: An MCP Apps host for Compose Multiplatform.
+sidebar:
+  order: 1
+---
+
+Casement shows the interactive UI of an MCP tool inside a Compose app. A server declares a `ui://` resource next to a tool. Casement fetches it, renders it in a locked-down web view, runs the host side of the MCP Apps bridge and reports everything it had to refuse.
+
+```kotlin
+McpAppView(
+    tool = tool,
+    toolInput = null,
+    toolResult = result,
+    client = host,
+    onBlocked = { log("blocked ${it.kind}: ${it.detail}") },
+)
+```
+
+One composable, four targets: Android, iOS, the web (Wasm) and the desktop. It follows spec `2026-01-26`. The current version is **{{version}}**, and nothing is published to Maven Central yet.
+
+## Where to go next
+
+- [Getting started](./getting-started) adds Casement and shows one app.
+- [How it works](./how-it-works) explains the bridge and the renderers.
+- [Security model](./security) lists what an app cannot do and how a refusal is reported.
+- [Host context and theming](./host-context) covers theme, locale and style variables.
+- [Platforms](./platforms) says what was checked where, and what was not.
+- [Using Casement with A2UI](./a2ui) shows how the two fit together.
+- [Prior art](./prior-art) lists related projects.
