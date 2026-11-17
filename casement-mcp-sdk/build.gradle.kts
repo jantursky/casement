@@ -49,6 +49,7 @@ kotlin {
         jvmTest.dependencies {
             implementation(libs.mcp.sdk.server)
             implementation(libs.mcp.sdk.testing)
+            implementation(libs.ktor.client.mock)
         }
     }
 }

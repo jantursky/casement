@@ -3,6 +3,10 @@ package com.jantursky.casement.mcp
 import com.jantursky.casement.model.EXTENSION_ID
 import com.jantursky.casement.model.MCP_APP_MIME_TYPE
 import com.jantursky.casement.model.ToolVisibility
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respondError
+import io.ktor.http.HttpStatusCode
 import io.modelcontextprotocol.kotlin.sdk.client.Client
 import io.modelcontextprotocol.kotlin.sdk.client.ClientOptions
 import io.modelcontextprotocol.kotlin.sdk.server.Server
@@ -24,6 +28,7 @@ import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonObject
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
 
 /** A real SDK server and client talking over an in-memory transport, with the adapter in between. */
 class SdkClientIntegrationTest {
@@ -97,5 +102,13 @@ class SdkClientIntegrationTest {
             val client = Client(Implementation("client", "1"), options)
             client.connect(pair.clientTransport)
             assertEquals(true, session.clientCapabilities?.extensions?.containsKey(EXTENSION_ID))
+        }
+
+    @Test
+    fun `connecting to a server that refuses fails`() =
+        runBlocking {
+            val http = HttpClient(MockEngine { respondError(HttpStatusCode.NotFound) })
+            assertFails { connectMcpAppsHost(http, "http://localhost:1/mcp") }
+            Unit
         }
 }
