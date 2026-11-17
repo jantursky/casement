@@ -38,6 +38,7 @@ import com.jantursky.casement.bridge.BlockedKind
 import com.jantursky.casement.compose.RendererFailure
 import com.jantursky.casement.compose.WebViewSpec
 import com.jantursky.casement.compose.bridgeShim
+import com.jantursky.casement.compose.cspDetail
 import com.jantursky.casement.policy.OriginMatcher
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
@@ -132,7 +133,7 @@ private fun createSandboxedWebView(
             when (controlOf(text)) {
                 null -> spec.channel.fromApp(text)
                 "ready" -> spec.channel.attach { reply.postMessage(it) }
-                "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, "The browser blocked a CSP violation"))
+                "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, cspDetail(text)))
             }
         }
     }

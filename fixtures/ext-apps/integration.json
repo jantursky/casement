@@ -1,0 +1,49 @@
+{
+ "tools": [
+  {
+   "name": "get-time",
+   "title": "Get Time",
+   "description": "Returns the current server time.",
+   "inputSchema": {
+    "type": "object",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {}
+   },
+   "_meta": {
+    "ui": {
+     "resourceUri": "ui://get-time/mcp-app.html"
+    },
+    "ui/resourceUri": "ui://get-time/mcp-app.html"
+   },
+   "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+     "time": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "time"
+    ],
+    "additionalProperties": false
+   }
+  }
+ ],
+ "results": {
+  "get-time": {
+   "content": [
+    {
+     "type": "text",
+     "text": "{\"time\":\"2026-11-17T18:43:52.891Z\"}"
+    }
+   ],
+   "structuredContent": {
+    "time": "2026-11-17T18:43:52.891Z"
+   }
+  }
+ },
+ "resourceMeta": {
+  "ui://get-time/mcp-app.html": {}
+ }
+}

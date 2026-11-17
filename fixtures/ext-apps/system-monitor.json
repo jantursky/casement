@@ -1,0 +1,272 @@
+{
+ "tools": [
+  {
+   "name": "get-system-info",
+   "title": "Get System Info",
+   "description": "Returns system information, including hostname, platform, CPU info, and memory.",
+   "inputSchema": {
+    "type": "object",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {}
+   },
+   "_meta": {
+    "ui": {
+     "resourceUri": "ui://system-monitor/mcp-app.html"
+    },
+    "ui/resourceUri": "ui://system-monitor/mcp-app.html"
+   },
+   "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+     "hostname": {
+      "type": "string"
+     },
+     "platform": {
+      "type": "string"
+     },
+     "arch": {
+      "type": "string"
+     },
+     "cpu": {
+      "type": "object",
+      "properties": {
+       "model": {
+        "type": "string"
+       },
+       "count": {
+        "type": "number"
+       }
+      },
+      "required": [
+       "model",
+       "count"
+      ],
+      "additionalProperties": false
+     },
+     "memory": {
+      "type": "object",
+      "properties": {
+       "totalBytes": {
+        "type": "number"
+       }
+      },
+      "required": [
+       "totalBytes"
+      ],
+      "additionalProperties": false
+     }
+    },
+    "required": [
+     "hostname",
+     "platform",
+     "arch",
+     "cpu",
+     "memory"
+    ],
+    "additionalProperties": false
+   }
+  },
+  {
+   "name": "poll-system-stats",
+   "title": "Poll System Stats",
+   "description": "Returns dynamic system metrics for polling: per-core CPU timing, memory usage, and uptime. App-only.",
+   "inputSchema": {
+    "type": "object",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {}
+   },
+   "_meta": {
+    "ui": {
+     "visibility": [
+      "app"
+     ]
+    }
+   },
+   "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+     "cpu": {
+      "type": "object",
+      "properties": {
+       "cores": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "idle": {
+           "type": "number"
+          },
+          "total": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "idle",
+          "total"
+         ],
+         "additionalProperties": false
+        }
+       }
+      },
+      "required": [
+       "cores"
+      ],
+      "additionalProperties": false
+     },
+     "memory": {
+      "type": "object",
+      "properties": {
+       "usedBytes": {
+        "type": "number"
+       },
+       "usedPercent": {
+        "type": "number"
+       },
+       "freeBytes": {
+        "type": "number"
+       }
+      },
+      "required": [
+       "usedBytes",
+       "usedPercent",
+       "freeBytes"
+      ],
+      "additionalProperties": false
+     },
+     "uptime": {
+      "type": "object",
+      "properties": {
+       "seconds": {
+        "type": "number"
+       }
+      },
+      "required": [
+       "seconds"
+      ],
+      "additionalProperties": false
+     },
+     "timestamp": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "cpu",
+     "memory",
+     "uptime",
+     "timestamp"
+    ],
+    "additionalProperties": false
+   }
+  }
+ ],
+ "results": {
+  "get-system-info": {
+   "content": [
+    {
+     "type": "text",
+     "text": "{\"hostname\":\"MacBook-Pro-2.local\",\"platform\":\"darwin arm64\",\"arch\":\"arm64\",\"cpu\":{\"model\":\"Apple M5 Pro\",\"count\":15},\"memory\":{\"totalBytes\":25769803776}}"
+    }
+   ],
+   "structuredContent": {
+    "hostname": "MacBook-Pro-2.local",
+    "platform": "darwin arm64",
+    "arch": "arm64",
+    "cpu": {
+     "model": "Apple M5 Pro",
+     "count": 15
+    },
+    "memory": {
+     "totalBytes": 25769803776
+    }
+   }
+  },
+  "poll-system-stats": {
+   "content": [
+    {
+     "type": "text",
+     "text": "{\"cpu\":{\"cores\":[{\"idle\":420833300,\"total\":523018940},{\"idle\":432331750,\"total\":524039450},{\"idle\":444499830,\"total\":524671260},{\"idle\":453764220,\"total\":525161700},{\"idle\":460361280,\"total\":525527360},{\"idle\":422446430,\"total\":523078930},{\"idle\":433481860,\"total\":524076490},{\"idle\":445552700,\"total\":524681780},{\"idle\":454704010,\"total\":525166520},{\"idle\":461260820,\"total\":525530370},{\"idle\":310365660,\"total\":520409890},{\"idle\":332823000,\"total\":521820650},{\"idle\":346479430,\"total\":522243540},{\"idle\":353969930,\"total\":522389940},{\"idle\":358597730,\"total\":522486200}]},\"memory\":{\"usedBytes\":21040955392,\"usedPercent\":82,\"freeBytes\":4728848384},\"uptime\":{\"seconds\":946723},\"timestamp\":\"2026-11-17T18:43:52.787Z\"}"
+    }
+   ],
+   "structuredContent": {
+    "cpu": {
+     "cores": [
+      {
+       "idle": 420833300,
+       "total": 523018940
+      },
+      {
+       "idle": 432331750,
+       "total": 524039450
+      },
+      {
+       "idle": 444499830,
+       "total": 524671260
+      },
+      {
+       "idle": 453764220,
+       "total": 525161700
+      },
+      {
+       "idle": 460361280,
+       "total": 525527360
+      },
+      {
+       "idle": 422446430,
+       "total": 523078930
+      },
+      {
+       "idle": 433481860,
+       "total": 524076490
+      },
+      {
+       "idle": 445552700,
+       "total": 524681780
+      },
+      {
+       "idle": 454704010,
+       "total": 525166520
+      },
+      {
+       "idle": 461260820,
+       "total": 525530370
+      },
+      {
+       "idle": 310365660,
+       "total": 520409890
+      },
+      {
+       "idle": 332823000,
+       "total": 521820650
+      },
+      {
+       "idle": 346479430,
+       "total": 522243540
+      },
+      {
+       "idle": 353969930,
+       "total": 522389940
+      },
+      {
+       "idle": 358597730,
+       "total": 522486200
+      }
+     ]
+    },
+    "memory": {
+     "usedBytes": 21040955392,
+     "usedPercent": 82,
+     "freeBytes": 4728848384
+    },
+    "uptime": {
+     "seconds": 946723
+    },
+    "timestamp": "2026-11-17T18:43:52.787Z"
+   }
+  }
+ },
+ "resourceMeta": {
+  "ui://system-monitor/mcp-app.html": {}
+ }
+}

@@ -1,0 +1,819 @@
+{
+ "tools": [
+  {
+   "name": "get-cohort-data",
+   "title": "Get Cohort Retention Data",
+   "description": "Returns cohort retention heatmap data showing customer retention over time by signup month",
+   "inputSchema": {
+    "type": "object",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+     "metric": {
+      "default": "retention",
+      "type": "string",
+      "enum": [
+       "retention",
+       "revenue",
+       "active"
+      ]
+     },
+     "periodType": {
+      "default": "monthly",
+      "type": "string",
+      "enum": [
+       "monthly",
+       "weekly"
+      ]
+     },
+     "cohortCount": {
+      "default": 12,
+      "type": "number",
+      "minimum": 3,
+      "maximum": 24
+     },
+     "maxPeriods": {
+      "default": 12,
+      "type": "number",
+      "minimum": 3,
+      "maximum": 24
+     }
+    }
+   },
+   "_meta": {
+    "ui": {
+     "resourceUri": "ui://get-cohort-data/mcp-app.html"
+    },
+    "ui/resourceUri": "ui://get-cohort-data/mcp-app.html"
+   },
+   "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+     "cohorts": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "cohortId": {
+         "type": "string"
+        },
+        "cohortLabel": {
+         "type": "string"
+        },
+        "originalUsers": {
+         "type": "number"
+        },
+        "cells": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "properties": {
+           "cohortIndex": {
+            "type": "number"
+           },
+           "periodIndex": {
+            "type": "number"
+           },
+           "retention": {
+            "type": "number"
+           },
+           "usersRetained": {
+            "type": "number"
+           },
+           "usersOriginal": {
+            "type": "number"
+           }
+          },
+          "required": [
+           "cohortIndex",
+           "periodIndex",
+           "retention",
+           "usersRetained",
+           "usersOriginal"
+          ],
+          "additionalProperties": false
+         }
+        }
+       },
+       "required": [
+        "cohortId",
+        "cohortLabel",
+        "originalUsers",
+        "cells"
+       ],
+       "additionalProperties": false
+      }
+     },
+     "periods": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "periodLabels": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "metric": {
+      "type": "string"
+     },
+     "periodType": {
+      "type": "string"
+     },
+     "generatedAt": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "cohorts",
+     "periods",
+     "periodLabels",
+     "metric",
+     "periodType",
+     "generatedAt"
+    ],
+    "additionalProperties": false
+   }
+  }
+ ],
+ "results": {
+  "get-cohort-data": {
+   "content": [
+    {
+     "type": "text",
+     "text": "Cohort Analysis: 12 cohorts, 12 periods\nAverage retention: 60.8%\nMetric: retention, Period: monthly"
+    }
+   ],
+   "structuredContent": {
+    "cohorts": [
+     {
+      "cohortId": "2025-12",
+      "cohortLabel": "Dec 2025",
+      "originalUsers": 4435,
+      "cells": [
+       {
+        "cohortIndex": 0,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 4435,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 1,
+        "retention": 0.8567519134423383,
+        "usersRetained": 3800,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 2,
+        "retention": 0.728513563581203,
+        "usersRetained": 3231,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 3,
+        "retention": 0.7007631872631135,
+        "usersRetained": 3108,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 4,
+        "retention": 0.5699045209632051,
+        "usersRetained": 2528,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 5,
+        "retention": 0.5369770117082461,
+        "usersRetained": 2381,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 6,
+        "retention": 0.5160424912014518,
+        "usersRetained": 2289,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 7,
+        "retention": 0.45358533474439544,
+        "usersRetained": 2012,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 8,
+        "retention": 0.4171496928025858,
+        "usersRetained": 1850,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 9,
+        "retention": 0.36828177333154655,
+        "usersRetained": 1633,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 10,
+        "retention": 0.31477475327725685,
+        "usersRetained": 1396,
+        "usersOriginal": 4435
+       },
+       {
+        "cohortIndex": 0,
+        "periodIndex": 11,
+        "retention": 0.3178454924840401,
+        "usersRetained": 1410,
+        "usersOriginal": 4435
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-01",
+      "cohortLabel": "Jan 2026",
+      "originalUsers": 4026,
+      "cells": [
+       {
+        "cohortIndex": 1,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 4026,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 1,
+        "retention": 0.8473351514190272,
+        "usersRetained": 3411,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 2,
+        "retention": 0.7150783663355043,
+        "usersRetained": 2879,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 3,
+        "retention": 0.6932034145922634,
+        "usersRetained": 2791,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 4,
+        "retention": 0.6078532100216725,
+        "usersRetained": 2447,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 5,
+        "retention": 0.5408599831284342,
+        "usersRetained": 2178,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 6,
+        "retention": 0.45595970208150594,
+        "usersRetained": 1836,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 7,
+        "retention": 0.46429465498370687,
+        "usersRetained": 1869,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 8,
+        "retention": 0.3942536343554456,
+        "usersRetained": 1587,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 9,
+        "retention": 0.3599708429424062,
+        "usersRetained": 1449,
+        "usersOriginal": 4026
+       },
+       {
+        "cohortIndex": 1,
+        "periodIndex": 10,
+        "retention": 0.3679242949308506,
+        "usersRetained": 1481,
+        "usersOriginal": 4026
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-02",
+      "cohortLabel": "Feb 2026",
+      "originalUsers": 2583,
+      "cells": [
+       {
+        "cohortIndex": 2,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 2583,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 1,
+        "retention": 0.850212024326518,
+        "usersRetained": 2196,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 2,
+        "retention": 0.7616701924398457,
+        "usersRetained": 1967,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 3,
+        "retention": 0.6551683922743686,
+        "usersRetained": 1692,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 4,
+        "retention": 0.6159983954865078,
+        "usersRetained": 1591,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 5,
+        "retention": 0.5322879306266779,
+        "usersRetained": 1375,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 6,
+        "retention": 0.46692000424392466,
+        "usersRetained": 1206,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 7,
+        "retention": 0.4429637464546201,
+        "usersRetained": 1144,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 8,
+        "retention": 0.38875097090248806,
+        "usersRetained": 1004,
+        "usersOriginal": 2583
+       },
+       {
+        "cohortIndex": 2,
+        "periodIndex": 9,
+        "retention": 0.3783763839843455,
+        "usersRetained": 977,
+        "usersOriginal": 2583
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-03",
+      "cohortLabel": "Mar 2026",
+      "originalUsers": 1459,
+      "cells": [
+       {
+        "cohortIndex": 3,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 1459,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 1,
+        "retention": 0.8296999739084068,
+        "usersRetained": 1211,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 2,
+        "retention": 0.7744147594286311,
+        "usersRetained": 1130,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 3,
+        "retention": 0.6606823657230724,
+        "usersRetained": 964,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 4,
+        "retention": 0.6185069834901837,
+        "usersRetained": 902,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 5,
+        "retention": 0.5358703777929208,
+        "usersRetained": 782,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 6,
+        "retention": 0.5056531555961116,
+        "usersRetained": 738,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 7,
+        "retention": 0.4723710824304434,
+        "usersRetained": 689,
+        "usersOriginal": 1459
+       },
+       {
+        "cohortIndex": 3,
+        "periodIndex": 8,
+        "retention": 0.38237600657742843,
+        "usersRetained": 558,
+        "usersOriginal": 1459
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-04",
+      "cohortLabel": "Apr 2026",
+      "originalUsers": 2537,
+      "cells": [
+       {
+        "cohortIndex": 4,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 2537,
+        "usersOriginal": 2537
+       },
+       {
+        "cohortIndex": 4,
+        "periodIndex": 1,
+        "retention": 0.8670969460493154,
+        "usersRetained": 2200,
+        "usersOriginal": 2537
+       },
+       {
+        "cohortIndex": 4,
+        "periodIndex": 2,
+        "retention": 0.7378979332148401,
+        "usersRetained": 1872,
+        "usersOriginal": 2537
+       },
+       {
+        "cohortIndex": 4,
+        "periodIndex": 3,
+        "retention": 0.681777089996629,
+        "usersRetained": 1730,
+        "usersOriginal": 2537
+       },
+       {
+        "cohortIndex": 4,
+        "periodIndex": 4,
+        "retention": 0.6047587495861974,
+        "usersRetained": 1534,
+        "usersOriginal": 2537
+       },
+       {
+        "cohortIndex": 4,
+        "periodIndex": 5,
+        "retention": 0.548550763037844,
+        "usersRetained": 1392,
+        "usersOriginal": 2537
+       },
+       {
+        "cohortIndex": 4,
+        "periodIndex": 6,
+        "retention": 0.507727436732021,
+        "usersRetained": 1288,
+        "usersOriginal": 2537
+       },
+       {
+        "cohortIndex": 4,
+        "periodIndex": 7,
+        "retention": 0.44783353620496114,
+        "usersRetained": 1136,
+        "usersOriginal": 2537
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-05",
+      "cohortLabel": "May 2026",
+      "originalUsers": 1228,
+      "cells": [
+       {
+        "cohortIndex": 5,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 1228,
+        "usersOriginal": 1228
+       },
+       {
+        "cohortIndex": 5,
+        "periodIndex": 1,
+        "retention": 0.8182098611704887,
+        "usersRetained": 1005,
+        "usersOriginal": 1228
+       },
+       {
+        "cohortIndex": 5,
+        "periodIndex": 2,
+        "retention": 0.7663886129399912,
+        "usersRetained": 941,
+        "usersOriginal": 1228
+       },
+       {
+        "cohortIndex": 5,
+        "periodIndex": 3,
+        "retention": 0.675057146471494,
+        "usersRetained": 829,
+        "usersOriginal": 1228
+       },
+       {
+        "cohortIndex": 5,
+        "periodIndex": 4,
+        "retention": 0.6000324921456202,
+        "usersRetained": 737,
+        "usersOriginal": 1228
+       },
+       {
+        "cohortIndex": 5,
+        "periodIndex": 5,
+        "retention": 0.578913642636862,
+        "usersRetained": 711,
+        "usersOriginal": 1228
+       },
+       {
+        "cohortIndex": 5,
+        "periodIndex": 6,
+        "retention": 0.4638544663292613,
+        "usersRetained": 570,
+        "usersOriginal": 1228
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-06",
+      "cohortLabel": "Jun 2026",
+      "originalUsers": 2337,
+      "cells": [
+       {
+        "cohortIndex": 6,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 2337,
+        "usersOriginal": 2337
+       },
+       {
+        "cohortIndex": 6,
+        "periodIndex": 1,
+        "retention": 0.8005892587782182,
+        "usersRetained": 1871,
+        "usersOriginal": 2337
+       },
+       {
+        "cohortIndex": 6,
+        "periodIndex": 2,
+        "retention": 0.7223502387469334,
+        "usersRetained": 1688,
+        "usersOriginal": 2337
+       },
+       {
+        "cohortIndex": 6,
+        "periodIndex": 3,
+        "retention": 0.6561760135814925,
+        "usersRetained": 1533,
+        "usersOriginal": 2337
+       },
+       {
+        "cohortIndex": 6,
+        "periodIndex": 4,
+        "retention": 0.565704758975232,
+        "usersRetained": 1322,
+        "usersOriginal": 2337
+       },
+       {
+        "cohortIndex": 6,
+        "periodIndex": 5,
+        "retention": 0.5803383169518581,
+        "usersRetained": 1356,
+        "usersOriginal": 2337
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-07",
+      "cohortLabel": "Jul 2026",
+      "originalUsers": 3589,
+      "cells": [
+       {
+        "cohortIndex": 7,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 3589,
+        "usersOriginal": 3589
+       },
+       {
+        "cohortIndex": 7,
+        "periodIndex": 1,
+        "retention": 0.8409353955898943,
+        "usersRetained": 3018,
+        "usersOriginal": 3589
+       },
+       {
+        "cohortIndex": 7,
+        "periodIndex": 2,
+        "retention": 0.7769885197047308,
+        "usersRetained": 2789,
+        "usersOriginal": 3589
+       },
+       {
+        "cohortIndex": 7,
+        "periodIndex": 3,
+        "retention": 0.6377156674139797,
+        "usersRetained": 2289,
+        "usersOriginal": 3589
+       },
+       {
+        "cohortIndex": 7,
+        "periodIndex": 4,
+        "retention": 0.5722951489922248,
+        "usersRetained": 2054,
+        "usersOriginal": 3589
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-08",
+      "cohortLabel": "Aug 2026",
+      "originalUsers": 1383,
+      "cells": [
+       {
+        "cohortIndex": 8,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 1383,
+        "usersOriginal": 1383
+       },
+       {
+        "cohortIndex": 8,
+        "periodIndex": 1,
+        "retention": 0.7959372661744335,
+        "usersRetained": 1101,
+        "usersOriginal": 1383
+       },
+       {
+        "cohortIndex": 8,
+        "periodIndex": 2,
+        "retention": 0.7594582787097212,
+        "usersRetained": 1050,
+        "usersOriginal": 1383
+       },
+       {
+        "cohortIndex": 8,
+        "periodIndex": 3,
+        "retention": 0.6359485143135404,
+        "usersRetained": 880,
+        "usersOriginal": 1383
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-09",
+      "cohortLabel": "Sep 2026",
+      "originalUsers": 3125,
+      "cells": [
+       {
+        "cohortIndex": 9,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 3125,
+        "usersOriginal": 3125
+       },
+       {
+        "cohortIndex": 9,
+        "periodIndex": 1,
+        "retention": 0.8477514044387993,
+        "usersRetained": 2649,
+        "usersOriginal": 3125
+       },
+       {
+        "cohortIndex": 9,
+        "periodIndex": 2,
+        "retention": 0.7391388049829661,
+        "usersRetained": 2310,
+        "usersOriginal": 3125
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-10",
+      "cohortLabel": "Oct 2026",
+      "originalUsers": 4476,
+      "cells": [
+       {
+        "cohortIndex": 10,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 4476,
+        "usersOriginal": 4476
+       },
+       {
+        "cohortIndex": 10,
+        "periodIndex": 1,
+        "retention": 0.8137327593609563,
+        "usersRetained": 3642,
+        "usersOriginal": 4476
+       }
+      ]
+     },
+     {
+      "cohortId": "2026-11",
+      "cohortLabel": "Nov 2026",
+      "originalUsers": 2732,
+      "cells": [
+       {
+        "cohortIndex": 11,
+        "periodIndex": 0,
+        "retention": 1,
+        "usersRetained": 2732,
+        "usersOriginal": 2732
+       }
+      ]
+     }
+    ],
+    "periods": [
+     "M0",
+     "M1",
+     "M2",
+     "M3",
+     "M4",
+     "M5",
+     "M6",
+     "M7",
+     "M8",
+     "M9",
+     "M10",
+     "M11"
+    ],
+    "periodLabels": [
+     "Month 0",
+     "Month 1",
+     "Month 2",
+     "Month 3",
+     "Month 4",
+     "Month 5",
+     "Month 6",
+     "Month 7",
+     "Month 8",
+     "Month 9",
+     "Month 10",
+     "Month 11"
+    ],
+    "metric": "retention",
+    "periodType": "monthly",
+    "generatedAt": "2026-11-17T18:43:52.627Z"
+   }
+  }
+ },
+ "resourceMeta": {
+  "ui://get-cohort-data/mcp-app.html": {}
+ }
+}

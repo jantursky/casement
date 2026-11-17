@@ -1,0 +1,605 @@
+{
+ "tools": [
+  {
+   "name": "get-budget-data",
+   "title": "Get Budget Data",
+   "description": "Returns budget configuration with 24 months of historical allocations and industry benchmarks by company stage. The widget is interactive and exposes tools for reading/modifying allocations, adjusting budgets, and comparing against industry benchmarks.",
+   "inputSchema": {
+    "type": "object",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {}
+   },
+   "_meta": {
+    "ui": {
+     "resourceUri": "ui://budget-allocator/mcp-app.html"
+    },
+    "ui/resourceUri": "ui://budget-allocator/mcp-app.html"
+   },
+   "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+     "config": {
+      "type": "object",
+      "properties": {
+       "categories": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "id": {
+           "type": "string"
+          },
+          "name": {
+           "type": "string"
+          },
+          "color": {
+           "type": "string"
+          },
+          "defaultPercent": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "id",
+          "name",
+          "color",
+          "defaultPercent"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "presetBudgets": {
+        "type": "array",
+        "items": {
+         "type": "number"
+        }
+       },
+       "defaultBudget": {
+        "type": "number"
+       },
+       "currency": {
+        "type": "string"
+       },
+       "currencySymbol": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "categories",
+       "presetBudgets",
+       "defaultBudget",
+       "currency",
+       "currencySymbol"
+      ],
+      "additionalProperties": false
+     },
+     "analytics": {
+      "type": "object",
+      "properties": {
+       "history": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "month": {
+           "type": "string"
+          },
+          "allocations": {
+           "type": "object",
+           "propertyNames": {
+            "type": "string"
+           },
+           "additionalProperties": {
+            "type": "number"
+           }
+          }
+         },
+         "required": [
+          "month",
+          "allocations"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "benchmarks": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "stage": {
+           "type": "string"
+          },
+          "categoryBenchmarks": {
+           "type": "object",
+           "propertyNames": {
+            "type": "string"
+           },
+           "additionalProperties": {
+            "type": "object",
+            "properties": {
+             "p25": {
+              "type": "number"
+             },
+             "p50": {
+              "type": "number"
+             },
+             "p75": {
+              "type": "number"
+             }
+            },
+            "required": [
+             "p25",
+             "p50",
+             "p75"
+            ],
+            "additionalProperties": false
+           }
+          }
+         },
+         "required": [
+          "stage",
+          "categoryBenchmarks"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "stages": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       },
+       "defaultStage": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "history",
+       "benchmarks",
+       "stages",
+       "defaultStage"
+      ],
+      "additionalProperties": false
+     }
+    },
+    "required": [
+     "config",
+     "analytics"
+    ],
+    "additionalProperties": false
+   }
+  }
+ ],
+ "results": {
+  "get-budget-data": {
+   "content": [
+    {
+     "type": "text",
+     "text": "Budget Allocator Configuration\n==============================\n\nDefault Budget: $100,000\nAvailable Presets: $50,000, $100,000, $250,000, $500,000\n\nCategories:\n  - Marketing: 25% default\n  - Engineering: 35% default\n  - Operations: 15% default\n  - Sales: 15% default\n  - R&D: 10% default\n\nHistorical Data: 24 months\nBenchmark Stages: Seed, Series A, Series B, Growth\nDefault Stage: Series A"
+    }
+   ],
+   "structuredContent": {
+    "config": {
+     "categories": [
+      {
+       "id": "marketing",
+       "name": "Marketing",
+       "color": "#3b82f6",
+       "defaultPercent": 25
+      },
+      {
+       "id": "engineering",
+       "name": "Engineering",
+       "color": "#10b981",
+       "defaultPercent": 35
+      },
+      {
+       "id": "operations",
+       "name": "Operations",
+       "color": "#f59e0b",
+       "defaultPercent": 15
+      },
+      {
+       "id": "sales",
+       "name": "Sales",
+       "color": "#ef4444",
+       "defaultPercent": 15
+      },
+      {
+       "id": "rd",
+       "name": "R&D",
+       "color": "#8b5cf6",
+       "defaultPercent": 10
+      }
+     ],
+     "presetBudgets": [
+      50000,
+      100000,
+      250000,
+      500000
+     ],
+     "defaultBudget": 100000,
+     "currency": "USD",
+     "currencySymbol": "$"
+    },
+    "analytics": {
+     "history": [
+      {
+       "month": "2024-12",
+       "allocations": {
+        "marketing": 24.5,
+        "engineering": 34.1,
+        "operations": 15.8,
+        "sales": 15.2,
+        "rd": 10.5
+       }
+      },
+      {
+       "month": "2025-01",
+       "allocations": {
+        "marketing": 26.4,
+        "engineering": 35.9,
+        "operations": 14.4,
+        "sales": 14.1,
+        "rd": 9.2
+       }
+      },
+      {
+       "month": "2025-02",
+       "allocations": {
+        "marketing": 24.3,
+        "engineering": 35.7,
+        "operations": 15.5,
+        "sales": 15.4,
+        "rd": 9.1
+       }
+      },
+      {
+       "month": "2025-03",
+       "allocations": {
+        "marketing": 24.4,
+        "engineering": 33.1,
+        "operations": 16.1,
+        "sales": 16.1,
+        "rd": 10.3
+       }
+      },
+      {
+       "month": "2025-04",
+       "allocations": {
+        "marketing": 25.5,
+        "engineering": 34.1,
+        "operations": 16.3,
+        "sales": 14,
+        "rd": 10.1
+       }
+      },
+      {
+       "month": "2025-05",
+       "allocations": {
+        "marketing": 26.8,
+        "engineering": 35,
+        "operations": 13.9,
+        "sales": 14.7,
+        "rd": 9.4
+       }
+      },
+      {
+       "month": "2025-06",
+       "allocations": {
+        "marketing": 25,
+        "engineering": 34.4,
+        "operations": 15.6,
+        "sales": 16.6,
+        "rd": 8.4
+       }
+      },
+      {
+       "month": "2025-07",
+       "allocations": {
+        "marketing": 26.3,
+        "engineering": 33,
+        "operations": 15.7,
+        "sales": 15.8,
+        "rd": 9.2
+       }
+      },
+      {
+       "month": "2025-08",
+       "allocations": {
+        "marketing": 26.1,
+        "engineering": 34.3,
+        "operations": 15.9,
+        "sales": 14.4,
+        "rd": 9.3
+       }
+      },
+      {
+       "month": "2025-09",
+       "allocations": {
+        "marketing": 26,
+        "engineering": 35.2,
+        "operations": 14.3,
+        "sales": 16.7,
+        "rd": 7.7
+       }
+      },
+      {
+       "month": "2025-10",
+       "allocations": {
+        "marketing": 25.7,
+        "engineering": 34.9,
+        "operations": 14.5,
+        "sales": 15.2,
+        "rd": 9.8
+       }
+      },
+      {
+       "month": "2025-11",
+       "allocations": {
+        "marketing": 25.9,
+        "engineering": 33.4,
+        "operations": 15.9,
+        "sales": 16.6,
+        "rd": 8.3
+       }
+      },
+      {
+       "month": "2025-12",
+       "allocations": {
+        "marketing": 27.8,
+        "engineering": 34.2,
+        "operations": 16,
+        "sales": 14.8,
+        "rd": 7.2
+       }
+      },
+      {
+       "month": "2026-01",
+       "allocations": {
+        "marketing": 25.3,
+        "engineering": 34.4,
+        "operations": 16.8,
+        "sales": 15,
+        "rd": 8.5
+       }
+      },
+      {
+       "month": "2026-02",
+       "allocations": {
+        "marketing": 27.6,
+        "engineering": 35.1,
+        "operations": 15.1,
+        "sales": 15.4,
+        "rd": 6.7
+       }
+      },
+      {
+       "month": "2026-03",
+       "allocations": {
+        "marketing": 26.7,
+        "engineering": 33.4,
+        "operations": 17.1,
+        "sales": 15.9,
+        "rd": 6.9
+       }
+      },
+      {
+       "month": "2026-04",
+       "allocations": {
+        "marketing": 27.2,
+        "engineering": 34.1,
+        "operations": 15.7,
+        "sales": 15,
+        "rd": 8
+       }
+      },
+      {
+       "month": "2026-05",
+       "allocations": {
+        "marketing": 27.2,
+        "engineering": 34.1,
+        "operations": 14.8,
+        "sales": 16.8,
+        "rd": 7
+       }
+      },
+      {
+       "month": "2026-06",
+       "allocations": {
+        "marketing": 28.5,
+        "engineering": 33.6,
+        "operations": 15.8,
+        "sales": 16.2,
+        "rd": 6
+       }
+      },
+      {
+       "month": "2026-07",
+       "allocations": {
+        "marketing": 26.7,
+        "engineering": 32.9,
+        "operations": 16.2,
+        "sales": 16.1,
+        "rd": 8.1
+       }
+      },
+      {
+       "month": "2026-08",
+       "allocations": {
+        "marketing": 28.5,
+        "engineering": 32.7,
+        "operations": 14.6,
+        "sales": 17.7,
+        "rd": 6.5
+       }
+      },
+      {
+       "month": "2026-09",
+       "allocations": {
+        "marketing": 28.6,
+        "engineering": 31.9,
+        "operations": 14.9,
+        "sales": 17.8,
+        "rd": 6.8
+       }
+      },
+      {
+       "month": "2026-10",
+       "allocations": {
+        "marketing": 27.7,
+        "engineering": 33.1,
+        "operations": 16.2,
+        "sales": 17.5,
+        "rd": 5.5
+       }
+      },
+      {
+       "month": "2026-11",
+       "allocations": {
+        "marketing": 27.8,
+        "engineering": 33.2,
+        "operations": 15.1,
+        "sales": 18.4,
+        "rd": 5.5
+       }
+      }
+     ],
+     "benchmarks": [
+      {
+       "stage": "Seed",
+       "categoryBenchmarks": {
+        "marketing": {
+         "p25": 15,
+         "p50": 20,
+         "p75": 25
+        },
+        "engineering": {
+         "p25": 40,
+         "p50": 47,
+         "p75": 55
+        },
+        "operations": {
+         "p25": 8,
+         "p50": 12,
+         "p75": 15
+        },
+        "sales": {
+         "p25": 10,
+         "p50": 15,
+         "p75": 20
+        },
+        "rd": {
+         "p25": 5,
+         "p50": 10,
+         "p75": 15
+        }
+       }
+      },
+      {
+       "stage": "Series A",
+       "categoryBenchmarks": {
+        "marketing": {
+         "p25": 20,
+         "p50": 25,
+         "p75": 30
+        },
+        "engineering": {
+         "p25": 35,
+         "p50": 40,
+         "p75": 45
+        },
+        "operations": {
+         "p25": 10,
+         "p50": 14,
+         "p75": 18
+        },
+        "sales": {
+         "p25": 15,
+         "p50": 20,
+         "p75": 25
+        },
+        "rd": {
+         "p25": 8,
+         "p50": 12,
+         "p75": 15
+        }
+       }
+      },
+      {
+       "stage": "Series B",
+       "categoryBenchmarks": {
+        "marketing": {
+         "p25": 22,
+         "p50": 27,
+         "p75": 32
+        },
+        "engineering": {
+         "p25": 30,
+         "p50": 35,
+         "p75": 40
+        },
+        "operations": {
+         "p25": 12,
+         "p50": 16,
+         "p75": 20
+        },
+        "sales": {
+         "p25": 18,
+         "p50": 23,
+         "p75": 28
+        },
+        "rd": {
+         "p25": 8,
+         "p50": 12,
+         "p75": 15
+        }
+       }
+      },
+      {
+       "stage": "Growth",
+       "categoryBenchmarks": {
+        "marketing": {
+         "p25": 25,
+         "p50": 30,
+         "p75": 35
+        },
+        "engineering": {
+         "p25": 25,
+         "p50": 30,
+         "p75": 35
+        },
+        "operations": {
+         "p25": 15,
+         "p50": 18,
+         "p75": 22
+        },
+        "sales": {
+         "p25": 20,
+         "p50": 25,
+         "p75": 30
+        },
+        "rd": {
+         "p25": 5,
+         "p50": 8,
+         "p75": 12
+        }
+       }
+      }
+     ],
+     "stages": [
+      "Seed",
+      "Series A",
+      "Series B",
+      "Growth"
+     ],
+     "defaultStage": "Series A"
+    }
+   }
+  }
+ },
+ "resourceMeta": {
+  "ui://budget-allocator/mcp-app.html": {}
+ }
+}

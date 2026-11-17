@@ -41,9 +41,13 @@ internal fun wrapperDocument(): String =
         if (!frame || e.source !== frame.contentWindow) return;
         var d = e.data;
         if (d && typeof d === 'object' && d.jsonrpc === '2.0') toHost(JSON.stringify(d));
-        else if (d && d.casement === 'csp') toHost(JSON.stringify({ casement: 'csp' }));
+        else if (d && d.casement === 'csp') {
+          toHost(JSON.stringify({ casement: 'csp', directive: String(d.directive || ''), blocked: String(d.blocked || '') }));
+        }
       });
-      document.addEventListener('securitypolicyviolation', function () { toHost(JSON.stringify({ casement: 'csp' })); });
+      document.addEventListener('securitypolicyviolation', function (e) {
+        toHost(JSON.stringify({ casement: 'csp', directive: e.violatedDirective, blocked: e.blockedURI }));
+      });
       toHost(JSON.stringify({ casement: 'ready' }));
     })();
     </script></body></html>
@@ -59,8 +63,8 @@ internal fun appDocument(
 ): String {
     val meta = """<meta http-equiv="Content-Security-Policy" content="${csp.replace("\"", "&quot;")}">"""
     val report =
-        "<script>document.addEventListener('securitypolicyviolation',function(){" +
-            "parent.postMessage({casement:'csp'},'*')});</script>"
+        "<script>document.addEventListener('securitypolicyviolation',function(e){" +
+            "parent.postMessage({casement:'csp',directive:e.violatedDirective,blocked:e.blockedURI},'*')});</script>"
     val doctype = Regex("^\\s*(<!--[\\s\\S]*?-->\\s*)*<!doctype[^>]*>", RegexOption.IGNORE_CASE).find(html)
     val head = meta + report
     return if (doctype != null) {

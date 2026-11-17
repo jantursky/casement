@@ -12,6 +12,7 @@ import com.jantursky.casement.bridge.BlockedAction
 import com.jantursky.casement.bridge.BlockedKind
 import com.jantursky.casement.compose.RendererFailure
 import com.jantursky.casement.compose.WebViewSpec
+import com.jantursky.casement.compose.cspDetail
 import kotlinx.browser.document
 import kotlinx.browser.window
 import org.w3c.dom.HTMLIFrameElement
@@ -139,7 +140,7 @@ private fun createSandboxFrame(
     portOnMessage(hostPort) { text ->
         when (controlOf(text)) {
             null -> spec.channel.fromApp(text)
-            "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, "The browser blocked a CSP violation"))
+            "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, cspDetail(text)))
             "navigation" -> spec.onBlocked(BlockedAction(BlockedKind.Navigation, "The app tried to navigate away"))
         }
     }

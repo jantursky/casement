@@ -12,6 +12,7 @@ import com.jantursky.casement.compose.RendererFailure
 import com.jantursky.casement.compose.WebViewSpec
 import com.jantursky.casement.compose.bridgeShim
 import com.jantursky.casement.compose.contentRules
+import com.jantursky.casement.compose.cspDetail
 import kotlinx.cinterop.BetaInteropApi
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.ObjCSignatureOverride
@@ -167,7 +168,7 @@ private class IosSandbox(
         val text = didReceiveScriptMessage.body as? String ?: return
         when (controlOf(text)) {
             null -> spec.channel.fromApp(text)
-            "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, "The browser blocked a CSP violation"))
+            "csp" -> spec.onBlocked(BlockedAction(BlockedKind.Csp, cspDetail(text)))
         }
     }
 

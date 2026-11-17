@@ -13,6 +13,7 @@ import androidx.compose.ui.awt.SwingPanel
 import com.jantursky.casement.bridge.BlockedAction
 import com.jantursky.casement.bridge.BlockedKind
 import com.jantursky.casement.compose.WebViewSpec
+import com.jantursky.casement.compose.cspDetail
 import javafx.application.Platform
 import javafx.concurrent.Worker
 import javafx.embed.swing.JFXPanel
@@ -121,7 +122,7 @@ internal class JavaFxSandbox(
         when (controlOf(text)) {
             null -> post { spec.channel.fromApp(text) }
             "ready" -> post { spec.channel.attach { toApp(it) } }
-            "csp" -> blocked(BlockedKind.Csp, "The browser blocked a CSP violation")
+            "csp" -> blocked(BlockedKind.Csp, cspDetail(text))
             "navigation" -> blocked(BlockedKind.Navigation, "The app tried to navigate away")
         }
     }
