@@ -4,6 +4,11 @@ All notable changes to `io.github.jantursky:casement-*` are listed here. The for
 
 ## [Unreleased]
 
+### Fixed
+
+- `toolInfo.tool` always carries `name` and `inputSchema`, so the app SDK no longer rejects `ui/initialize` for a tool whose definition lacks them (found on a real Android device).
+- The demo's bottom controls no longer sit under the Android navigation bar.
+
 ### Added
 
 - `casement-core`: the host side of the MCP Apps bridge for spec 2026-01-26, JSON-RPC framing, tool visibility, host policy and CSP builder.

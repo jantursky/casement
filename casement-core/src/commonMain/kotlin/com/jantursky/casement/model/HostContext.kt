@@ -84,7 +84,7 @@ public data class HostContext(
     public fun toJson(): JsonObject =
         buildJsonObject {
             toolInfo?.let { info ->
-                putJsonObject("toolInfo") { put("tool", info.definition) }
+                putJsonObject("toolInfo") { put("tool", info.definitionForApp()) }
             }
             theme?.let { put("theme", it.wire) }
             if (styleVariables.isNotEmpty() || fontCss != null) {
@@ -130,4 +130,12 @@ private fun ContainerDimensions.toJson(): JsonObject =
     buildJsonObject {
         height?.let { put(if (fixedHeight) "height" else "maxHeight", it) }
         width?.let { put(if (fixedWidth) "width" else "maxWidth", it) }
+    }
+
+/** The app SDK rejects a tool without `name` and `inputSchema`, so fill in what the definition left out. */
+private fun ToolWithUi.definitionForApp(): JsonObject =
+    buildJsonObject {
+        put("name", name)
+        put("inputSchema", buildJsonObject { put("type", "object") })
+        definition.forEach { (key, value) -> put(key, value) }
     }

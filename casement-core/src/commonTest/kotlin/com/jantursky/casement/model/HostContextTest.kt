@@ -61,7 +61,14 @@ class HostContextTest {
                 .jsonPrimitive.content
                 .toInt(),
         )
-        assertEquals(tool, json["toolInfo"]!!.jsonObject["tool"])
+        assertEquals(
+            "t",
+            json["toolInfo"]!!
+                .jsonObject["tool"]!!
+                .jsonObject["name"]
+                ?.jsonPrimitive
+                ?.content,
+        )
         assertEquals("1.5", json["fontScale"]!!.jsonPrimitive.content)
         assertEquals("sk-SK", json["locale"]!!.jsonPrimitive.content)
         assertEquals("Europe/Bratislava", json["timeZone"]!!.jsonPrimitive.content)
@@ -89,5 +96,13 @@ class HostContextTest {
         assertEquals(setOf("maxHeight", "maxWidth"), max["containerDimensions"]!!.jsonObject.keys)
         val fixed = HostContext(containerDimensions = ContainerDimensions(height = 10, fixedHeight = true)).toJson()
         assertEquals(setOf("height"), fixed["containerDimensions"]!!.jsonObject.keys)
+    }
+
+    @Test
+    fun `tool info always carries a name and an input schema`() {
+        val info = HostContext(toolInfo = ToolWithUi("t", ToolUi("ui://t"), JsonObject(emptyMap()))).toJson()
+        val sent = info["toolInfo"]!!.jsonObject["tool"]!!.jsonObject
+        assertEquals("t", sent["name"]?.jsonPrimitive?.content)
+        assertEquals("object", sent["inputSchema"]!!.jsonObject["type"]?.jsonPrimitive?.content)
     }
 }
