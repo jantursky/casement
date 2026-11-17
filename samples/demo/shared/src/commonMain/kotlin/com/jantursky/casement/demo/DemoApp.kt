@@ -81,7 +81,10 @@ private sealed interface Entry {
 /** The Casement demo: a chat where the assistant answers with MCP Apps. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-public fun DemoApp() {
+public fun DemoApp(
+    autoRun: List<String> = emptyList(),
+    onBlocked: (BlockedAction) -> Unit = {},
+) {
     var choice by remember { mutableStateOf(ThemeChoice.System) }
     val dark =
         when (choice) {
@@ -95,6 +98,13 @@ public fun DemoApp() {
         val blocked = remember { mutableStateListOf<BlockedAction>() }
         val listState = rememberLazyListState()
         LaunchedEffect(entries.size) { listState.animateScrollToItem(entries.lastIndex) }
+        LaunchedEffect(autoRun) {
+            autoRun.mapNotNull { id -> SCENARIOS.firstOrNull { it.id == id } }.forEach { scenario ->
+                entries += Entry.Text(true, scenario.label)
+                entries += Entry.Text(false, scenario.reply)
+                entries += Entry.App(scenario)
+            }
+        }
 
         Scaffold(
             topBar = {
@@ -166,7 +176,10 @@ public fun DemoApp() {
                                             true
                                         },
                                         onOpenLink = { entries += Entry.Text(false, "The app wants to open $it") },
-                                        onBlocked = { blocked += it },
+                                        onBlocked = {
+                                            blocked += it
+                                            onBlocked(it)
+                                        },
                                     )
                                 }
                             }

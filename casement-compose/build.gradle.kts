@@ -52,6 +52,9 @@ kotlin {
             implementation(kotlin("test"))
             implementation(libs.kotlinx.coroutines.test)
         }
+        jvmMain.dependencies {
+            implementation(libs.kcef)
+        }
         jvmTest.dependencies {
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui.test)

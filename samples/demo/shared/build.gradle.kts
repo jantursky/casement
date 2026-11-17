@@ -82,5 +82,14 @@ tasks
 compose.desktop {
     application {
         mainClass = "com.jantursky.casement.demo.MainKt"
+        // JCEF's native library crashed on JDK 25, so the run task can be pointed at another JDK.
+        System.getenv("CASEMENT_DESKTOP_JAVA_HOME")?.let { javaHome = it }
+        // JCEF needs these on macOS.
+        jvmArgs(
+            "--add-opens=java.desktop/sun.awt=ALL-UNNAMED",
+            "--add-opens=java.desktop/java.awt.peer=ALL-UNNAMED",
+            "--add-opens=java.desktop/sun.lwawt=ALL-UNNAMED",
+            "--add-opens=java.desktop/sun.lwawt.macosx=ALL-UNNAMED",
+        )
     }
 }

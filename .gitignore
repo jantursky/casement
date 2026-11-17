@@ -26,3 +26,4 @@ apps/docs/public/screenshots/
 # Browser tests
 test-results/
 playwright-report/
+hs_err_pid*.log
