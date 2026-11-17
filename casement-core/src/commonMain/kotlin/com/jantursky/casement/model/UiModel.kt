@@ -97,6 +97,18 @@ public data class UiPermissions(
             clipboardWrite = clipboardWrite && granted.clipboardWrite,
         )
 
+    /**
+     * The `Permissions-Policy` header value for a document that may use exactly these features. Features that are
+     * not granted are switched off for the document and everything it embeds.
+     */
+    public fun toPermissionsPolicy(): String =
+        listOf(
+            "camera" to camera,
+            "microphone" to microphone,
+            "geolocation" to geolocation,
+            "clipboard-write" to clipboardWrite,
+        ).joinToString(", ") { (feature, granted) -> "$feature=${if (granted) "(self)" else "()"}" }
+
     public companion object {
         /** No permissions. This is the default policy. */
         public val None: UiPermissions = UiPermissions()

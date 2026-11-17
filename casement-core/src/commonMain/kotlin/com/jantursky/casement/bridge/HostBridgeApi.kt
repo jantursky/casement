@@ -83,6 +83,21 @@ public enum class BlockedKind {
 
     /** A request the handler refused, for example a tool call the user declined. */
     Rejected,
+
+    /** The app tried to navigate away from its document. */
+    Navigation,
+
+    /** The app tried to open a new window. */
+    Window,
+
+    /** The app asked the platform for a permission the host did not grant. */
+    Permission,
+
+    /** The app tried to load something from a domain its CSP does not allow. */
+    Network,
+
+    /** The browser reported a CSP violation. */
+    Csp,
 }
 
 /** One refused action, reported to [HostBridgeHandler.onBlocked]. Hosts can log or show it. */

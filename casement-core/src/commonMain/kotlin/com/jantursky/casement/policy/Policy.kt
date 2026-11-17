@@ -29,10 +29,14 @@ public data class HostPolicy(
     public fun resolvePermissions(declared: UiPermissions): UiPermissions = declared intersect grantedPermissions
 }
 
-/** The CSP header for an app, and the domains that were dropped while building it. */
+/**
+ * The CSP header for an app, the domains that were dropped while building it, and the domains that made it in.
+ * Report [accepted] to the app as `sandbox.csp`.
+ */
 public data class CspResult(
     val header: String,
     val rejected: List<String>,
+    val accepted: UiCsp,
 )
 
 /**
@@ -85,7 +89,7 @@ public object CspBuilder {
                 "base-uri ${if (bases.isEmpty()) "'self'" else bases.joinToString(" ")}",
                 "form-action 'none'",
             )
-        return CspResult(directives.joinToString("; "), rejected)
+        return CspResult(directives.joinToString("; "), rejected, UiCsp(connect, resources, frames, bases))
     }
 
     /** True for `https` and `wss` origins, a leading wildcard label, and loopback `http` and `ws`, with a port. */
@@ -95,5 +99,50 @@ public object CspBuilder {
         if (scheme == "https" || scheme == "wss") return true
         val host = entry.substringAfter("://").substringBefore(':')
         return host in loopback
+    }
+}
+
+/** Decides whether a request URL falls under the origins a CSP declared. Used as a second wall behind the CSP. */
+public object OriginMatcher {
+    private val defaultPorts = mapOf("https" to 443, "wss" to 443, "http" to 80, "ws" to 80)
+
+    /** True when [url] has the scheme, host and port of one of [allowed]. A leading `*.` matches any subdomain. */
+    public fun isAllowed(
+        allowed: List<String>,
+        url: String,
+    ): Boolean {
+        val target = Origin.parse(url) ?: return false
+        return allowed.any { entry -> Origin.parse(entry, wildcard = true)?.let { target.isCoveredBy(it) } == true }
+    }
+
+    private data class Origin(
+        val scheme: String,
+        val host: String,
+        val port: Int,
+        val wildcard: Boolean,
+    ) {
+        fun isCoveredBy(allowed: Origin): Boolean {
+            if (scheme != allowed.scheme || port != allowed.port) return false
+            return if (allowed.wildcard) host.endsWith(".${allowed.host}") else host == allowed.host
+        }
+
+        companion object {
+            fun parse(
+                text: String,
+                wildcard: Boolean = false,
+            ): Origin? {
+                val scheme = text.substringBefore("://", "").lowercase()
+                val defaultPort = defaultPorts[scheme] ?: return null
+                val authority = text.substringAfter("://").takeWhile { it != '/' && it != '?' && it != '#' }
+                if ('@' in authority || '[' in authority || authority.isEmpty()) return null
+                val hostPart = authority.substringBeforeLast(':').lowercase()
+                val portText = authority.substringAfterLast(':', missingDelimiterValue = "")
+                val port = if (portText.isEmpty()) defaultPort else portText.toIntOrNull() ?: return null
+                val isWildcard = wildcard && hostPart.startsWith("*.")
+                val host = if (isWildcard) hostPart.removePrefix("*.") else hostPart
+                if (host.isEmpty() || '*' in host) return null
+                return Origin(scheme, host, port, isWildcard)
+            }
+        }
     }
 }

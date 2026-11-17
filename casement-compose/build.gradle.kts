@@ -1,0 +1,134 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinMultiplatform
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.android.kmp.library)
+    alias(libs.plugins.kover)
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.maven.publish)
+    alias(libs.plugins.binary.compatibility.validator)
+}
+
+kotlin {
+    explicitApi()
+
+    android {
+        namespace = "com.jantursky.casement.compose"
+        compileSdk =
+            libs.versions.android.compileSdk
+                .get()
+                .toInt()
+        minSdk =
+            libs.versions.android.minSdk
+                .get()
+                .toInt()
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
+        withHostTest { isIncludeAndroidResources = true }
+        withDeviceTest { instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" }
+    }
+
+    jvm { compilerOptions { jvmTarget.set(JvmTarget.JVM_17) } }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs { browser() }
+
+    iosArm64()
+    iosSimulatorArm64()
+
+    sourceSets {
+        commonMain.dependencies {
+            api(project(":casement-core"))
+            api(libs.compose.runtime)
+            api(libs.compose.ui)
+            implementation(libs.compose.foundation)
+            implementation(libs.compose.material3)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
+        }
+        androidMain.dependencies {
+            implementation(libs.androidx.webkit)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+        }
+        getByName("androidDeviceTest").resources.srcDir(rootProject.file("fixtures/ext-apps"))
+        getByName("androidDeviceTest").dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.androidx.test.runner)
+            implementation(libs.androidx.test.junit)
+            implementation(libs.androidx.compose.ui.test.junit4)
+            implementation(libs.androidx.compose.ui.test.manifest)
+            implementation(libs.kotlinx.coroutines.test)
+        }
+    }
+}
+
+apiValidation {
+    @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+    klib { enabled = true }
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                // Platform renderers are exercised on devices and simulators, not in host tests.
+                packages("com.jantursky.casement.compose.platform")
+            }
+        }
+        verify {
+            rule {
+                bound { minValue = 90 }
+                bound {
+                    coverageUnits = kotlinx.kover.gradle.plugin.dsl.CoverageUnit.BRANCH
+                    minValue = 78
+                }
+            }
+        }
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+    configure(KotlinMultiplatform(javadocJar = JavadocJar.Empty()))
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) signAllPublications()
+    coordinates(artifactId = "casement-compose")
+    pom {
+        name.set("Casement Compose")
+        description.set(
+            "McpAppView: render MCP Apps in a sandboxed WebView inside Compose Multiplatform, " +
+                "with the host side of the MCP Apps bridge.",
+        )
+        inceptionYear.set("2026")
+        url.set("https://github.com/jantursky/casement")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/license/mit")
+                distribution.set("repo")
+            }
+        }
+        developers {
+            developer {
+                id.set("jantursky")
+                name.set("Jan Tursky")
+                email.set("jan.tursky@gmail.com")
+                url.set("https://jantursky.com")
+            }
+        }
+        scm {
+            url.set("https://github.com/jantursky/casement")
+            connection.set("scm:git:https://github.com/jantursky/casement.git")
+            developerConnection.set("scm:git:ssh://git@github.com/jantursky/casement.git")
+        }
+    }
+}
+
+// The library ships no Compose resources, and the plugin's copy task for device tests has no output directory
+// with the Android KMP library plugin.
+tasks.matching { it.name == "copyAndroidDeviceTestComposeResourcesToAndroidAssets" }.configureEach { enabled = false }

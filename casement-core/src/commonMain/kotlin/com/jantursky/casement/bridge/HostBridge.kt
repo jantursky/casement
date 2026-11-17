@@ -133,6 +133,15 @@ public class HostBridge(
         close()
     }
 
+    /**
+     * Sends `ui/resource-teardown` without waiting for the answer, then closes the bridge. Use it when the view
+     * goes away and nothing can wait. Prefer [teardown] when it can.
+     */
+    public fun closeAfterTeardown(reason: String = "host closed the app") {
+        commands.trySend(Command.Teardown(reason, CompletableDeferred()))
+        commands.trySend(Command.Close)
+    }
+
     /** Closes the bridge without telling the app. Pending handler calls are cancelled. */
     public fun close() {
         currentState = BridgeState.Closed
@@ -169,6 +178,8 @@ public class HostBridge(
             val reason: String,
             val done: CompletableDeferred<Unit>,
         ) : Command
+
+        data object Close : Command
     }
 
     private fun process(command: Command) {
@@ -181,6 +192,7 @@ public class HostBridge(
             is Command.ToolCancelled -> onToolCancelled(command.reason)
             is Command.Context -> onContext(command.context)
             is Command.Teardown -> onTeardown(command)
+            Command.Close -> close()
         }
     }
 
@@ -324,7 +336,7 @@ public class HostBridge(
             fail(request, JsonRpcErrorCode.INVALID_PARAMS, "appInfo.name and appInfo.version are required")
             return
         }
-        val appCaps = params?.get("appCapabilities") as? JsonObject
+        val appCaps = params["appCapabilities"] as? JsonObject
         appDisplayModes =
             (appCaps?.get("availableDisplayModes") as? JsonArray)
                 ?.mapNotNull { DisplayMode.fromWire((it as? JsonPrimitive)?.content) }
@@ -484,7 +496,7 @@ public class HostBridge(
             fail(request, JsonRpcErrorCode.REJECTED, "Tool $name is not available to apps")
             return
         }
-        val arguments = request.params?.get("arguments") as? JsonObject
+        val arguments = request.params["arguments"] as? JsonObject
         launchReply(request) { handler.callTool(ToolCallRequest(name, arguments)) }
     }
 
