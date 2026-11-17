@@ -30,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,6 +38,9 @@ import androidx.compose.ui.unit.dp
 import com.jantursky.casement.bridge.BlockedAction
 import com.jantursky.casement.compose.McpAppView
 import com.jantursky.casement.demo.resources.Res
+import com.jantursky.casement.mcp.connectMcpAppsHost
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.JsonObject
 
 internal enum class ThemeChoice(
     val label: String,
@@ -75,8 +79,19 @@ private sealed interface Entry {
 
     class App(
         val scenario: Scenario,
+        val result: JsonObject?,
     ) : Entry
 }
+
+private enum class Source(
+    val label: String,
+) {
+    BuiltIn("Built-in"),
+    Servers("Servers"),
+}
+
+/** The example servers `scripts/run-sample-servers.sh` starts. */
+private val SERVER_PORTS = listOf(39101, 39102, 39103)
 
 /** The Casement demo: a chat where the assistant answers with MCP Apps. */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,15 +109,46 @@ public fun DemoApp(
         }
     MaterialTheme(colorScheme = if (dark) DarkColors else LightColors) {
         val client = remember { DemoClient { Res.readBytes("files/$it").decodeToString() } }
+        val builtIn = remember { builtInScenarios(client) }
+        val servers = remember { mutableStateListOf<Scenario>() }
+        var source by remember { mutableStateOf(Source.BuiltIn) }
+        var serverStatus by remember { mutableStateOf<String?>(null) }
         val entries = remember { mutableStateListOf<Entry>(Entry.Text(false, "Pick something and I will show it.")) }
         val blocked = remember { mutableStateListOf<BlockedAction>() }
         val listState = rememberLazyListState()
+        val scope = rememberCoroutineScope()
+
+        fun show(scenario: Scenario) {
+            entries += Entry.Text(true, scenario.label)
+            entries += Entry.Text(false, scenario.reply)
+            scope.launch {
+                val result =
+                    try {
+                        scenario.result()
+                    } catch (e: Exception) {
+                        entries += Entry.Text(false, "The tool call failed: ${e.message}")
+                        return@launch
+                    }
+                entries += Entry.App(scenario, result)
+            }
+        }
+
         LaunchedEffect(entries.size) { listState.animateScrollToItem(entries.lastIndex) }
-        LaunchedEffect(autoRun) {
-            autoRun.mapNotNull { id -> SCENARIOS.firstOrNull { it.id == id } }.forEach { scenario ->
-                entries += Entry.Text(true, scenario.label)
-                entries += Entry.Text(false, scenario.reply)
-                entries += Entry.App(scenario)
+        LaunchedEffect(source) {
+            if (source == Source.Servers && servers.isEmpty()) {
+                serverStatus = "Connecting..."
+                servers += connectServers { serverStatus = it }
+                serverStatus = if (servers.isEmpty()) serverStatus ?: "No server answered." else null
+            }
+        }
+        var started by remember { mutableStateOf(emptySet<String>()) }
+        LaunchedEffect(autoRun, servers.size) {
+            if (autoRun.any { id -> builtIn.none { it.id == id } }) source = Source.Servers
+            autoRun.filter { it !in started }.forEach { id ->
+                (builtIn + servers).firstOrNull { it.id == id }?.let {
+                    started += id
+                    show(it)
+                }
             }
         }
 
@@ -127,21 +173,26 @@ public fun DemoApp(
                 )
             },
             bottomBar = {
-                Column(Modifier.padding(vertical = 8.dp)) {
+                Column(Modifier.padding(vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     if (blocked.isNotEmpty()) BlockedPanel(blocked)
+                    Row(Modifier.padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Source.entries.forEach { option ->
+                            FilterChip(
+                                selected = source == option,
+                                onClick = { source = option },
+                                label = { Text(option.label) },
+                            )
+                        }
+                        serverStatus?.takeIf { source == Source.Servers }?.let {
+                            Text(it, Modifier.padding(top = 8.dp), style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
                     LazyRow(
                         contentPadding = PaddingValues(horizontal = 12.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        items(SCENARIOS) { scenario ->
-                            AssistChip(
-                                onClick = {
-                                    entries += Entry.Text(true, scenario.label)
-                                    entries += Entry.Text(false, scenario.reply)
-                                    entries += Entry.App(scenario)
-                                },
-                                label = { Text(scenario.label) },
-                            )
+                        items(if (source == Source.BuiltIn) builtIn else servers.toList()) { scenario ->
+                            AssistChip(onClick = { show(scenario) }, label = { Text(scenario.label) })
                         }
                     }
                 }
@@ -167,8 +218,8 @@ public fun DemoApp(
                                     McpAppView(
                                         tool = entry.scenario.tool,
                                         toolInput = null,
-                                        toolResult = entry.scenario.result(client),
-                                        client = client,
+                                        toolResult = entry.result,
+                                        client = entry.scenario.client,
                                         modifier = Modifier.fillMaxWidth(),
                                         onMessage = { entries += Entry.Text(true, "(from app) ${it.content}") },
                                         approveToolCall = {
@@ -189,6 +240,32 @@ public fun DemoApp(
             }
         }
     }
+}
+
+/** Connects to every example server that answers and returns one scenario per tool that has a UI. */
+private suspend fun connectServers(status: (String) -> Unit): List<Scenario> {
+    val http = demoHttpClient()
+    val found = mutableListOf<Scenario>()
+    SERVER_PORTS.forEach { port ->
+        val url = "http://${serverHost()}:$port/mcp"
+        try {
+            val host = connectMcpAppsHost(http, url)
+            host.refreshTools().forEach { tool ->
+                found +=
+                    Scenario(
+                        id = tool.name,
+                        label = tool.name,
+                        reply = "Here is ${tool.name} from the server on port $port.",
+                        tool = tool,
+                        client = host,
+                        result = { host.callTool(tool.name, null) },
+                    )
+            }
+        } catch (e: Exception) {
+            status("No server on port $port. Run scripts/run-sample-servers.sh")
+        }
+    }
+    return found
 }
 
 @Composable

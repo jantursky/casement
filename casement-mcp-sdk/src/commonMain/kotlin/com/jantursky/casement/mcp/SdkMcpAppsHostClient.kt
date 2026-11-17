@@ -10,12 +10,17 @@ import com.jantursky.casement.model.ToolVisibility
 import com.jantursky.casement.model.ToolWithUi
 import com.jantursky.casement.model.UiResource
 import com.jantursky.casement.model.UiResourceMeta
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.sse.SSE
 import io.modelcontextprotocol.kotlin.sdk.client.Client
+import io.modelcontextprotocol.kotlin.sdk.client.ClientOptions
+import io.modelcontextprotocol.kotlin.sdk.client.mcpStreamableHttpTransport
 import io.modelcontextprotocol.kotlin.sdk.types.BlobResourceContents
 import io.modelcontextprotocol.kotlin.sdk.types.CallToolRequest
 import io.modelcontextprotocol.kotlin.sdk.types.CallToolRequestParams
 import io.modelcontextprotocol.kotlin.sdk.types.CallToolResult
 import io.modelcontextprotocol.kotlin.sdk.types.ClientCapabilities
+import io.modelcontextprotocol.kotlin.sdk.types.Implementation
 import io.modelcontextprotocol.kotlin.sdk.types.ListToolsRequest
 import io.modelcontextprotocol.kotlin.sdk.types.McpJson
 import io.modelcontextprotocol.kotlin.sdk.types.PaginatedRequestParams
@@ -122,3 +127,21 @@ internal fun toUiResource(
 
 private fun isAppMimeType(mimeType: String?): Boolean =
     mimeType?.filterNot { it == ' ' }?.lowercase() == MCP_APP_MIME_TYPE
+
+/**
+ * Connects to an MCP server over Streamable HTTP and returns a ready [SdkMcpAppsHostClient]: the UI extension is
+ * advertised, and the tool list is loaded, so [SdkMcpAppsHostClient.tools] answers right away. The [httpClient] needs
+ * an engine for the platform; the SSE plugin is added here.
+ *
+ * @param url The server's MCP endpoint, for example `http://localhost:3001/mcp`.
+ */
+public suspend fun connectMcpAppsHost(
+    httpClient: HttpClient,
+    url: String,
+    clientInfo: Implementation = Implementation(name = "casement-host", version = "1.0.0"),
+): SdkMcpAppsHostClient {
+    val http = httpClient.config { install(SSE) }
+    val client = Client(clientInfo, ClientOptions(capabilities = mcpAppsClientCapabilities()))
+    client.connect(http.mcpStreamableHttpTransport(url))
+    return SdkMcpAppsHostClient(client).also { it.refreshTools() }
+}

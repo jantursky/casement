@@ -64,16 +64,22 @@ kotlin {
         commonMain.dependencies {
             api(project(":casement-compose"))
             api(project(":casement-core"))
+            implementation(project(":casement-mcp-sdk"))
+            implementation(libs.ktor.client.core)
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui)
             implementation(libs.compose.material3)
             implementation(libs.compose.components.resources)
         }
+        androidMain.dependencies { implementation(libs.ktor.client.cio) }
+        iosMain.dependencies { implementation(libs.ktor.client.darwin) }
+        wasmJsMain.dependencies { implementation(libs.ktor.client.js) }
         commonTest.dependencies { implementation(kotlin("test")) }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             // The desktop renderer's web engine (OpenJFX), see javafxPlatform below.
+            implementation(libs.ktor.client.cio)
             implementation(files(javafxPlatform))
             implementation(libs.kotlinx.coroutines.swing)
         }
