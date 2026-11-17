@@ -1,0 +1,582 @@
+public final class com/jantursky/casement/bridge/AppInfo {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lcom/jantursky/casement/bridge/AppInfo;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/bridge/AppInfo;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lcom/jantursky/casement/bridge/AppInfo;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/bridge/AppMessage {
+	public fun <init> (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun copy (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)Lcom/jantursky/casement/bridge/AppMessage;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/bridge/AppMessage;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;ILjava/lang/Object;)Lcom/jantursky/casement/bridge/AppMessage;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContent ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getRole ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/bridge/BlockedAction {
+	public fun <init> (Lcom/jantursky/casement/bridge/BlockedKind;Ljava/lang/String;)V
+	public final fun component1 ()Lcom/jantursky/casement/bridge/BlockedKind;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lcom/jantursky/casement/bridge/BlockedKind;Ljava/lang/String;)Lcom/jantursky/casement/bridge/BlockedAction;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/bridge/BlockedAction;Lcom/jantursky/casement/bridge/BlockedKind;Ljava/lang/String;ILjava/lang/Object;)Lcom/jantursky/casement/bridge/BlockedAction;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDetail ()Ljava/lang/String;
+	public final fun getKind ()Lcom/jantursky/casement/bridge/BlockedKind;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/bridge/BlockedKind : java/lang/Enum {
+	public static final field Capability Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field DisplayMode Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field Duplicate Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field Link Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field Malformed Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field Oversize Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field Premature Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field Rejected Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field ToolNotVisible Lcom/jantursky/casement/bridge/BlockedKind;
+	public static final field ToolUnknown Lcom/jantursky/casement/bridge/BlockedKind;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jantursky/casement/bridge/BlockedKind;
+	public static fun values ()[Lcom/jantursky/casement/bridge/BlockedKind;
+}
+
+public final class com/jantursky/casement/bridge/BridgeRejection : java/lang/Exception {
+	public fun <init> (Ljava/lang/String;I)V
+	public synthetic fun <init> (Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCode ()I
+}
+
+public final class com/jantursky/casement/bridge/BridgeState : java/lang/Enum {
+	public static final field AwaitingInitialize Lcom/jantursky/casement/bridge/BridgeState;
+	public static final field AwaitingInitialized Lcom/jantursky/casement/bridge/BridgeState;
+	public static final field Closed Lcom/jantursky/casement/bridge/BridgeState;
+	public static final field Ready Lcom/jantursky/casement/bridge/BridgeState;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jantursky/casement/bridge/BridgeState;
+	public static fun values ()[Lcom/jantursky/casement/bridge/BridgeState;
+}
+
+public final class com/jantursky/casement/bridge/HostBridge {
+	public static final field MAX_DETAIL I
+	public static final field MAX_SIDE D
+	public static final field TEARDOWN_GRACE_MILLIS J
+	public fun <init> (Lcom/jantursky/casement/bridge/HostBridgeConfig;Lcom/jantursky/casement/bridge/HostBridgeHandler;Lcom/jantursky/casement/bridge/HostBridgeTransport;Lkotlinx/coroutines/CoroutineScope;Lcom/jantursky/casement/bridge/ToolCatalog;Lcom/jantursky/casement/model/HostContext;)V
+	public synthetic fun <init> (Lcom/jantursky/casement/bridge/HostBridgeConfig;Lcom/jantursky/casement/bridge/HostBridgeHandler;Lcom/jantursky/casement/bridge/HostBridgeTransport;Lkotlinx/coroutines/CoroutineScope;Lcom/jantursky/casement/bridge/ToolCatalog;Lcom/jantursky/casement/model/HostContext;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun close ()V
+	public final fun getState ()Lcom/jantursky/casement/bridge/BridgeState;
+	public final fun receive (Ljava/lang/String;)V
+	public final fun sendToolCancelled (Ljava/lang/String;)V
+	public static synthetic fun sendToolCancelled$default (Lcom/jantursky/casement/bridge/HostBridge;Ljava/lang/String;ILjava/lang/Object;)V
+	public final fun sendToolInput (Lkotlinx/serialization/json/JsonObject;)V
+	public final fun sendToolInputPartial (Lkotlinx/serialization/json/JsonObject;)V
+	public final fun sendToolResult (Lkotlinx/serialization/json/JsonObject;)V
+	public final fun teardown (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun teardown$default (Lcom/jantursky/casement/bridge/HostBridge;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun updateContext (Lcom/jantursky/casement/model/HostContext;)V
+}
+
+public final class com/jantursky/casement/bridge/HostBridgeConfig {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;Lcom/jantursky/casement/policy/HostPolicy;Lcom/jantursky/casement/model/UiPermissions;Lcom/jantursky/casement/model/UiCsp;J)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;Lcom/jantursky/casement/policy/HostPolicy;Lcom/jantursky/casement/model/UiPermissions;Lcom/jantursky/casement/model/UiCsp;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;
+	public final fun component4 ()Lcom/jantursky/casement/policy/HostPolicy;
+	public final fun component5 ()Lcom/jantursky/casement/model/UiPermissions;
+	public final fun component6 ()Lcom/jantursky/casement/model/UiCsp;
+	public final fun component7 ()J
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;Lcom/jantursky/casement/policy/HostPolicy;Lcom/jantursky/casement/model/UiPermissions;Lcom/jantursky/casement/model/UiCsp;J)Lcom/jantursky/casement/bridge/HostBridgeConfig;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/bridge/HostBridgeConfig;Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;Lcom/jantursky/casement/policy/HostPolicy;Lcom/jantursky/casement/model/UiPermissions;Lcom/jantursky/casement/model/UiCsp;JILjava/lang/Object;)Lcom/jantursky/casement/bridge/HostBridgeConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCapabilities ()Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;
+	public final fun getHostName ()Ljava/lang/String;
+	public final fun getHostVersion ()Ljava/lang/String;
+	public final fun getPolicy ()Lcom/jantursky/casement/policy/HostPolicy;
+	public final fun getSandboxCsp ()Lcom/jantursky/casement/model/UiCsp;
+	public final fun getSandboxPermissions ()Lcom/jantursky/casement/model/UiPermissions;
+	public final fun getTeardownTimeoutMillis ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/jantursky/casement/bridge/HostBridgeHandler {
+	public fun callTool (Lcom/jantursky/casement/bridge/ToolCallRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun forward (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onBlocked (Lcom/jantursky/casement/bridge/BlockedAction;)V
+	public fun onInitialized (Lcom/jantursky/casement/bridge/AppInfo;)V
+	public fun onLog (Lkotlinx/serialization/json/JsonObject;)V
+	public fun onMessage (Lcom/jantursky/casement/bridge/AppMessage;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onOpenLink (Ljava/lang/String;)Z
+	public fun onRequestDisplayMode (Lcom/jantursky/casement/model/DisplayMode;)Lcom/jantursky/casement/model/DisplayMode;
+	public fun onRequestTeardown ()V
+	public fun onSizeChanged (Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public fun onUpdateModelContext (Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class com/jantursky/casement/bridge/HostBridgeHandler$DefaultImpls {
+	public static fun callTool (Lcom/jantursky/casement/bridge/HostBridgeHandler;Lcom/jantursky/casement/bridge/ToolCallRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun forward (Lcom/jantursky/casement/bridge/HostBridgeHandler;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun onBlocked (Lcom/jantursky/casement/bridge/HostBridgeHandler;Lcom/jantursky/casement/bridge/BlockedAction;)V
+	public static fun onInitialized (Lcom/jantursky/casement/bridge/HostBridgeHandler;Lcom/jantursky/casement/bridge/AppInfo;)V
+	public static fun onLog (Lcom/jantursky/casement/bridge/HostBridgeHandler;Lkotlinx/serialization/json/JsonObject;)V
+	public static fun onMessage (Lcom/jantursky/casement/bridge/HostBridgeHandler;Lcom/jantursky/casement/bridge/AppMessage;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun onOpenLink (Lcom/jantursky/casement/bridge/HostBridgeHandler;Ljava/lang/String;)Z
+	public static fun onRequestDisplayMode (Lcom/jantursky/casement/bridge/HostBridgeHandler;Lcom/jantursky/casement/model/DisplayMode;)Lcom/jantursky/casement/model/DisplayMode;
+	public static fun onRequestTeardown (Lcom/jantursky/casement/bridge/HostBridgeHandler;)V
+	public static fun onSizeChanged (Lcom/jantursky/casement/bridge/HostBridgeHandler;Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public static fun onUpdateModelContext (Lcom/jantursky/casement/bridge/HostBridgeHandler;Lkotlinx/serialization/json/JsonObject;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class com/jantursky/casement/bridge/HostBridgeTransport {
+	public abstract fun send (Ljava/lang/String;)V
+}
+
+public final class com/jantursky/casement/bridge/HostCapabilitiesConfig {
+	public fun <init> ()V
+	public fun <init> (ZZZZZZ)V
+	public synthetic fun <init> (ZZZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun copy (ZZZZZZ)Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;ZZZZZZILjava/lang/Object;)Lcom/jantursky/casement/bridge/HostCapabilitiesConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLogging ()Z
+	public final fun getMessage ()Z
+	public final fun getOpenLinks ()Z
+	public final fun getServerResources ()Z
+	public final fun getServerTools ()Z
+	public final fun getUpdateModelContext ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/bridge/ToolCallRequest {
+	public fun <init> (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lcom/jantursky/casement/bridge/ToolCallRequest;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/bridge/ToolCallRequest;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/jantursky/casement/bridge/ToolCallRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArguments ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/jantursky/casement/bridge/ToolCatalog {
+	public static final field Companion Lcom/jantursky/casement/bridge/ToolCatalog$Companion;
+	public abstract fun visibilityOf (Ljava/lang/String;)Ljava/util/Set;
+}
+
+public final class com/jantursky/casement/bridge/ToolCatalog$Companion {
+	public final fun getEmpty ()Lcom/jantursky/casement/bridge/ToolCatalog;
+	public final fun of (Ljava/util/Map;)Lcom/jantursky/casement/bridge/ToolCatalog;
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcCodec {
+	public static final field INSTANCE Lcom/jantursky/casement/jsonrpc/JsonRpcCodec;
+	public final fun decode (Ljava/lang/String;)Lcom/jantursky/casement/jsonrpc/JsonRpcMessage;
+	public final fun encode (Lcom/jantursky/casement/jsonrpc/JsonRpcMessage;)Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcError {
+	public fun <init> (ILjava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/json/JsonElement;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun copy (ILjava/lang/String;Lkotlinx/serialization/json/JsonElement;)Lcom/jantursky/casement/jsonrpc/JsonRpcError;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/jsonrpc/JsonRpcError;ILjava/lang/String;Lkotlinx/serialization/json/JsonElement;ILjava/lang/Object;)Lcom/jantursky/casement/jsonrpc/JsonRpcError;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public final fun getData ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcErrorCode {
+	public static final field INSTANCE Lcom/jantursky/casement/jsonrpc/JsonRpcErrorCode;
+	public static final field INTERNAL_ERROR I
+	public static final field INVALID_PARAMS I
+	public static final field INVALID_REQUEST I
+	public static final field METHOD_NOT_FOUND I
+	public static final field PARSE_ERROR I
+	public static final field REJECTED I
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcErrorResponse : com/jantursky/casement/jsonrpc/JsonRpcMessage {
+	public fun <init> (Lkotlinx/serialization/json/JsonElement;Lcom/jantursky/casement/jsonrpc/JsonRpcError;)V
+	public final fun component1 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun component2 ()Lcom/jantursky/casement/jsonrpc/JsonRpcError;
+	public final fun copy (Lkotlinx/serialization/json/JsonElement;Lcom/jantursky/casement/jsonrpc/JsonRpcError;)Lcom/jantursky/casement/jsonrpc/JsonRpcErrorResponse;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/jsonrpc/JsonRpcErrorResponse;Lkotlinx/serialization/json/JsonElement;Lcom/jantursky/casement/jsonrpc/JsonRpcError;ILjava/lang/Object;)Lcom/jantursky/casement/jsonrpc/JsonRpcErrorResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Lcom/jantursky/casement/jsonrpc/JsonRpcError;
+	public final fun getId ()Lkotlinx/serialization/json/JsonElement;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcFormatException : java/lang/IllegalArgumentException {
+	public fun <init> (ILjava/lang/String;)V
+	public final fun getCode ()I
+}
+
+public abstract interface class com/jantursky/casement/jsonrpc/JsonRpcMessage {
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcNotification : com/jantursky/casement/jsonrpc/JsonRpcMessage {
+	public fun <init> (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy (Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lcom/jantursky/casement/jsonrpc/JsonRpcNotification;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/jsonrpc/JsonRpcNotification;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/jantursky/casement/jsonrpc/JsonRpcNotification;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMethod ()Ljava/lang/String;
+	public final fun getParams ()Lkotlinx/serialization/json/JsonObject;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcRequest : com/jantursky/casement/jsonrpc/JsonRpcMessage {
+	public fun <init> (Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)V
+	public synthetic fun <init> (Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy (Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lcom/jantursky/casement/jsonrpc/JsonRpcRequest;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/jsonrpc/JsonRpcRequest;Lkotlinx/serialization/json/JsonElement;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/jantursky/casement/jsonrpc/JsonRpcRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getMethod ()Ljava/lang/String;
+	public final fun getParams ()Lkotlinx/serialization/json/JsonObject;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/jsonrpc/JsonRpcResponse : com/jantursky/casement/jsonrpc/JsonRpcMessage {
+	public fun <init> (Lkotlinx/serialization/json/JsonElement;Lkotlinx/serialization/json/JsonObject;)V
+	public final fun component1 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun component2 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy (Lkotlinx/serialization/json/JsonElement;Lkotlinx/serialization/json/JsonObject;)Lcom/jantursky/casement/jsonrpc/JsonRpcResponse;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/jsonrpc/JsonRpcResponse;Lkotlinx/serialization/json/JsonElement;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/jantursky/casement/jsonrpc/JsonRpcResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getResult ()Lkotlinx/serialization/json/JsonObject;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/ContainerDimensions {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;ZZ)V
+	public synthetic fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun copy (Ljava/lang/Integer;Ljava/lang/Integer;ZZ)Lcom/jantursky/casement/model/ContainerDimensions;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/ContainerDimensions;Ljava/lang/Integer;Ljava/lang/Integer;ZZILjava/lang/Object;)Lcom/jantursky/casement/model/ContainerDimensions;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFixedHeight ()Z
+	public final fun getFixedWidth ()Z
+	public final fun getHeight ()Ljava/lang/Integer;
+	public final fun getWidth ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/DisplayMode : java/lang/Enum {
+	public static final field Companion Lcom/jantursky/casement/model/DisplayMode$Companion;
+	public static final field Fullscreen Lcom/jantursky/casement/model/DisplayMode;
+	public static final field Inline Lcom/jantursky/casement/model/DisplayMode;
+	public static final field Pip Lcom/jantursky/casement/model/DisplayMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getWire ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jantursky/casement/model/DisplayMode;
+	public static fun values ()[Lcom/jantursky/casement/model/DisplayMode;
+}
+
+public final class com/jantursky/casement/model/DisplayMode$Companion {
+	public final fun fromWire (Ljava/lang/String;)Lcom/jantursky/casement/model/DisplayMode;
+}
+
+public final class com/jantursky/casement/model/HostContext {
+	public fun <init> ()V
+	public fun <init> (Lcom/jantursky/casement/model/Theme;Ljava/util/Map;Ljava/lang/String;Lcom/jantursky/casement/model/DisplayMode;Ljava/util/List;Lcom/jantursky/casement/model/ContainerDimensions;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/Platform;Ljava/lang/Boolean;Ljava/lang/Boolean;Lcom/jantursky/casement/model/SafeAreaInsets;Lcom/jantursky/casement/model/ToolWithUi;Ljava/util/Map;)V
+	public synthetic fun <init> (Lcom/jantursky/casement/model/Theme;Ljava/util/Map;Ljava/lang/String;Lcom/jantursky/casement/model/DisplayMode;Ljava/util/List;Lcom/jantursky/casement/model/ContainerDimensions;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/Platform;Ljava/lang/Boolean;Ljava/lang/Boolean;Lcom/jantursky/casement/model/SafeAreaInsets;Lcom/jantursky/casement/model/ToolWithUi;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun changesSince (Lcom/jantursky/casement/model/HostContext;)Lkotlinx/serialization/json/JsonObject;
+	public final fun component1 ()Lcom/jantursky/casement/model/Theme;
+	public final fun component10 ()Lcom/jantursky/casement/model/Platform;
+	public final fun component11 ()Ljava/lang/Boolean;
+	public final fun component12 ()Ljava/lang/Boolean;
+	public final fun component13 ()Lcom/jantursky/casement/model/SafeAreaInsets;
+	public final fun component14 ()Lcom/jantursky/casement/model/ToolWithUi;
+	public final fun component15 ()Ljava/util/Map;
+	public final fun component2 ()Ljava/util/Map;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lcom/jantursky/casement/model/DisplayMode;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Lcom/jantursky/casement/model/ContainerDimensions;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Lcom/jantursky/casement/model/Theme;Ljava/util/Map;Ljava/lang/String;Lcom/jantursky/casement/model/DisplayMode;Ljava/util/List;Lcom/jantursky/casement/model/ContainerDimensions;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/Platform;Ljava/lang/Boolean;Ljava/lang/Boolean;Lcom/jantursky/casement/model/SafeAreaInsets;Lcom/jantursky/casement/model/ToolWithUi;Ljava/util/Map;)Lcom/jantursky/casement/model/HostContext;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/HostContext;Lcom/jantursky/casement/model/Theme;Ljava/util/Map;Ljava/lang/String;Lcom/jantursky/casement/model/DisplayMode;Ljava/util/List;Lcom/jantursky/casement/model/ContainerDimensions;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/Platform;Ljava/lang/Boolean;Ljava/lang/Boolean;Lcom/jantursky/casement/model/SafeAreaInsets;Lcom/jantursky/casement/model/ToolWithUi;Ljava/util/Map;ILjava/lang/Object;)Lcom/jantursky/casement/model/HostContext;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAvailableDisplayModes ()Ljava/util/List;
+	public final fun getContainerDimensions ()Lcom/jantursky/casement/model/ContainerDimensions;
+	public final fun getDisplayMode ()Lcom/jantursky/casement/model/DisplayMode;
+	public final fun getExtras ()Ljava/util/Map;
+	public final fun getFontCss ()Ljava/lang/String;
+	public final fun getHover ()Ljava/lang/Boolean;
+	public final fun getLocale ()Ljava/lang/String;
+	public final fun getPlatform ()Lcom/jantursky/casement/model/Platform;
+	public final fun getSafeAreaInsets ()Lcom/jantursky/casement/model/SafeAreaInsets;
+	public final fun getStyleVariables ()Ljava/util/Map;
+	public final fun getTheme ()Lcom/jantursky/casement/model/Theme;
+	public final fun getTimeZone ()Ljava/lang/String;
+	public final fun getToolInfo ()Lcom/jantursky/casement/model/ToolWithUi;
+	public final fun getTouch ()Ljava/lang/Boolean;
+	public final fun getUserAgent ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun toJson ()Lkotlinx/serialization/json/JsonObject;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/Platform : java/lang/Enum {
+	public static final field Desktop Lcom/jantursky/casement/model/Platform;
+	public static final field Mobile Lcom/jantursky/casement/model/Platform;
+	public static final field Web Lcom/jantursky/casement/model/Platform;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getWire ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jantursky/casement/model/Platform;
+	public static fun values ()[Lcom/jantursky/casement/model/Platform;
+}
+
+public final class com/jantursky/casement/model/SafeAreaInsets {
+	public fun <init> ()V
+	public fun <init> (IIII)V
+	public synthetic fun <init> (IIIIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()I
+	public final fun copy (IIII)Lcom/jantursky/casement/model/SafeAreaInsets;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/SafeAreaInsets;IIIIILjava/lang/Object;)Lcom/jantursky/casement/model/SafeAreaInsets;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBottom ()I
+	public final fun getLeft ()I
+	public final fun getRight ()I
+	public final fun getTop ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/Theme : java/lang/Enum {
+	public static final field Dark Lcom/jantursky/casement/model/Theme;
+	public static final field Light Lcom/jantursky/casement/model/Theme;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getWire ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jantursky/casement/model/Theme;
+	public static fun values ()[Lcom/jantursky/casement/model/Theme;
+}
+
+public final class com/jantursky/casement/model/ToolUi {
+	public static final field Companion Lcom/jantursky/casement/model/ToolUi$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/util/Set;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Set;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/Set;
+	public final fun copy (Ljava/lang/String;Ljava/util/Set;)Lcom/jantursky/casement/model/ToolUi;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/ToolUi;Ljava/lang/String;Ljava/util/Set;ILjava/lang/Object;)Lcom/jantursky/casement/model/ToolUi;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAppCallable ()Z
+	public final fun getResourceUri ()Ljava/lang/String;
+	public final fun getVisibility ()Ljava/util/Set;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/ToolUi$Companion {
+	public final fun fromToolMeta (Lkotlinx/serialization/json/JsonObject;)Lcom/jantursky/casement/model/ToolUi;
+}
+
+public final class com/jantursky/casement/model/ToolVisibility : java/lang/Enum {
+	public static final field App Lcom/jantursky/casement/model/ToolVisibility;
+	public static final field Model Lcom/jantursky/casement/model/ToolVisibility;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getWire ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jantursky/casement/model/ToolVisibility;
+	public static fun values ()[Lcom/jantursky/casement/model/ToolVisibility;
+}
+
+public final class com/jantursky/casement/model/ToolWithUi {
+	public fun <init> (Ljava/lang/String;Lcom/jantursky/casement/model/ToolUi;Lkotlinx/serialization/json/JsonObject;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lcom/jantursky/casement/model/ToolUi;
+	public final fun component3 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy (Ljava/lang/String;Lcom/jantursky/casement/model/ToolUi;Lkotlinx/serialization/json/JsonObject;)Lcom/jantursky/casement/model/ToolWithUi;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/ToolWithUi;Ljava/lang/String;Lcom/jantursky/casement/model/ToolUi;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lcom/jantursky/casement/model/ToolWithUi;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefinition ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getUi ()Lcom/jantursky/casement/model/ToolUi;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/UiCsp {
+	public static final field Companion Lcom/jantursky/casement/model/UiCsp$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lcom/jantursky/casement/model/UiCsp;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/UiCsp;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lcom/jantursky/casement/model/UiCsp;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBaseUriDomains ()Ljava/util/List;
+	public final fun getConnectDomains ()Ljava/util/List;
+	public final fun getFrameDomains ()Ljava/util/List;
+	public final fun getResourceDomains ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/UiCsp$Companion {
+}
+
+public final class com/jantursky/casement/model/UiModelKt {
+	public static final field EXTENSION_ID Ljava/lang/String;
+	public static final field MCP_APP_MIME_TYPE Ljava/lang/String;
+	public static final field SPEC_VERSION Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/UiPermissions {
+	public static final field Companion Lcom/jantursky/casement/model/UiPermissions$Companion;
+	public fun <init> ()V
+	public fun <init> (ZZZZ)V
+	public synthetic fun <init> (ZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun copy (ZZZZ)Lcom/jantursky/casement/model/UiPermissions;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/UiPermissions;ZZZZILjava/lang/Object;)Lcom/jantursky/casement/model/UiPermissions;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCamera ()Z
+	public final fun getClipboardWrite ()Z
+	public final fun getGeolocation ()Z
+	public final fun getMicrophone ()Z
+	public fun hashCode ()I
+	public final fun intersect (Lcom/jantursky/casement/model/UiPermissions;)Lcom/jantursky/casement/model/UiPermissions;
+	public final fun isEmpty ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/UiPermissions$Companion {
+	public final fun getNone ()Lcom/jantursky/casement/model/UiPermissions;
+}
+
+public final class com/jantursky/casement/model/UiResource {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/UiResourceMeta;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/UiResourceMeta;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lcom/jantursky/casement/model/UiResourceMeta;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/UiResourceMeta;)Lcom/jantursky/casement/model/UiResource;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/UiResource;Ljava/lang/String;Ljava/lang/String;Lcom/jantursky/casement/model/UiResourceMeta;ILjava/lang/Object;)Lcom/jantursky/casement/model/UiResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHtml ()Ljava/lang/String;
+	public final fun getMeta ()Lcom/jantursky/casement/model/UiResourceMeta;
+	public final fun getUri ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/UiResourceMeta {
+	public static final field Companion Lcom/jantursky/casement/model/UiResourceMeta$Companion;
+	public fun <init> ()V
+	public fun <init> (Lcom/jantursky/casement/model/UiCsp;Lcom/jantursky/casement/model/UiPermissions;Ljava/lang/String;Ljava/lang/Boolean;)V
+	public synthetic fun <init> (Lcom/jantursky/casement/model/UiCsp;Lcom/jantursky/casement/model/UiPermissions;Ljava/lang/String;Ljava/lang/Boolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lcom/jantursky/casement/model/UiCsp;
+	public final fun component2 ()Lcom/jantursky/casement/model/UiPermissions;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/Boolean;
+	public final fun copy (Lcom/jantursky/casement/model/UiCsp;Lcom/jantursky/casement/model/UiPermissions;Ljava/lang/String;Ljava/lang/Boolean;)Lcom/jantursky/casement/model/UiResourceMeta;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/model/UiResourceMeta;Lcom/jantursky/casement/model/UiCsp;Lcom/jantursky/casement/model/UiPermissions;Ljava/lang/String;Ljava/lang/Boolean;ILjava/lang/Object;)Lcom/jantursky/casement/model/UiResourceMeta;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCsp ()Lcom/jantursky/casement/model/UiCsp;
+	public final fun getDomain ()Ljava/lang/String;
+	public final fun getPermissions ()Lcom/jantursky/casement/model/UiPermissions;
+	public final fun getPrefersBorder ()Ljava/lang/Boolean;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/model/UiResourceMeta$Companion {
+	public final fun fromResourceMeta (Lkotlinx/serialization/json/JsonObject;)Lcom/jantursky/casement/model/UiResourceMeta;
+}
+
+public final class com/jantursky/casement/policy/CspBuilder {
+	public static final field INSTANCE Lcom/jantursky/casement/policy/CspBuilder;
+	public final fun build (Lcom/jantursky/casement/model/UiCsp;)Lcom/jantursky/casement/policy/CspResult;
+	public final fun isAllowedOrigin (Ljava/lang/String;)Z
+}
+
+public final class com/jantursky/casement/policy/CspResult {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lcom/jantursky/casement/policy/CspResult;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/policy/CspResult;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lcom/jantursky/casement/policy/CspResult;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHeader ()Ljava/lang/String;
+	public final fun getRejected ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jantursky/casement/policy/HostPolicy {
+	public fun <init> ()V
+	public fun <init> (Lcom/jantursky/casement/model/UiPermissions;Ljava/util/Set;II)V
+	public synthetic fun <init> (Lcom/jantursky/casement/model/UiPermissions;Ljava/util/Set;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun allowsLink (Ljava/lang/String;)Z
+	public final fun component1 ()Lcom/jantursky/casement/model/UiPermissions;
+	public final fun component2 ()Ljava/util/Set;
+	public final fun component3 ()I
+	public final fun component4 ()I
+	public final fun copy (Lcom/jantursky/casement/model/UiPermissions;Ljava/util/Set;II)Lcom/jantursky/casement/policy/HostPolicy;
+	public static synthetic fun copy$default (Lcom/jantursky/casement/policy/HostPolicy;Lcom/jantursky/casement/model/UiPermissions;Ljava/util/Set;IIILjava/lang/Object;)Lcom/jantursky/casement/policy/HostPolicy;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAllowedLinkSchemes ()Ljava/util/Set;
+	public final fun getGrantedPermissions ()Lcom/jantursky/casement/model/UiPermissions;
+	public final fun getMaxHtmlLength ()I
+	public final fun getMaxMessageLength ()I
+	public fun hashCode ()I
+	public final fun resolvePermissions (Lcom/jantursky/casement/model/UiPermissions;)Lcom/jantursky/casement/model/UiPermissions;
+	public fun toString ()Ljava/lang/String;
+}
+

@@ -1,0 +1,680 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <casement:casement-core>
+final enum class com.jantursky.casement.bridge/BlockedKind : kotlin/Enum<com.jantursky.casement.bridge/BlockedKind> { // com.jantursky.casement.bridge/BlockedKind|null[0]
+    enum entry Capability // com.jantursky.casement.bridge/BlockedKind.Capability|null[0]
+    enum entry DisplayMode // com.jantursky.casement.bridge/BlockedKind.DisplayMode|null[0]
+    enum entry Duplicate // com.jantursky.casement.bridge/BlockedKind.Duplicate|null[0]
+    enum entry Link // com.jantursky.casement.bridge/BlockedKind.Link|null[0]
+    enum entry Malformed // com.jantursky.casement.bridge/BlockedKind.Malformed|null[0]
+    enum entry Oversize // com.jantursky.casement.bridge/BlockedKind.Oversize|null[0]
+    enum entry Premature // com.jantursky.casement.bridge/BlockedKind.Premature|null[0]
+    enum entry Rejected // com.jantursky.casement.bridge/BlockedKind.Rejected|null[0]
+    enum entry ToolNotVisible // com.jantursky.casement.bridge/BlockedKind.ToolNotVisible|null[0]
+    enum entry ToolUnknown // com.jantursky.casement.bridge/BlockedKind.ToolUnknown|null[0]
+
+    final val entries // com.jantursky.casement.bridge/BlockedKind.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.jantursky.casement.bridge/BlockedKind> // com.jantursky.casement.bridge/BlockedKind.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.jantursky.casement.bridge/BlockedKind // com.jantursky.casement.bridge/BlockedKind.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.jantursky.casement.bridge/BlockedKind> // com.jantursky.casement.bridge/BlockedKind.values|values#static(){}[0]
+}
+
+final enum class com.jantursky.casement.bridge/BridgeState : kotlin/Enum<com.jantursky.casement.bridge/BridgeState> { // com.jantursky.casement.bridge/BridgeState|null[0]
+    enum entry AwaitingInitialize // com.jantursky.casement.bridge/BridgeState.AwaitingInitialize|null[0]
+    enum entry AwaitingInitialized // com.jantursky.casement.bridge/BridgeState.AwaitingInitialized|null[0]
+    enum entry Closed // com.jantursky.casement.bridge/BridgeState.Closed|null[0]
+    enum entry Ready // com.jantursky.casement.bridge/BridgeState.Ready|null[0]
+
+    final val entries // com.jantursky.casement.bridge/BridgeState.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.jantursky.casement.bridge/BridgeState> // com.jantursky.casement.bridge/BridgeState.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.jantursky.casement.bridge/BridgeState // com.jantursky.casement.bridge/BridgeState.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.jantursky.casement.bridge/BridgeState> // com.jantursky.casement.bridge/BridgeState.values|values#static(){}[0]
+}
+
+final enum class com.jantursky.casement.model/DisplayMode : kotlin/Enum<com.jantursky.casement.model/DisplayMode> { // com.jantursky.casement.model/DisplayMode|null[0]
+    enum entry Fullscreen // com.jantursky.casement.model/DisplayMode.Fullscreen|null[0]
+    enum entry Inline // com.jantursky.casement.model/DisplayMode.Inline|null[0]
+    enum entry Pip // com.jantursky.casement.model/DisplayMode.Pip|null[0]
+
+    final val entries // com.jantursky.casement.model/DisplayMode.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.jantursky.casement.model/DisplayMode> // com.jantursky.casement.model/DisplayMode.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val wire // com.jantursky.casement.model/DisplayMode.wire|{}wire[0]
+        final fun <get-wire>(): kotlin/String // com.jantursky.casement.model/DisplayMode.wire.<get-wire>|<get-wire>(){}[0]
+
+    final fun valueOf(kotlin/String): com.jantursky.casement.model/DisplayMode // com.jantursky.casement.model/DisplayMode.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.jantursky.casement.model/DisplayMode> // com.jantursky.casement.model/DisplayMode.values|values#static(){}[0]
+
+    final object Companion { // com.jantursky.casement.model/DisplayMode.Companion|null[0]
+        final fun fromWire(kotlin/String?): com.jantursky.casement.model/DisplayMode? // com.jantursky.casement.model/DisplayMode.Companion.fromWire|fromWire(kotlin.String?){}[0]
+    }
+}
+
+final enum class com.jantursky.casement.model/Platform : kotlin/Enum<com.jantursky.casement.model/Platform> { // com.jantursky.casement.model/Platform|null[0]
+    enum entry Desktop // com.jantursky.casement.model/Platform.Desktop|null[0]
+    enum entry Mobile // com.jantursky.casement.model/Platform.Mobile|null[0]
+    enum entry Web // com.jantursky.casement.model/Platform.Web|null[0]
+
+    final val entries // com.jantursky.casement.model/Platform.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.jantursky.casement.model/Platform> // com.jantursky.casement.model/Platform.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val wire // com.jantursky.casement.model/Platform.wire|{}wire[0]
+        final fun <get-wire>(): kotlin/String // com.jantursky.casement.model/Platform.wire.<get-wire>|<get-wire>(){}[0]
+
+    final fun valueOf(kotlin/String): com.jantursky.casement.model/Platform // com.jantursky.casement.model/Platform.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.jantursky.casement.model/Platform> // com.jantursky.casement.model/Platform.values|values#static(){}[0]
+}
+
+final enum class com.jantursky.casement.model/Theme : kotlin/Enum<com.jantursky.casement.model/Theme> { // com.jantursky.casement.model/Theme|null[0]
+    enum entry Dark // com.jantursky.casement.model/Theme.Dark|null[0]
+    enum entry Light // com.jantursky.casement.model/Theme.Light|null[0]
+
+    final val entries // com.jantursky.casement.model/Theme.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.jantursky.casement.model/Theme> // com.jantursky.casement.model/Theme.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val wire // com.jantursky.casement.model/Theme.wire|{}wire[0]
+        final fun <get-wire>(): kotlin/String // com.jantursky.casement.model/Theme.wire.<get-wire>|<get-wire>(){}[0]
+
+    final fun valueOf(kotlin/String): com.jantursky.casement.model/Theme // com.jantursky.casement.model/Theme.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.jantursky.casement.model/Theme> // com.jantursky.casement.model/Theme.values|values#static(){}[0]
+}
+
+final enum class com.jantursky.casement.model/ToolVisibility : kotlin/Enum<com.jantursky.casement.model/ToolVisibility> { // com.jantursky.casement.model/ToolVisibility|null[0]
+    enum entry App // com.jantursky.casement.model/ToolVisibility.App|null[0]
+    enum entry Model // com.jantursky.casement.model/ToolVisibility.Model|null[0]
+
+    final val entries // com.jantursky.casement.model/ToolVisibility.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.jantursky.casement.model/ToolVisibility> // com.jantursky.casement.model/ToolVisibility.entries.<get-entries>|<get-entries>#static(){}[0]
+    final val wire // com.jantursky.casement.model/ToolVisibility.wire|{}wire[0]
+        final fun <get-wire>(): kotlin/String // com.jantursky.casement.model/ToolVisibility.wire.<get-wire>|<get-wire>(){}[0]
+
+    final fun valueOf(kotlin/String): com.jantursky.casement.model/ToolVisibility // com.jantursky.casement.model/ToolVisibility.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.jantursky.casement.model/ToolVisibility> // com.jantursky.casement.model/ToolVisibility.values|values#static(){}[0]
+}
+
+abstract fun interface com.jantursky.casement.bridge/HostBridgeTransport { // com.jantursky.casement.bridge/HostBridgeTransport|null[0]
+    abstract fun send(kotlin/String) // com.jantursky.casement.bridge/HostBridgeTransport.send|send(kotlin.String){}[0]
+}
+
+abstract fun interface com.jantursky.casement.bridge/ToolCatalog { // com.jantursky.casement.bridge/ToolCatalog|null[0]
+    abstract fun visibilityOf(kotlin/String): kotlin.collections/Set<com.jantursky.casement.model/ToolVisibility>? // com.jantursky.casement.bridge/ToolCatalog.visibilityOf|visibilityOf(kotlin.String){}[0]
+
+    final object Companion { // com.jantursky.casement.bridge/ToolCatalog.Companion|null[0]
+        final val Empty // com.jantursky.casement.bridge/ToolCatalog.Companion.Empty|{}Empty[0]
+            final fun <get-Empty>(): com.jantursky.casement.bridge/ToolCatalog // com.jantursky.casement.bridge/ToolCatalog.Companion.Empty.<get-Empty>|<get-Empty>(){}[0]
+
+        final fun of(kotlin.collections/Map<kotlin/String, kotlin.collections/Set<com.jantursky.casement.model/ToolVisibility>>): com.jantursky.casement.bridge/ToolCatalog // com.jantursky.casement.bridge/ToolCatalog.Companion.of|of(kotlin.collections.Map<kotlin.String,kotlin.collections.Set<com.jantursky.casement.model.ToolVisibility>>){}[0]
+    }
+}
+
+abstract interface com.jantursky.casement.bridge/HostBridgeHandler { // com.jantursky.casement.bridge/HostBridgeHandler|null[0]
+    open fun onBlocked(com.jantursky.casement.bridge/BlockedAction) // com.jantursky.casement.bridge/HostBridgeHandler.onBlocked|onBlocked(com.jantursky.casement.bridge.BlockedAction){}[0]
+    open fun onInitialized(com.jantursky.casement.bridge/AppInfo) // com.jantursky.casement.bridge/HostBridgeHandler.onInitialized|onInitialized(com.jantursky.casement.bridge.AppInfo){}[0]
+    open fun onLog(kotlinx.serialization.json/JsonObject) // com.jantursky.casement.bridge/HostBridgeHandler.onLog|onLog(kotlinx.serialization.json.JsonObject){}[0]
+    open fun onOpenLink(kotlin/String): kotlin/Boolean // com.jantursky.casement.bridge/HostBridgeHandler.onOpenLink|onOpenLink(kotlin.String){}[0]
+    open fun onRequestDisplayMode(com.jantursky.casement.model/DisplayMode): com.jantursky.casement.model/DisplayMode? // com.jantursky.casement.bridge/HostBridgeHandler.onRequestDisplayMode|onRequestDisplayMode(com.jantursky.casement.model.DisplayMode){}[0]
+    open fun onRequestTeardown() // com.jantursky.casement.bridge/HostBridgeHandler.onRequestTeardown|onRequestTeardown(){}[0]
+    open fun onSizeChanged(kotlin/Int?, kotlin/Int?) // com.jantursky.casement.bridge/HostBridgeHandler.onSizeChanged|onSizeChanged(kotlin.Int?;kotlin.Int?){}[0]
+    open suspend fun callTool(com.jantursky.casement.bridge/ToolCallRequest): kotlinx.serialization.json/JsonObject // com.jantursky.casement.bridge/HostBridgeHandler.callTool|callTool(com.jantursky.casement.bridge.ToolCallRequest){}[0]
+    open suspend fun forward(kotlin/String, kotlinx.serialization.json/JsonObject?): kotlinx.serialization.json/JsonObject // com.jantursky.casement.bridge/HostBridgeHandler.forward|forward(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+    open suspend fun onMessage(com.jantursky.casement.bridge/AppMessage): kotlin/Boolean // com.jantursky.casement.bridge/HostBridgeHandler.onMessage|onMessage(com.jantursky.casement.bridge.AppMessage){}[0]
+    open suspend fun onUpdateModelContext(kotlinx.serialization.json/JsonObject) // com.jantursky.casement.bridge/HostBridgeHandler.onUpdateModelContext|onUpdateModelContext(kotlinx.serialization.json.JsonObject){}[0]
+}
+
+sealed interface com.jantursky.casement.jsonrpc/JsonRpcMessage // com.jantursky.casement.jsonrpc/JsonRpcMessage|null[0]
+
+final class com.jantursky.casement.bridge/AppInfo { // com.jantursky.casement.bridge/AppInfo|null[0]
+    constructor <init>(kotlin/String, kotlin/String) // com.jantursky.casement.bridge/AppInfo.<init>|<init>(kotlin.String;kotlin.String){}[0]
+
+    final val name // com.jantursky.casement.bridge/AppInfo.name|{}name[0]
+        final fun <get-name>(): kotlin/String // com.jantursky.casement.bridge/AppInfo.name.<get-name>|<get-name>(){}[0]
+    final val version // com.jantursky.casement.bridge/AppInfo.version|{}version[0]
+        final fun <get-version>(): kotlin/String // com.jantursky.casement.bridge/AppInfo.version.<get-version>|<get-version>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.bridge/AppInfo.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.jantursky.casement.bridge/AppInfo.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ...): com.jantursky.casement.bridge/AppInfo // com.jantursky.casement.bridge/AppInfo.copy|copy(kotlin.String;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.bridge/AppInfo.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.bridge/AppInfo.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.bridge/AppInfo.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.bridge/AppMessage { // com.jantursky.casement.bridge/AppMessage|null[0]
+    constructor <init>(kotlin/String, kotlinx.serialization.json/JsonElement) // com.jantursky.casement.bridge/AppMessage.<init>|<init>(kotlin.String;kotlinx.serialization.json.JsonElement){}[0]
+
+    final val content // com.jantursky.casement.bridge/AppMessage.content|{}content[0]
+        final fun <get-content>(): kotlinx.serialization.json/JsonElement // com.jantursky.casement.bridge/AppMessage.content.<get-content>|<get-content>(){}[0]
+    final val role // com.jantursky.casement.bridge/AppMessage.role|{}role[0]
+        final fun <get-role>(): kotlin/String // com.jantursky.casement.bridge/AppMessage.role.<get-role>|<get-role>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.bridge/AppMessage.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonElement // com.jantursky.casement.bridge/AppMessage.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlinx.serialization.json/JsonElement = ...): com.jantursky.casement.bridge/AppMessage // com.jantursky.casement.bridge/AppMessage.copy|copy(kotlin.String;kotlinx.serialization.json.JsonElement){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.bridge/AppMessage.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.bridge/AppMessage.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.bridge/AppMessage.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.bridge/BlockedAction { // com.jantursky.casement.bridge/BlockedAction|null[0]
+    constructor <init>(com.jantursky.casement.bridge/BlockedKind, kotlin/String) // com.jantursky.casement.bridge/BlockedAction.<init>|<init>(com.jantursky.casement.bridge.BlockedKind;kotlin.String){}[0]
+
+    final val detail // com.jantursky.casement.bridge/BlockedAction.detail|{}detail[0]
+        final fun <get-detail>(): kotlin/String // com.jantursky.casement.bridge/BlockedAction.detail.<get-detail>|<get-detail>(){}[0]
+    final val kind // com.jantursky.casement.bridge/BlockedAction.kind|{}kind[0]
+        final fun <get-kind>(): com.jantursky.casement.bridge/BlockedKind // com.jantursky.casement.bridge/BlockedAction.kind.<get-kind>|<get-kind>(){}[0]
+
+    final fun component1(): com.jantursky.casement.bridge/BlockedKind // com.jantursky.casement.bridge/BlockedAction.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.jantursky.casement.bridge/BlockedAction.component2|component2(){}[0]
+    final fun copy(com.jantursky.casement.bridge/BlockedKind = ..., kotlin/String = ...): com.jantursky.casement.bridge/BlockedAction // com.jantursky.casement.bridge/BlockedAction.copy|copy(com.jantursky.casement.bridge.BlockedKind;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.bridge/BlockedAction.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.bridge/BlockedAction.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.bridge/BlockedAction.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.bridge/BridgeRejection : kotlin/Exception { // com.jantursky.casement.bridge/BridgeRejection|null[0]
+    constructor <init>(kotlin/String, kotlin/Int = ...) // com.jantursky.casement.bridge/BridgeRejection.<init>|<init>(kotlin.String;kotlin.Int){}[0]
+
+    final val code // com.jantursky.casement.bridge/BridgeRejection.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // com.jantursky.casement.bridge/BridgeRejection.code.<get-code>|<get-code>(){}[0]
+}
+
+final class com.jantursky.casement.bridge/HostBridge { // com.jantursky.casement.bridge/HostBridge|null[0]
+    constructor <init>(com.jantursky.casement.bridge/HostBridgeConfig, com.jantursky.casement.bridge/HostBridgeHandler, com.jantursky.casement.bridge/HostBridgeTransport, kotlinx.coroutines/CoroutineScope, com.jantursky.casement.bridge/ToolCatalog = ..., com.jantursky.casement.model/HostContext = ...) // com.jantursky.casement.bridge/HostBridge.<init>|<init>(com.jantursky.casement.bridge.HostBridgeConfig;com.jantursky.casement.bridge.HostBridgeHandler;com.jantursky.casement.bridge.HostBridgeTransport;kotlinx.coroutines.CoroutineScope;com.jantursky.casement.bridge.ToolCatalog;com.jantursky.casement.model.HostContext){}[0]
+
+    final val state // com.jantursky.casement.bridge/HostBridge.state|{}state[0]
+        final fun <get-state>(): com.jantursky.casement.bridge/BridgeState // com.jantursky.casement.bridge/HostBridge.state.<get-state>|<get-state>(){}[0]
+
+    final fun close() // com.jantursky.casement.bridge/HostBridge.close|close(){}[0]
+    final fun receive(kotlin/String) // com.jantursky.casement.bridge/HostBridge.receive|receive(kotlin.String){}[0]
+    final fun sendToolCancelled(kotlin/String? = ...) // com.jantursky.casement.bridge/HostBridge.sendToolCancelled|sendToolCancelled(kotlin.String?){}[0]
+    final fun sendToolInput(kotlinx.serialization.json/JsonObject) // com.jantursky.casement.bridge/HostBridge.sendToolInput|sendToolInput(kotlinx.serialization.json.JsonObject){}[0]
+    final fun sendToolInputPartial(kotlinx.serialization.json/JsonObject) // com.jantursky.casement.bridge/HostBridge.sendToolInputPartial|sendToolInputPartial(kotlinx.serialization.json.JsonObject){}[0]
+    final fun sendToolResult(kotlinx.serialization.json/JsonObject) // com.jantursky.casement.bridge/HostBridge.sendToolResult|sendToolResult(kotlinx.serialization.json.JsonObject){}[0]
+    final fun updateContext(com.jantursky.casement.model/HostContext) // com.jantursky.casement.bridge/HostBridge.updateContext|updateContext(com.jantursky.casement.model.HostContext){}[0]
+    final suspend fun teardown(kotlin/String = ...) // com.jantursky.casement.bridge/HostBridge.teardown|teardown(kotlin.String){}[0]
+}
+
+final class com.jantursky.casement.bridge/HostBridgeConfig { // com.jantursky.casement.bridge/HostBridgeConfig|null[0]
+    constructor <init>(kotlin/String, kotlin/String, com.jantursky.casement.bridge/HostCapabilitiesConfig = ..., com.jantursky.casement.policy/HostPolicy = ..., com.jantursky.casement.model/UiPermissions = ..., com.jantursky.casement.model/UiCsp = ..., kotlin/Long = ...) // com.jantursky.casement.bridge/HostBridgeConfig.<init>|<init>(kotlin.String;kotlin.String;com.jantursky.casement.bridge.HostCapabilitiesConfig;com.jantursky.casement.policy.HostPolicy;com.jantursky.casement.model.UiPermissions;com.jantursky.casement.model.UiCsp;kotlin.Long){}[0]
+
+    final val capabilities // com.jantursky.casement.bridge/HostBridgeConfig.capabilities|{}capabilities[0]
+        final fun <get-capabilities>(): com.jantursky.casement.bridge/HostCapabilitiesConfig // com.jantursky.casement.bridge/HostBridgeConfig.capabilities.<get-capabilities>|<get-capabilities>(){}[0]
+    final val hostName // com.jantursky.casement.bridge/HostBridgeConfig.hostName|{}hostName[0]
+        final fun <get-hostName>(): kotlin/String // com.jantursky.casement.bridge/HostBridgeConfig.hostName.<get-hostName>|<get-hostName>(){}[0]
+    final val hostVersion // com.jantursky.casement.bridge/HostBridgeConfig.hostVersion|{}hostVersion[0]
+        final fun <get-hostVersion>(): kotlin/String // com.jantursky.casement.bridge/HostBridgeConfig.hostVersion.<get-hostVersion>|<get-hostVersion>(){}[0]
+    final val policy // com.jantursky.casement.bridge/HostBridgeConfig.policy|{}policy[0]
+        final fun <get-policy>(): com.jantursky.casement.policy/HostPolicy // com.jantursky.casement.bridge/HostBridgeConfig.policy.<get-policy>|<get-policy>(){}[0]
+    final val sandboxCsp // com.jantursky.casement.bridge/HostBridgeConfig.sandboxCsp|{}sandboxCsp[0]
+        final fun <get-sandboxCsp>(): com.jantursky.casement.model/UiCsp // com.jantursky.casement.bridge/HostBridgeConfig.sandboxCsp.<get-sandboxCsp>|<get-sandboxCsp>(){}[0]
+    final val sandboxPermissions // com.jantursky.casement.bridge/HostBridgeConfig.sandboxPermissions|{}sandboxPermissions[0]
+        final fun <get-sandboxPermissions>(): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.bridge/HostBridgeConfig.sandboxPermissions.<get-sandboxPermissions>|<get-sandboxPermissions>(){}[0]
+    final val teardownTimeoutMillis // com.jantursky.casement.bridge/HostBridgeConfig.teardownTimeoutMillis|{}teardownTimeoutMillis[0]
+        final fun <get-teardownTimeoutMillis>(): kotlin/Long // com.jantursky.casement.bridge/HostBridgeConfig.teardownTimeoutMillis.<get-teardownTimeoutMillis>|<get-teardownTimeoutMillis>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.bridge/HostBridgeConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.jantursky.casement.bridge/HostBridgeConfig.component2|component2(){}[0]
+    final fun component3(): com.jantursky.casement.bridge/HostCapabilitiesConfig // com.jantursky.casement.bridge/HostBridgeConfig.component3|component3(){}[0]
+    final fun component4(): com.jantursky.casement.policy/HostPolicy // com.jantursky.casement.bridge/HostBridgeConfig.component4|component4(){}[0]
+    final fun component5(): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.bridge/HostBridgeConfig.component5|component5(){}[0]
+    final fun component6(): com.jantursky.casement.model/UiCsp // com.jantursky.casement.bridge/HostBridgeConfig.component6|component6(){}[0]
+    final fun component7(): kotlin/Long // com.jantursky.casement.bridge/HostBridgeConfig.component7|component7(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., com.jantursky.casement.bridge/HostCapabilitiesConfig = ..., com.jantursky.casement.policy/HostPolicy = ..., com.jantursky.casement.model/UiPermissions = ..., com.jantursky.casement.model/UiCsp = ..., kotlin/Long = ...): com.jantursky.casement.bridge/HostBridgeConfig // com.jantursky.casement.bridge/HostBridgeConfig.copy|copy(kotlin.String;kotlin.String;com.jantursky.casement.bridge.HostCapabilitiesConfig;com.jantursky.casement.policy.HostPolicy;com.jantursky.casement.model.UiPermissions;com.jantursky.casement.model.UiCsp;kotlin.Long){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.bridge/HostBridgeConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.bridge/HostBridgeConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.bridge/HostBridgeConfig.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.bridge/HostCapabilitiesConfig { // com.jantursky.casement.bridge/HostCapabilitiesConfig|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // com.jantursky.casement.bridge/HostCapabilitiesConfig.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+
+    final val logging // com.jantursky.casement.bridge/HostCapabilitiesConfig.logging|{}logging[0]
+        final fun <get-logging>(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.logging.<get-logging>|<get-logging>(){}[0]
+    final val message // com.jantursky.casement.bridge/HostCapabilitiesConfig.message|{}message[0]
+        final fun <get-message>(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.message.<get-message>|<get-message>(){}[0]
+    final val openLinks // com.jantursky.casement.bridge/HostCapabilitiesConfig.openLinks|{}openLinks[0]
+        final fun <get-openLinks>(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.openLinks.<get-openLinks>|<get-openLinks>(){}[0]
+    final val serverResources // com.jantursky.casement.bridge/HostCapabilitiesConfig.serverResources|{}serverResources[0]
+        final fun <get-serverResources>(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.serverResources.<get-serverResources>|<get-serverResources>(){}[0]
+    final val serverTools // com.jantursky.casement.bridge/HostCapabilitiesConfig.serverTools|{}serverTools[0]
+        final fun <get-serverTools>(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.serverTools.<get-serverTools>|<get-serverTools>(){}[0]
+    final val updateModelContext // com.jantursky.casement.bridge/HostCapabilitiesConfig.updateModelContext|{}updateModelContext[0]
+        final fun <get-updateModelContext>(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.updateModelContext.<get-updateModelContext>|<get-updateModelContext>(){}[0]
+
+    final fun component1(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.component4|component4(){}[0]
+    final fun component5(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.component5|component5(){}[0]
+    final fun component6(): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.component6|component6(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...): com.jantursky.casement.bridge/HostCapabilitiesConfig // com.jantursky.casement.bridge/HostCapabilitiesConfig.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.bridge/HostCapabilitiesConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.bridge/HostCapabilitiesConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.bridge/HostCapabilitiesConfig.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.bridge/ToolCallRequest { // com.jantursky.casement.bridge/ToolCallRequest|null[0]
+    constructor <init>(kotlin/String, kotlinx.serialization.json/JsonObject?) // com.jantursky.casement.bridge/ToolCallRequest.<init>|<init>(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+
+    final val arguments // com.jantursky.casement.bridge/ToolCallRequest.arguments|{}arguments[0]
+        final fun <get-arguments>(): kotlinx.serialization.json/JsonObject? // com.jantursky.casement.bridge/ToolCallRequest.arguments.<get-arguments>|<get-arguments>(){}[0]
+    final val name // com.jantursky.casement.bridge/ToolCallRequest.name|{}name[0]
+        final fun <get-name>(): kotlin/String // com.jantursky.casement.bridge/ToolCallRequest.name.<get-name>|<get-name>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.bridge/ToolCallRequest.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonObject? // com.jantursky.casement.bridge/ToolCallRequest.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlinx.serialization.json/JsonObject? = ...): com.jantursky.casement.bridge/ToolCallRequest // com.jantursky.casement.bridge/ToolCallRequest.copy|copy(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.bridge/ToolCallRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.bridge/ToolCallRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.bridge/ToolCallRequest.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.jsonrpc/JsonRpcError { // com.jantursky.casement.jsonrpc/JsonRpcError|null[0]
+    constructor <init>(kotlin/Int, kotlin/String, kotlinx.serialization.json/JsonElement? = ...) // com.jantursky.casement.jsonrpc/JsonRpcError.<init>|<init>(kotlin.Int;kotlin.String;kotlinx.serialization.json.JsonElement?){}[0]
+
+    final val code // com.jantursky.casement.jsonrpc/JsonRpcError.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcError.code.<get-code>|<get-code>(){}[0]
+    final val data // com.jantursky.casement.jsonrpc/JsonRpcError.data|{}data[0]
+        final fun <get-data>(): kotlinx.serialization.json/JsonElement? // com.jantursky.casement.jsonrpc/JsonRpcError.data.<get-data>|<get-data>(){}[0]
+    final val message // com.jantursky.casement.jsonrpc/JsonRpcError.message|{}message[0]
+        final fun <get-message>(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcError.message.<get-message>|<get-message>(){}[0]
+
+    final fun component1(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcError.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcError.component2|component2(){}[0]
+    final fun component3(): kotlinx.serialization.json/JsonElement? // com.jantursky.casement.jsonrpc/JsonRpcError.component3|component3(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/String = ..., kotlinx.serialization.json/JsonElement? = ...): com.jantursky.casement.jsonrpc/JsonRpcError // com.jantursky.casement.jsonrpc/JsonRpcError.copy|copy(kotlin.Int;kotlin.String;kotlinx.serialization.json.JsonElement?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.jsonrpc/JsonRpcError.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcError.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcError.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.jsonrpc/JsonRpcErrorResponse : com.jantursky.casement.jsonrpc/JsonRpcMessage { // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse|null[0]
+    constructor <init>(kotlinx.serialization.json/JsonElement?, com.jantursky.casement.jsonrpc/JsonRpcError) // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.<init>|<init>(kotlinx.serialization.json.JsonElement?;com.jantursky.casement.jsonrpc.JsonRpcError){}[0]
+
+    final val error // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.error|{}error[0]
+        final fun <get-error>(): com.jantursky.casement.jsonrpc/JsonRpcError // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.error.<get-error>|<get-error>(){}[0]
+    final val id // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.id|{}id[0]
+        final fun <get-id>(): kotlinx.serialization.json/JsonElement? // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.id.<get-id>|<get-id>(){}[0]
+
+    final fun component1(): kotlinx.serialization.json/JsonElement? // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.component1|component1(){}[0]
+    final fun component2(): com.jantursky.casement.jsonrpc/JsonRpcError // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.component2|component2(){}[0]
+    final fun copy(kotlinx.serialization.json/JsonElement? = ..., com.jantursky.casement.jsonrpc/JsonRpcError = ...): com.jantursky.casement.jsonrpc/JsonRpcErrorResponse // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.copy|copy(kotlinx.serialization.json.JsonElement?;com.jantursky.casement.jsonrpc.JsonRpcError){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcErrorResponse.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.jsonrpc/JsonRpcFormatException : kotlin/IllegalArgumentException { // com.jantursky.casement.jsonrpc/JsonRpcFormatException|null[0]
+    constructor <init>(kotlin/Int, kotlin/String) // com.jantursky.casement.jsonrpc/JsonRpcFormatException.<init>|<init>(kotlin.Int;kotlin.String){}[0]
+
+    final val code // com.jantursky.casement.jsonrpc/JsonRpcFormatException.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcFormatException.code.<get-code>|<get-code>(){}[0]
+}
+
+final class com.jantursky.casement.jsonrpc/JsonRpcNotification : com.jantursky.casement.jsonrpc/JsonRpcMessage { // com.jantursky.casement.jsonrpc/JsonRpcNotification|null[0]
+    constructor <init>(kotlin/String, kotlinx.serialization.json/JsonObject? = ...) // com.jantursky.casement.jsonrpc/JsonRpcNotification.<init>|<init>(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+
+    final val method // com.jantursky.casement.jsonrpc/JsonRpcNotification.method|{}method[0]
+        final fun <get-method>(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcNotification.method.<get-method>|<get-method>(){}[0]
+    final val params // com.jantursky.casement.jsonrpc/JsonRpcNotification.params|{}params[0]
+        final fun <get-params>(): kotlinx.serialization.json/JsonObject? // com.jantursky.casement.jsonrpc/JsonRpcNotification.params.<get-params>|<get-params>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcNotification.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonObject? // com.jantursky.casement.jsonrpc/JsonRpcNotification.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlinx.serialization.json/JsonObject? = ...): com.jantursky.casement.jsonrpc/JsonRpcNotification // com.jantursky.casement.jsonrpc/JsonRpcNotification.copy|copy(kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.jsonrpc/JsonRpcNotification.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcNotification.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcNotification.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.jsonrpc/JsonRpcRequest : com.jantursky.casement.jsonrpc/JsonRpcMessage { // com.jantursky.casement.jsonrpc/JsonRpcRequest|null[0]
+    constructor <init>(kotlinx.serialization.json/JsonElement, kotlin/String, kotlinx.serialization.json/JsonObject? = ...) // com.jantursky.casement.jsonrpc/JsonRpcRequest.<init>|<init>(kotlinx.serialization.json.JsonElement;kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+
+    final val id // com.jantursky.casement.jsonrpc/JsonRpcRequest.id|{}id[0]
+        final fun <get-id>(): kotlinx.serialization.json/JsonElement // com.jantursky.casement.jsonrpc/JsonRpcRequest.id.<get-id>|<get-id>(){}[0]
+    final val method // com.jantursky.casement.jsonrpc/JsonRpcRequest.method|{}method[0]
+        final fun <get-method>(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcRequest.method.<get-method>|<get-method>(){}[0]
+    final val params // com.jantursky.casement.jsonrpc/JsonRpcRequest.params|{}params[0]
+        final fun <get-params>(): kotlinx.serialization.json/JsonObject? // com.jantursky.casement.jsonrpc/JsonRpcRequest.params.<get-params>|<get-params>(){}[0]
+
+    final fun component1(): kotlinx.serialization.json/JsonElement // com.jantursky.casement.jsonrpc/JsonRpcRequest.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcRequest.component2|component2(){}[0]
+    final fun component3(): kotlinx.serialization.json/JsonObject? // com.jantursky.casement.jsonrpc/JsonRpcRequest.component3|component3(){}[0]
+    final fun copy(kotlinx.serialization.json/JsonElement = ..., kotlin/String = ..., kotlinx.serialization.json/JsonObject? = ...): com.jantursky.casement.jsonrpc/JsonRpcRequest // com.jantursky.casement.jsonrpc/JsonRpcRequest.copy|copy(kotlinx.serialization.json.JsonElement;kotlin.String;kotlinx.serialization.json.JsonObject?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.jsonrpc/JsonRpcRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcRequest.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.jsonrpc/JsonRpcResponse : com.jantursky.casement.jsonrpc/JsonRpcMessage { // com.jantursky.casement.jsonrpc/JsonRpcResponse|null[0]
+    constructor <init>(kotlinx.serialization.json/JsonElement, kotlinx.serialization.json/JsonObject) // com.jantursky.casement.jsonrpc/JsonRpcResponse.<init>|<init>(kotlinx.serialization.json.JsonElement;kotlinx.serialization.json.JsonObject){}[0]
+
+    final val id // com.jantursky.casement.jsonrpc/JsonRpcResponse.id|{}id[0]
+        final fun <get-id>(): kotlinx.serialization.json/JsonElement // com.jantursky.casement.jsonrpc/JsonRpcResponse.id.<get-id>|<get-id>(){}[0]
+    final val result // com.jantursky.casement.jsonrpc/JsonRpcResponse.result|{}result[0]
+        final fun <get-result>(): kotlinx.serialization.json/JsonObject // com.jantursky.casement.jsonrpc/JsonRpcResponse.result.<get-result>|<get-result>(){}[0]
+
+    final fun component1(): kotlinx.serialization.json/JsonElement // com.jantursky.casement.jsonrpc/JsonRpcResponse.component1|component1(){}[0]
+    final fun component2(): kotlinx.serialization.json/JsonObject // com.jantursky.casement.jsonrpc/JsonRpcResponse.component2|component2(){}[0]
+    final fun copy(kotlinx.serialization.json/JsonElement = ..., kotlinx.serialization.json/JsonObject = ...): com.jantursky.casement.jsonrpc/JsonRpcResponse // com.jantursky.casement.jsonrpc/JsonRpcResponse.copy|copy(kotlinx.serialization.json.JsonElement;kotlinx.serialization.json.JsonObject){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.jsonrpc/JsonRpcResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcResponse.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.model/ContainerDimensions { // com.jantursky.casement.model/ContainerDimensions|null[0]
+    constructor <init>(kotlin/Int? = ..., kotlin/Int? = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // com.jantursky.casement.model/ContainerDimensions.<init>|<init>(kotlin.Int?;kotlin.Int?;kotlin.Boolean;kotlin.Boolean){}[0]
+
+    final val fixedHeight // com.jantursky.casement.model/ContainerDimensions.fixedHeight|{}fixedHeight[0]
+        final fun <get-fixedHeight>(): kotlin/Boolean // com.jantursky.casement.model/ContainerDimensions.fixedHeight.<get-fixedHeight>|<get-fixedHeight>(){}[0]
+    final val fixedWidth // com.jantursky.casement.model/ContainerDimensions.fixedWidth|{}fixedWidth[0]
+        final fun <get-fixedWidth>(): kotlin/Boolean // com.jantursky.casement.model/ContainerDimensions.fixedWidth.<get-fixedWidth>|<get-fixedWidth>(){}[0]
+    final val height // com.jantursky.casement.model/ContainerDimensions.height|{}height[0]
+        final fun <get-height>(): kotlin/Int? // com.jantursky.casement.model/ContainerDimensions.height.<get-height>|<get-height>(){}[0]
+    final val width // com.jantursky.casement.model/ContainerDimensions.width|{}width[0]
+        final fun <get-width>(): kotlin/Int? // com.jantursky.casement.model/ContainerDimensions.width.<get-width>|<get-width>(){}[0]
+
+    final fun component1(): kotlin/Int? // com.jantursky.casement.model/ContainerDimensions.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // com.jantursky.casement.model/ContainerDimensions.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // com.jantursky.casement.model/ContainerDimensions.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean // com.jantursky.casement.model/ContainerDimensions.component4|component4(){}[0]
+    final fun copy(kotlin/Int? = ..., kotlin/Int? = ..., kotlin/Boolean = ..., kotlin/Boolean = ...): com.jantursky.casement.model/ContainerDimensions // com.jantursky.casement.model/ContainerDimensions.copy|copy(kotlin.Int?;kotlin.Int?;kotlin.Boolean;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/ContainerDimensions.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/ContainerDimensions.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/ContainerDimensions.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.model/HostContext { // com.jantursky.casement.model/HostContext|null[0]
+    constructor <init>(com.jantursky.casement.model/Theme? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String? = ..., com.jantursky.casement.model/DisplayMode? = ..., kotlin.collections/List<com.jantursky.casement.model/DisplayMode> = ..., com.jantursky.casement.model/ContainerDimensions? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., com.jantursky.casement.model/Platform? = ..., kotlin/Boolean? = ..., kotlin/Boolean? = ..., com.jantursky.casement.model/SafeAreaInsets? = ..., com.jantursky.casement.model/ToolWithUi? = ..., kotlin.collections/Map<kotlin/String, kotlinx.serialization.json/JsonElement> = ...) // com.jantursky.casement.model/HostContext.<init>|<init>(com.jantursky.casement.model.Theme?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String?;com.jantursky.casement.model.DisplayMode?;kotlin.collections.List<com.jantursky.casement.model.DisplayMode>;com.jantursky.casement.model.ContainerDimensions?;kotlin.String?;kotlin.String?;kotlin.String?;com.jantursky.casement.model.Platform?;kotlin.Boolean?;kotlin.Boolean?;com.jantursky.casement.model.SafeAreaInsets?;com.jantursky.casement.model.ToolWithUi?;kotlin.collections.Map<kotlin.String,kotlinx.serialization.json.JsonElement>){}[0]
+
+    final val availableDisplayModes // com.jantursky.casement.model/HostContext.availableDisplayModes|{}availableDisplayModes[0]
+        final fun <get-availableDisplayModes>(): kotlin.collections/List<com.jantursky.casement.model/DisplayMode> // com.jantursky.casement.model/HostContext.availableDisplayModes.<get-availableDisplayModes>|<get-availableDisplayModes>(){}[0]
+    final val containerDimensions // com.jantursky.casement.model/HostContext.containerDimensions|{}containerDimensions[0]
+        final fun <get-containerDimensions>(): com.jantursky.casement.model/ContainerDimensions? // com.jantursky.casement.model/HostContext.containerDimensions.<get-containerDimensions>|<get-containerDimensions>(){}[0]
+    final val displayMode // com.jantursky.casement.model/HostContext.displayMode|{}displayMode[0]
+        final fun <get-displayMode>(): com.jantursky.casement.model/DisplayMode? // com.jantursky.casement.model/HostContext.displayMode.<get-displayMode>|<get-displayMode>(){}[0]
+    final val extras // com.jantursky.casement.model/HostContext.extras|{}extras[0]
+        final fun <get-extras>(): kotlin.collections/Map<kotlin/String, kotlinx.serialization.json/JsonElement> // com.jantursky.casement.model/HostContext.extras.<get-extras>|<get-extras>(){}[0]
+    final val fontCss // com.jantursky.casement.model/HostContext.fontCss|{}fontCss[0]
+        final fun <get-fontCss>(): kotlin/String? // com.jantursky.casement.model/HostContext.fontCss.<get-fontCss>|<get-fontCss>(){}[0]
+    final val hover // com.jantursky.casement.model/HostContext.hover|{}hover[0]
+        final fun <get-hover>(): kotlin/Boolean? // com.jantursky.casement.model/HostContext.hover.<get-hover>|<get-hover>(){}[0]
+    final val locale // com.jantursky.casement.model/HostContext.locale|{}locale[0]
+        final fun <get-locale>(): kotlin/String? // com.jantursky.casement.model/HostContext.locale.<get-locale>|<get-locale>(){}[0]
+    final val platform // com.jantursky.casement.model/HostContext.platform|{}platform[0]
+        final fun <get-platform>(): com.jantursky.casement.model/Platform? // com.jantursky.casement.model/HostContext.platform.<get-platform>|<get-platform>(){}[0]
+    final val safeAreaInsets // com.jantursky.casement.model/HostContext.safeAreaInsets|{}safeAreaInsets[0]
+        final fun <get-safeAreaInsets>(): com.jantursky.casement.model/SafeAreaInsets? // com.jantursky.casement.model/HostContext.safeAreaInsets.<get-safeAreaInsets>|<get-safeAreaInsets>(){}[0]
+    final val styleVariables // com.jantursky.casement.model/HostContext.styleVariables|{}styleVariables[0]
+        final fun <get-styleVariables>(): kotlin.collections/Map<kotlin/String, kotlin/String> // com.jantursky.casement.model/HostContext.styleVariables.<get-styleVariables>|<get-styleVariables>(){}[0]
+    final val theme // com.jantursky.casement.model/HostContext.theme|{}theme[0]
+        final fun <get-theme>(): com.jantursky.casement.model/Theme? // com.jantursky.casement.model/HostContext.theme.<get-theme>|<get-theme>(){}[0]
+    final val timeZone // com.jantursky.casement.model/HostContext.timeZone|{}timeZone[0]
+        final fun <get-timeZone>(): kotlin/String? // com.jantursky.casement.model/HostContext.timeZone.<get-timeZone>|<get-timeZone>(){}[0]
+    final val toolInfo // com.jantursky.casement.model/HostContext.toolInfo|{}toolInfo[0]
+        final fun <get-toolInfo>(): com.jantursky.casement.model/ToolWithUi? // com.jantursky.casement.model/HostContext.toolInfo.<get-toolInfo>|<get-toolInfo>(){}[0]
+    final val touch // com.jantursky.casement.model/HostContext.touch|{}touch[0]
+        final fun <get-touch>(): kotlin/Boolean? // com.jantursky.casement.model/HostContext.touch.<get-touch>|<get-touch>(){}[0]
+    final val userAgent // com.jantursky.casement.model/HostContext.userAgent|{}userAgent[0]
+        final fun <get-userAgent>(): kotlin/String? // com.jantursky.casement.model/HostContext.userAgent.<get-userAgent>|<get-userAgent>(){}[0]
+
+    final fun changesSince(com.jantursky.casement.model/HostContext): kotlinx.serialization.json/JsonObject // com.jantursky.casement.model/HostContext.changesSince|changesSince(com.jantursky.casement.model.HostContext){}[0]
+    final fun component1(): com.jantursky.casement.model/Theme? // com.jantursky.casement.model/HostContext.component1|component1(){}[0]
+    final fun component10(): com.jantursky.casement.model/Platform? // com.jantursky.casement.model/HostContext.component10|component10(){}[0]
+    final fun component11(): kotlin/Boolean? // com.jantursky.casement.model/HostContext.component11|component11(){}[0]
+    final fun component12(): kotlin/Boolean? // com.jantursky.casement.model/HostContext.component12|component12(){}[0]
+    final fun component13(): com.jantursky.casement.model/SafeAreaInsets? // com.jantursky.casement.model/HostContext.component13|component13(){}[0]
+    final fun component14(): com.jantursky.casement.model/ToolWithUi? // com.jantursky.casement.model/HostContext.component14|component14(){}[0]
+    final fun component15(): kotlin.collections/Map<kotlin/String, kotlinx.serialization.json/JsonElement> // com.jantursky.casement.model/HostContext.component15|component15(){}[0]
+    final fun component2(): kotlin.collections/Map<kotlin/String, kotlin/String> // com.jantursky.casement.model/HostContext.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // com.jantursky.casement.model/HostContext.component3|component3(){}[0]
+    final fun component4(): com.jantursky.casement.model/DisplayMode? // com.jantursky.casement.model/HostContext.component4|component4(){}[0]
+    final fun component5(): kotlin.collections/List<com.jantursky.casement.model/DisplayMode> // com.jantursky.casement.model/HostContext.component5|component5(){}[0]
+    final fun component6(): com.jantursky.casement.model/ContainerDimensions? // com.jantursky.casement.model/HostContext.component6|component6(){}[0]
+    final fun component7(): kotlin/String? // com.jantursky.casement.model/HostContext.component7|component7(){}[0]
+    final fun component8(): kotlin/String? // com.jantursky.casement.model/HostContext.component8|component8(){}[0]
+    final fun component9(): kotlin/String? // com.jantursky.casement.model/HostContext.component9|component9(){}[0]
+    final fun copy(com.jantursky.casement.model/Theme? = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ..., kotlin/String? = ..., com.jantursky.casement.model/DisplayMode? = ..., kotlin.collections/List<com.jantursky.casement.model/DisplayMode> = ..., com.jantursky.casement.model/ContainerDimensions? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., com.jantursky.casement.model/Platform? = ..., kotlin/Boolean? = ..., kotlin/Boolean? = ..., com.jantursky.casement.model/SafeAreaInsets? = ..., com.jantursky.casement.model/ToolWithUi? = ..., kotlin.collections/Map<kotlin/String, kotlinx.serialization.json/JsonElement> = ...): com.jantursky.casement.model/HostContext // com.jantursky.casement.model/HostContext.copy|copy(com.jantursky.casement.model.Theme?;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.String?;com.jantursky.casement.model.DisplayMode?;kotlin.collections.List<com.jantursky.casement.model.DisplayMode>;com.jantursky.casement.model.ContainerDimensions?;kotlin.String?;kotlin.String?;kotlin.String?;com.jantursky.casement.model.Platform?;kotlin.Boolean?;kotlin.Boolean?;com.jantursky.casement.model.SafeAreaInsets?;com.jantursky.casement.model.ToolWithUi?;kotlin.collections.Map<kotlin.String,kotlinx.serialization.json.JsonElement>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/HostContext.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/HostContext.hashCode|hashCode(){}[0]
+    final fun toJson(): kotlinx.serialization.json/JsonObject // com.jantursky.casement.model/HostContext.toJson|toJson(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/HostContext.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.model/SafeAreaInsets { // com.jantursky.casement.model/SafeAreaInsets|null[0]
+    constructor <init>(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...) // com.jantursky.casement.model/SafeAreaInsets.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+
+    final val bottom // com.jantursky.casement.model/SafeAreaInsets.bottom|{}bottom[0]
+        final fun <get-bottom>(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.bottom.<get-bottom>|<get-bottom>(){}[0]
+    final val left // com.jantursky.casement.model/SafeAreaInsets.left|{}left[0]
+        final fun <get-left>(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.left.<get-left>|<get-left>(){}[0]
+    final val right // com.jantursky.casement.model/SafeAreaInsets.right|{}right[0]
+        final fun <get-right>(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.right.<get-right>|<get-right>(){}[0]
+    final val top // com.jantursky.casement.model/SafeAreaInsets.top|{}top[0]
+        final fun <get-top>(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.top.<get-top>|<get-top>(){}[0]
+
+    final fun component1(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.component2|component2(){}[0]
+    final fun component3(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.component3|component3(){}[0]
+    final fun component4(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.component4|component4(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...): com.jantursky.casement.model/SafeAreaInsets // com.jantursky.casement.model/SafeAreaInsets.copy|copy(kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/SafeAreaInsets.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/SafeAreaInsets.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/SafeAreaInsets.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.model/ToolUi { // com.jantursky.casement.model/ToolUi|null[0]
+    constructor <init>(kotlin/String, kotlin.collections/Set<com.jantursky.casement.model/ToolVisibility> = ...) // com.jantursky.casement.model/ToolUi.<init>|<init>(kotlin.String;kotlin.collections.Set<com.jantursky.casement.model.ToolVisibility>){}[0]
+
+    final val appCallable // com.jantursky.casement.model/ToolUi.appCallable|{}appCallable[0]
+        final fun <get-appCallable>(): kotlin/Boolean // com.jantursky.casement.model/ToolUi.appCallable.<get-appCallable>|<get-appCallable>(){}[0]
+    final val resourceUri // com.jantursky.casement.model/ToolUi.resourceUri|{}resourceUri[0]
+        final fun <get-resourceUri>(): kotlin/String // com.jantursky.casement.model/ToolUi.resourceUri.<get-resourceUri>|<get-resourceUri>(){}[0]
+    final val visibility // com.jantursky.casement.model/ToolUi.visibility|{}visibility[0]
+        final fun <get-visibility>(): kotlin.collections/Set<com.jantursky.casement.model/ToolVisibility> // com.jantursky.casement.model/ToolUi.visibility.<get-visibility>|<get-visibility>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.model/ToolUi.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/Set<com.jantursky.casement.model/ToolVisibility> // com.jantursky.casement.model/ToolUi.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin.collections/Set<com.jantursky.casement.model/ToolVisibility> = ...): com.jantursky.casement.model/ToolUi // com.jantursky.casement.model/ToolUi.copy|copy(kotlin.String;kotlin.collections.Set<com.jantursky.casement.model.ToolVisibility>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/ToolUi.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/ToolUi.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/ToolUi.toString|toString(){}[0]
+
+    final object Companion { // com.jantursky.casement.model/ToolUi.Companion|null[0]
+        final fun fromToolMeta(kotlinx.serialization.json/JsonObject?): com.jantursky.casement.model/ToolUi? // com.jantursky.casement.model/ToolUi.Companion.fromToolMeta|fromToolMeta(kotlinx.serialization.json.JsonObject?){}[0]
+    }
+}
+
+final class com.jantursky.casement.model/ToolWithUi { // com.jantursky.casement.model/ToolWithUi|null[0]
+    constructor <init>(kotlin/String, com.jantursky.casement.model/ToolUi, kotlinx.serialization.json/JsonObject) // com.jantursky.casement.model/ToolWithUi.<init>|<init>(kotlin.String;com.jantursky.casement.model.ToolUi;kotlinx.serialization.json.JsonObject){}[0]
+
+    final val definition // com.jantursky.casement.model/ToolWithUi.definition|{}definition[0]
+        final fun <get-definition>(): kotlinx.serialization.json/JsonObject // com.jantursky.casement.model/ToolWithUi.definition.<get-definition>|<get-definition>(){}[0]
+    final val name // com.jantursky.casement.model/ToolWithUi.name|{}name[0]
+        final fun <get-name>(): kotlin/String // com.jantursky.casement.model/ToolWithUi.name.<get-name>|<get-name>(){}[0]
+    final val ui // com.jantursky.casement.model/ToolWithUi.ui|{}ui[0]
+        final fun <get-ui>(): com.jantursky.casement.model/ToolUi // com.jantursky.casement.model/ToolWithUi.ui.<get-ui>|<get-ui>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.model/ToolWithUi.component1|component1(){}[0]
+    final fun component2(): com.jantursky.casement.model/ToolUi // com.jantursky.casement.model/ToolWithUi.component2|component2(){}[0]
+    final fun component3(): kotlinx.serialization.json/JsonObject // com.jantursky.casement.model/ToolWithUi.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., com.jantursky.casement.model/ToolUi = ..., kotlinx.serialization.json/JsonObject = ...): com.jantursky.casement.model/ToolWithUi // com.jantursky.casement.model/ToolWithUi.copy|copy(kotlin.String;com.jantursky.casement.model.ToolUi;kotlinx.serialization.json.JsonObject){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/ToolWithUi.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/ToolWithUi.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/ToolWithUi.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.model/UiCsp { // com.jantursky.casement.model/UiCsp|null[0]
+    constructor <init>(kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ...) // com.jantursky.casement.model/UiCsp.<init>|<init>(kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>){}[0]
+
+    final val baseUriDomains // com.jantursky.casement.model/UiCsp.baseUriDomains|{}baseUriDomains[0]
+        final fun <get-baseUriDomains>(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.baseUriDomains.<get-baseUriDomains>|<get-baseUriDomains>(){}[0]
+    final val connectDomains // com.jantursky.casement.model/UiCsp.connectDomains|{}connectDomains[0]
+        final fun <get-connectDomains>(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.connectDomains.<get-connectDomains>|<get-connectDomains>(){}[0]
+    final val frameDomains // com.jantursky.casement.model/UiCsp.frameDomains|{}frameDomains[0]
+        final fun <get-frameDomains>(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.frameDomains.<get-frameDomains>|<get-frameDomains>(){}[0]
+    final val resourceDomains // com.jantursky.casement.model/UiCsp.resourceDomains|{}resourceDomains[0]
+        final fun <get-resourceDomains>(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.resourceDomains.<get-resourceDomains>|<get-resourceDomains>(){}[0]
+
+    final fun component1(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.component2|component2(){}[0]
+    final fun component3(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.component3|component3(){}[0]
+    final fun component4(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.model/UiCsp.component4|component4(){}[0]
+    final fun copy(kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ...): com.jantursky.casement.model/UiCsp // com.jantursky.casement.model/UiCsp.copy|copy(kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/UiCsp.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/UiCsp.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/UiCsp.toString|toString(){}[0]
+
+    final object Companion // com.jantursky.casement.model/UiCsp.Companion|null[0]
+}
+
+final class com.jantursky.casement.model/UiPermissions { // com.jantursky.casement.model/UiPermissions|null[0]
+    constructor <init>(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...) // com.jantursky.casement.model/UiPermissions.<init>|<init>(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+
+    final val camera // com.jantursky.casement.model/UiPermissions.camera|{}camera[0]
+        final fun <get-camera>(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.camera.<get-camera>|<get-camera>(){}[0]
+    final val clipboardWrite // com.jantursky.casement.model/UiPermissions.clipboardWrite|{}clipboardWrite[0]
+        final fun <get-clipboardWrite>(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.clipboardWrite.<get-clipboardWrite>|<get-clipboardWrite>(){}[0]
+    final val geolocation // com.jantursky.casement.model/UiPermissions.geolocation|{}geolocation[0]
+        final fun <get-geolocation>(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.geolocation.<get-geolocation>|<get-geolocation>(){}[0]
+    final val isEmpty // com.jantursky.casement.model/UiPermissions.isEmpty|{}isEmpty[0]
+        final fun <get-isEmpty>(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.isEmpty.<get-isEmpty>|<get-isEmpty>(){}[0]
+    final val microphone // com.jantursky.casement.model/UiPermissions.microphone|{}microphone[0]
+        final fun <get-microphone>(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.microphone.<get-microphone>|<get-microphone>(){}[0]
+
+    final fun component1(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.component1|component1(){}[0]
+    final fun component2(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.component4|component4(){}[0]
+    final fun copy(kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/Boolean = ...): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.model/UiPermissions.copy|copy(kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/UiPermissions.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/UiPermissions.hashCode|hashCode(){}[0]
+    final fun intersect(com.jantursky.casement.model/UiPermissions): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.model/UiPermissions.intersect|intersect(com.jantursky.casement.model.UiPermissions){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/UiPermissions.toString|toString(){}[0]
+
+    final object Companion { // com.jantursky.casement.model/UiPermissions.Companion|null[0]
+        final val None // com.jantursky.casement.model/UiPermissions.Companion.None|{}None[0]
+            final fun <get-None>(): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.model/UiPermissions.Companion.None.<get-None>|<get-None>(){}[0]
+    }
+}
+
+final class com.jantursky.casement.model/UiResource { // com.jantursky.casement.model/UiResource|null[0]
+    constructor <init>(kotlin/String, kotlin/String, com.jantursky.casement.model/UiResourceMeta = ...) // com.jantursky.casement.model/UiResource.<init>|<init>(kotlin.String;kotlin.String;com.jantursky.casement.model.UiResourceMeta){}[0]
+
+    final val html // com.jantursky.casement.model/UiResource.html|{}html[0]
+        final fun <get-html>(): kotlin/String // com.jantursky.casement.model/UiResource.html.<get-html>|<get-html>(){}[0]
+    final val meta // com.jantursky.casement.model/UiResource.meta|{}meta[0]
+        final fun <get-meta>(): com.jantursky.casement.model/UiResourceMeta // com.jantursky.casement.model/UiResource.meta.<get-meta>|<get-meta>(){}[0]
+    final val uri // com.jantursky.casement.model/UiResource.uri|{}uri[0]
+        final fun <get-uri>(): kotlin/String // com.jantursky.casement.model/UiResource.uri.<get-uri>|<get-uri>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.model/UiResource.component1|component1(){}[0]
+    final fun component2(): kotlin/String // com.jantursky.casement.model/UiResource.component2|component2(){}[0]
+    final fun component3(): com.jantursky.casement.model/UiResourceMeta // com.jantursky.casement.model/UiResource.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., com.jantursky.casement.model/UiResourceMeta = ...): com.jantursky.casement.model/UiResource // com.jantursky.casement.model/UiResource.copy|copy(kotlin.String;kotlin.String;com.jantursky.casement.model.UiResourceMeta){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/UiResource.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/UiResource.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/UiResource.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.model/UiResourceMeta { // com.jantursky.casement.model/UiResourceMeta|null[0]
+    constructor <init>(com.jantursky.casement.model/UiCsp? = ..., com.jantursky.casement.model/UiPermissions = ..., kotlin/String? = ..., kotlin/Boolean? = ...) // com.jantursky.casement.model/UiResourceMeta.<init>|<init>(com.jantursky.casement.model.UiCsp?;com.jantursky.casement.model.UiPermissions;kotlin.String?;kotlin.Boolean?){}[0]
+
+    final val csp // com.jantursky.casement.model/UiResourceMeta.csp|{}csp[0]
+        final fun <get-csp>(): com.jantursky.casement.model/UiCsp? // com.jantursky.casement.model/UiResourceMeta.csp.<get-csp>|<get-csp>(){}[0]
+    final val domain // com.jantursky.casement.model/UiResourceMeta.domain|{}domain[0]
+        final fun <get-domain>(): kotlin/String? // com.jantursky.casement.model/UiResourceMeta.domain.<get-domain>|<get-domain>(){}[0]
+    final val permissions // com.jantursky.casement.model/UiResourceMeta.permissions|{}permissions[0]
+        final fun <get-permissions>(): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.model/UiResourceMeta.permissions.<get-permissions>|<get-permissions>(){}[0]
+    final val prefersBorder // com.jantursky.casement.model/UiResourceMeta.prefersBorder|{}prefersBorder[0]
+        final fun <get-prefersBorder>(): kotlin/Boolean? // com.jantursky.casement.model/UiResourceMeta.prefersBorder.<get-prefersBorder>|<get-prefersBorder>(){}[0]
+
+    final fun component1(): com.jantursky.casement.model/UiCsp? // com.jantursky.casement.model/UiResourceMeta.component1|component1(){}[0]
+    final fun component2(): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.model/UiResourceMeta.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // com.jantursky.casement.model/UiResourceMeta.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean? // com.jantursky.casement.model/UiResourceMeta.component4|component4(){}[0]
+    final fun copy(com.jantursky.casement.model/UiCsp? = ..., com.jantursky.casement.model/UiPermissions = ..., kotlin/String? = ..., kotlin/Boolean? = ...): com.jantursky.casement.model/UiResourceMeta // com.jantursky.casement.model/UiResourceMeta.copy|copy(com.jantursky.casement.model.UiCsp?;com.jantursky.casement.model.UiPermissions;kotlin.String?;kotlin.Boolean?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.model/UiResourceMeta.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.model/UiResourceMeta.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.model/UiResourceMeta.toString|toString(){}[0]
+
+    final object Companion { // com.jantursky.casement.model/UiResourceMeta.Companion|null[0]
+        final fun fromResourceMeta(kotlinx.serialization.json/JsonObject?): com.jantursky.casement.model/UiResourceMeta // com.jantursky.casement.model/UiResourceMeta.Companion.fromResourceMeta|fromResourceMeta(kotlinx.serialization.json.JsonObject?){}[0]
+    }
+}
+
+final class com.jantursky.casement.policy/CspResult { // com.jantursky.casement.policy/CspResult|null[0]
+    constructor <init>(kotlin/String, kotlin.collections/List<kotlin/String>) // com.jantursky.casement.policy/CspResult.<init>|<init>(kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
+
+    final val header // com.jantursky.casement.policy/CspResult.header|{}header[0]
+        final fun <get-header>(): kotlin/String // com.jantursky.casement.policy/CspResult.header.<get-header>|<get-header>(){}[0]
+    final val rejected // com.jantursky.casement.policy/CspResult.rejected|{}rejected[0]
+        final fun <get-rejected>(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.policy/CspResult.rejected.<get-rejected>|<get-rejected>(){}[0]
+
+    final fun component1(): kotlin/String // com.jantursky.casement.policy/CspResult.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/List<kotlin/String> // com.jantursky.casement.policy/CspResult.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin.collections/List<kotlin/String> = ...): com.jantursky.casement.policy/CspResult // com.jantursky.casement.policy/CspResult.copy|copy(kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.policy/CspResult.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.policy/CspResult.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.policy/CspResult.toString|toString(){}[0]
+}
+
+final class com.jantursky.casement.policy/HostPolicy { // com.jantursky.casement.policy/HostPolicy|null[0]
+    constructor <init>(com.jantursky.casement.model/UiPermissions = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin/Int = ..., kotlin/Int = ...) // com.jantursky.casement.policy/HostPolicy.<init>|<init>(com.jantursky.casement.model.UiPermissions;kotlin.collections.Set<kotlin.String>;kotlin.Int;kotlin.Int){}[0]
+
+    final val allowedLinkSchemes // com.jantursky.casement.policy/HostPolicy.allowedLinkSchemes|{}allowedLinkSchemes[0]
+        final fun <get-allowedLinkSchemes>(): kotlin.collections/Set<kotlin/String> // com.jantursky.casement.policy/HostPolicy.allowedLinkSchemes.<get-allowedLinkSchemes>|<get-allowedLinkSchemes>(){}[0]
+    final val grantedPermissions // com.jantursky.casement.policy/HostPolicy.grantedPermissions|{}grantedPermissions[0]
+        final fun <get-grantedPermissions>(): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.policy/HostPolicy.grantedPermissions.<get-grantedPermissions>|<get-grantedPermissions>(){}[0]
+    final val maxHtmlLength // com.jantursky.casement.policy/HostPolicy.maxHtmlLength|{}maxHtmlLength[0]
+        final fun <get-maxHtmlLength>(): kotlin/Int // com.jantursky.casement.policy/HostPolicy.maxHtmlLength.<get-maxHtmlLength>|<get-maxHtmlLength>(){}[0]
+    final val maxMessageLength // com.jantursky.casement.policy/HostPolicy.maxMessageLength|{}maxMessageLength[0]
+        final fun <get-maxMessageLength>(): kotlin/Int // com.jantursky.casement.policy/HostPolicy.maxMessageLength.<get-maxMessageLength>|<get-maxMessageLength>(){}[0]
+
+    final fun allowsLink(kotlin/String): kotlin/Boolean // com.jantursky.casement.policy/HostPolicy.allowsLink|allowsLink(kotlin.String){}[0]
+    final fun component1(): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.policy/HostPolicy.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/Set<kotlin/String> // com.jantursky.casement.policy/HostPolicy.component2|component2(){}[0]
+    final fun component3(): kotlin/Int // com.jantursky.casement.policy/HostPolicy.component3|component3(){}[0]
+    final fun component4(): kotlin/Int // com.jantursky.casement.policy/HostPolicy.component4|component4(){}[0]
+    final fun copy(com.jantursky.casement.model/UiPermissions = ..., kotlin.collections/Set<kotlin/String> = ..., kotlin/Int = ..., kotlin/Int = ...): com.jantursky.casement.policy/HostPolicy // com.jantursky.casement.policy/HostPolicy.copy|copy(com.jantursky.casement.model.UiPermissions;kotlin.collections.Set<kotlin.String>;kotlin.Int;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.jantursky.casement.policy/HostPolicy.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.jantursky.casement.policy/HostPolicy.hashCode|hashCode(){}[0]
+    final fun resolvePermissions(com.jantursky.casement.model/UiPermissions): com.jantursky.casement.model/UiPermissions // com.jantursky.casement.policy/HostPolicy.resolvePermissions|resolvePermissions(com.jantursky.casement.model.UiPermissions){}[0]
+    final fun toString(): kotlin/String // com.jantursky.casement.policy/HostPolicy.toString|toString(){}[0]
+}
+
+final object com.jantursky.casement.jsonrpc/JsonRpcCodec { // com.jantursky.casement.jsonrpc/JsonRpcCodec|null[0]
+    final fun decode(kotlin/String): com.jantursky.casement.jsonrpc/JsonRpcMessage // com.jantursky.casement.jsonrpc/JsonRpcCodec.decode|decode(kotlin.String){}[0]
+    final fun encode(com.jantursky.casement.jsonrpc/JsonRpcMessage): kotlin/String // com.jantursky.casement.jsonrpc/JsonRpcCodec.encode|encode(com.jantursky.casement.jsonrpc.JsonRpcMessage){}[0]
+}
+
+final object com.jantursky.casement.jsonrpc/JsonRpcErrorCode { // com.jantursky.casement.jsonrpc/JsonRpcErrorCode|null[0]
+    final const val INTERNAL_ERROR // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.INTERNAL_ERROR|{}INTERNAL_ERROR[0]
+        final fun <get-INTERNAL_ERROR>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.INTERNAL_ERROR.<get-INTERNAL_ERROR>|<get-INTERNAL_ERROR>(){}[0]
+    final const val INVALID_PARAMS // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.INVALID_PARAMS|{}INVALID_PARAMS[0]
+        final fun <get-INVALID_PARAMS>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.INVALID_PARAMS.<get-INVALID_PARAMS>|<get-INVALID_PARAMS>(){}[0]
+    final const val INVALID_REQUEST // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.INVALID_REQUEST|{}INVALID_REQUEST[0]
+        final fun <get-INVALID_REQUEST>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.INVALID_REQUEST.<get-INVALID_REQUEST>|<get-INVALID_REQUEST>(){}[0]
+    final const val METHOD_NOT_FOUND // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.METHOD_NOT_FOUND|{}METHOD_NOT_FOUND[0]
+        final fun <get-METHOD_NOT_FOUND>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.METHOD_NOT_FOUND.<get-METHOD_NOT_FOUND>|<get-METHOD_NOT_FOUND>(){}[0]
+    final const val PARSE_ERROR // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.PARSE_ERROR|{}PARSE_ERROR[0]
+        final fun <get-PARSE_ERROR>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.PARSE_ERROR.<get-PARSE_ERROR>|<get-PARSE_ERROR>(){}[0]
+    final const val REJECTED // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.REJECTED|{}REJECTED[0]
+        final fun <get-REJECTED>(): kotlin/Int // com.jantursky.casement.jsonrpc/JsonRpcErrorCode.REJECTED.<get-REJECTED>|<get-REJECTED>(){}[0]
+}
+
+final object com.jantursky.casement.policy/CspBuilder { // com.jantursky.casement.policy/CspBuilder|null[0]
+    final fun build(com.jantursky.casement.model/UiCsp?): com.jantursky.casement.policy/CspResult // com.jantursky.casement.policy/CspBuilder.build|build(com.jantursky.casement.model.UiCsp?){}[0]
+    final fun isAllowedOrigin(kotlin/String): kotlin/Boolean // com.jantursky.casement.policy/CspBuilder.isAllowedOrigin|isAllowedOrigin(kotlin.String){}[0]
+}
+
+final const val com.jantursky.casement.model/EXTENSION_ID // com.jantursky.casement.model/EXTENSION_ID|{}EXTENSION_ID[0]
+    final fun <get-EXTENSION_ID>(): kotlin/String // com.jantursky.casement.model/EXTENSION_ID.<get-EXTENSION_ID>|<get-EXTENSION_ID>(){}[0]
+final const val com.jantursky.casement.model/MCP_APP_MIME_TYPE // com.jantursky.casement.model/MCP_APP_MIME_TYPE|{}MCP_APP_MIME_TYPE[0]
+    final fun <get-MCP_APP_MIME_TYPE>(): kotlin/String // com.jantursky.casement.model/MCP_APP_MIME_TYPE.<get-MCP_APP_MIME_TYPE>|<get-MCP_APP_MIME_TYPE>(){}[0]
+final const val com.jantursky.casement.model/SPEC_VERSION // com.jantursky.casement.model/SPEC_VERSION|{}SPEC_VERSION[0]
+    final fun <get-SPEC_VERSION>(): kotlin/String // com.jantursky.casement.model/SPEC_VERSION.<get-SPEC_VERSION>|<get-SPEC_VERSION>(){}[0]
