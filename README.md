@@ -110,7 +110,7 @@ Android, iOS and the desktop run the app as the top-level page of a web view. Th
 - **iOS runs the shim in the page world**, not an isolated world. A hostile page could see it.
 - **Teardown on dispose** sends `ui/resource-teardown` as a best effort only.
 - **The CSP report for `eval` is noise.** The zod library in the app SDK probes `new Function('')`, which the strict default CSP blocks. It is harmless and shows up as a blocked `eval (script-src)`.
-- No server-side rendering of a result, no streaming partial UI, and no extension beyond spec `2026-01-26` plus the draft features listed in the docs.
+- Casement does not render results on a server or stream partial UI. It targets spec `2026-01-26` and nothing newer.
 
 ## Platform support
 
@@ -148,6 +148,89 @@ scripts/build-fixtures.sh                            # real example apps for the
 ```
 
 Coverage gate: 90% lines and 78% branches per module. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+<!-- PROJECTS:START -->
+## Other Projects & Products
+
+<table align="center">
+  <tr>
+    <td align="center" valign="top" width="33%">
+      <a href="https://github.com/jantursky/" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://apptiary.com/projects/icons/github-dark.svg">
+          <img src="https://apptiary.com/projects/icons/github-light.svg" alt="GitHub Profile" width="48" height="48">
+        </picture>
+        <br><b>GitHub Profile</b>
+      </a>
+      <br><sub>Open-source repositories &amp; code</sub>
+    </td>
+    <td align="center" valign="top" width="33%">
+      <a href="https://podcasttotranscript.com/?utm_source=casement&amp;utm_medium=readme&amp;utm_campaign=other-projects&amp;utm_content=podcast-to-transcript" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://apptiary.com/projects/icons/podcasttotranscript-dark.svg">
+          <img src="https://apptiary.com/projects/icons/podcasttotranscript-light.svg" alt="Podcast To Transcript" width="48" height="48">
+        </picture>
+        <br><b>Podcast To Transcript</b>
+      </a>
+      <br><sub>Podcast transcripts, summaries &amp; chapters</sub>
+    </td>
+    <td align="center" valign="top" width="33%">
+      <a href="https://loupekit.com/?utm_source=casement&amp;utm_medium=readme&amp;utm_campaign=other-projects&amp;utm_content=loupekit" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://apptiary.com/projects/icons/loupekit-light.svg">
+          <img src="https://apptiary.com/projects/icons/loupekit-light.svg" alt="LoupeKit" width="48" height="48">
+        </picture>
+        <br><b>LoupeKit</b>
+      </a>
+      <br><sub>Tech stack, design tokens, AI code checker</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" width="33%">
+      <a href="https://textarray.com/?utm_source=casement&amp;utm_medium=readme&amp;utm_campaign=other-projects&amp;utm_content=textarray" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://apptiary.com/projects/icons/textarray-light.svg">
+          <img src="https://apptiary.com/projects/icons/textarray-light.svg" alt="TextArray" width="48" height="48">
+        </picture>
+        <br><b>TextArray</b>
+      </a>
+      <br><sub>Online text transformation tool</sub>
+    </td>
+    <td align="center" valign="top" width="33%">
+      <a href="https://addonhive.com/?utm_source=casement&amp;utm_medium=readme&amp;utm_campaign=other-projects&amp;utm_content=addonhive" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://apptiary.com/projects/icons/addonhive-dark-v3.svg">
+          <img src="https://apptiary.com/projects/icons/addonhive-light-v3.svg" alt="AddonHive" width="48" height="48">
+        </picture>
+        <br><b>AddonHive</b>
+      </a>
+      <br><sub>Addons &amp; integrations hub</sub>
+    </td>
+    <td align="center" valign="top" width="33%">
+      <a href="https://apptiary.com/mobile/games/?utm_source=casement&amp;utm_medium=readme&amp;utm_campaign=other-projects&amp;utm_content=mobile-games-and-apps" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://apptiary.com/projects/icons/stores-dark-v2.svg">
+          <img src="https://apptiary.com/projects/icons/stores-light-v2.svg" alt="Mobile Games &amp; Apps" width="48" height="48">
+        </picture>
+        <br><b>Mobile Games &amp; Apps</b>
+      </a>
+      <br><sub>Android &amp; iOS Applications</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" width="33%">
+      <a href="https://jantursky.com/?utm_source=casement&amp;utm_medium=readme&amp;utm_campaign=other-projects&amp;utm_content=and-more" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://apptiary.com/projects/icons/more-dark.svg">
+          <img src="https://apptiary.com/projects/icons/more-light.svg" alt="And more" width="48" height="48">
+        </picture>
+        <br><b>And more</b>
+      </a>
+      <br><sub>More projects, writing &amp; contact</sub>
+    </td>
+  </tr>
+</table>
+<!-- PROJECTS:END -->
 
 ## License
 
