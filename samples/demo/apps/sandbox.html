@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Sandbox and theme</title><style>:root { color-scheme: light dark; }
+body { margin: 0; padding: 12px; font-family: var(--font-sans, system-ui, sans-serif); font-size: 14px;
+  background: var(--color-background-primary, transparent); color: var(--color-text-primary, #1c1b1f); }
+h1 { font-size: 15px; margin: 0 0 6px; font-weight: 600; }
+p { margin: 0 0 8px; font-size: 12px; color: var(--color-text-secondary, #5f5b66); }
+pre { margin: 0; padding: 8px 10px; font-size: 12px; white-space: pre-wrap; word-break: break-word;
+  border: 1px solid var(--color-border-primary, #c9c5cf); border-radius: var(--border-radius-md, 8px);
+  background: var(--color-background-secondary, transparent); }
+#theme { margin: 8px 0 0; font-size: 12px; color: var(--color-text-secondary, #5f5b66); }
+</style></head>
+<body>
+<h1>Sandbox and theme</h1>
+<p>What the host granted this app, from the handshake:</p>
+<pre id="sandbox">waiting for the host</pre>
+<p id="theme">theme: waiting</p>
+<script>
+var nextId = 1, waiting = {}, listeners = {};
+window.addEventListener('message', function (e) {
+  var m = e.data;
+  if (!m || m.jsonrpc !== '2.0') return;
+  if (m.method && listeners[m.method]) listeners[m.method](m.params || {});
+  else if (m.id !== undefined && waiting[m.id]) { waiting[m.id](m); delete waiting[m.id]; }
+});
+function rpc(method, params) {
+  return new Promise(function (resolve) {
+    var id = nextId++;
+    waiting[id] = resolve;
+    window.parent.postMessage({ jsonrpc: '2.0', id: id, method: method, params: params }, '*');
+  });
+}
+function notify(method, params) {
+  window.parent.postMessage({ jsonrpc: '2.0', method: method, params: params }, '*');
+}
+function applyContext(ctx) {
+  if (!ctx) return;
+  if (ctx.theme) {
+    document.documentElement.setAttribute('data-theme', ctx.theme);
+    document.getElementById('theme').textContent = 'theme: ' + ctx.theme;
+  }
+  var vars = ctx.styles && ctx.styles.variables;
+  if (vars) Object.keys(vars).forEach(function (k) { document.documentElement.style.setProperty(k, vars[k]); });
+}
+function reportSize() {
+  notify('ui/notifications/size-changed', { height: Math.ceil(document.documentElement.getBoundingClientRect().height) });
+}
+listeners['ui/notifications/host-context-changed'] = applyContext;
+rpc('ui/initialize', { protocolVersion: '2026-01-26', appInfo: { name: document.title, version: '1.0.0' }, appCapabilities: {} })
+  .then(function (m) {
+    var result = m.result || {};
+    // The sandbox block sits under hostCapabilities in the handshake result.
+    var sandbox = (result.hostCapabilities && result.hostCapabilities.sandbox) || {};
+    document.getElementById('sandbox').textContent = JSON.stringify(sandbox, null, 2);
+    applyContext(result.hostContext);
+    notify('ui/notifications/initialized');
+    reportSize();
+  });
+</script></body></html>

@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.jantursky.casement.bridge.BlockedAction
 import com.jantursky.casement.compose.McpAppView
+import com.jantursky.casement.compose.rememberHostContext
 import com.jantursky.casement.demo.resources.Res
 import com.jantursky.casement.mcp.connectMcpAppsHost
 import kotlinx.coroutines.launch
@@ -118,6 +119,7 @@ public fun DemoApp(
         val blocked = remember { mutableStateListOf<BlockedAction>() }
         val listState = rememberLazyListState()
         val scope = rememberCoroutineScope()
+        val hostContext = rememberHostContext()
 
         fun show(scenario: Scenario) {
             entries += Entry.Text(true, scenario.label)
@@ -225,6 +227,11 @@ public fun DemoApp(
                                         toolResult = entry.result,
                                         client = entry.scenario.client,
                                         modifier = Modifier.fillMaxWidth(),
+                                        hostContext =
+                                            hostContext.copy(
+                                                availableDisplayModes = entry.scenario.displayModes,
+                                            ),
+                                        policy = entry.scenario.policy,
                                         onMessage = { entries += Entry.Text(true, "(from app) ${it.content}") },
                                         approveToolCall = {
                                             entries += Entry.Text(false, "The app called ${it.name}")

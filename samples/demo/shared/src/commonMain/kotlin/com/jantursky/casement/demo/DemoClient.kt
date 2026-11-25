@@ -4,7 +4,10 @@ import com.jantursky.casement.bridge.BridgeRejection
 import com.jantursky.casement.bridge.ToolCatalog
 import com.jantursky.casement.client.McpAppsHostClient
 import com.jantursky.casement.model.ToolVisibility
+import com.jantursky.casement.model.UiCsp
+import com.jantursky.casement.model.UiPermissions
 import com.jantursky.casement.model.UiResource
+import com.jantursky.casement.model.UiResourceMeta
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
@@ -29,6 +32,11 @@ internal class DemoClient(
                 "show-form" to both,
                 "show-chart" to both,
                 "show-hostile" to both,
+                "show-policy" to both,
+                "show-display" to both,
+                "show-csp" to both,
+                "show-capabilities" to both,
+                "show-theme" to both,
                 "get-time" to setOf(ToolVisibility.App),
                 "submit-form" to setOf(ToolVisibility.App),
                 "refresh-data" to setOf(ToolVisibility.App),
@@ -38,7 +46,7 @@ internal class DemoClient(
 
     override suspend fun readResource(uri: String): UiResource {
         val file = FILES[uri] ?: throw BridgeRejection("Unknown resource $uri")
-        return UiResource(uri, readFile(file))
+        return UiResource(uri, readFile(file), META[uri] ?: UiResourceMeta())
     }
 
     override suspend fun callTool(
@@ -107,6 +115,27 @@ internal class DemoClient(
                 "ui://demo/form" to "form.html",
                 "ui://demo/chart" to "chart.html",
                 "ui://demo/hostile" to "hostile.html",
+                "ui://demo/policy" to "policy.html",
+                "ui://demo/display" to "display.html",
+                "ui://demo/csp" to "sandbox.html",
+                "ui://demo/capabilities" to "sandbox.html",
+                "ui://demo/theme" to "sandbox.html",
+            )
+
+        /** The CSP the content-policy app declares. The plain http domain is not allowed, so the builder drops it. */
+        val CSP =
+            UiCsp(
+                connectDomains = listOf("https://api.example.com", "http://evil.example.com"),
+                resourceDomains = listOf("https://cdn.example.com"),
+            )
+
+        /** What the demo's capabilities app declares it needs. The policy grants only the camera. */
+        val PERMISSIONS = UiPermissions(camera = true, microphone = true)
+
+        private val META =
+            mapOf(
+                "ui://demo/csp" to UiResourceMeta(csp = CSP),
+                "ui://demo/capabilities" to UiResourceMeta(permissions = PERMISSIONS),
             )
     }
 }

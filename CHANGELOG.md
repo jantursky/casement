@@ -4,6 +4,10 @@ All notable changes to `io.github.jantursky:casement-*` are listed here. The for
 
 ## [Unreleased]
 
+### Added
+
+- The demo shows the link policy, a fullscreen request, the content policy, the granted permissions and the host theme, each as its own scenario. On the web, `?run=<scenario>` opens one on start.
+
 ## [1.0.0] - 2026-11-17
 
 ### Fixed
